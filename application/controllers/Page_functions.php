@@ -5,6 +5,7 @@ class Page_functions extends CI_Controller {
 			{
 					parent::__construct();
 					$this->load->model('profile_model');
+					$this->load->model('project_model');
 					$this->load->helper('url_helper');
 					$this->load->library('session');
 					$this->load->helper('url');
@@ -174,4 +175,52 @@ public function search(){
 			$this->load->view('templates/footer');
 		}
 	}
+
+public function view_projects()
+{
+			$this->check_restricted();
+			$this->load->helper('form');
+			$this->load->library('form_validation');
+			
+			
+			$data['info'] = $this->project_model->get_all_projects();
+			
+			$this->load->view('templates/profile_header', $data);
+			$this->load->view('pages/project/projects_temp');
+			$this->load->view('templates/footer');
+
+}
+
+
+
+public function find_project($projectID ){	
+			
+			$this->check_restricted();
+			$this->load->helper('form');
+			$this->load->library('form_validation');
+			
+			$data['info'] = $this->project_model->join_find_project($projectID);
+			$data['find'] = true;
+			
+			$this->load->view('templates/profile_header', $data);
+			$this->load->view('pages/project/show_project');
+			$this->load->view('templates/footer');
+		
+		}
+
+public function view_project($projectID){	
+			
+			$this->check_restricted();
+			$this->load->helper('form');
+			$this->load->library('form_validation');
+			
+			$data['info'] = $this->project_model->join_load_project($projectID);
+			
+			$this->load->view('templates/profile_header');
+			$this->load->view('pages/project/show_project');
+			$this->load->view('templates/footer');
+		
+		}
+
+
 }

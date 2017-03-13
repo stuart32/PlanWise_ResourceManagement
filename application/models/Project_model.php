@@ -397,6 +397,59 @@ public function search_algorithm(){
 	
 }
 
+
+
+public function join_find_project($projectID){
+				
+		$this->db-> select('*');
+		$this->db->	from('project');
+		$this->db-> join('user_account', 'project.managerID = user_account.accountID');
+		$this->db-> join('person', 'project.managerID = person.accountID');
+		$this->db-> join('project_tasks', 'project.projectID = project_tasks.projectID');
+		$this->db->	where('project.projectID',$projectID);
+		$this->db-> limit(1);
+		
+		$query = $this->db->get();
+		
+		if($query-> num_rows() != 1){
+			return;
+		}
+		
+		return $query->result_array();
+			
+	}
+
+public function join_load_project($projectID){
+		
+		
+		$this->db-> select('*');
+		$this->db->	from('project');
+		$this->db-> join('user_account', 'project.managerID = user_account.accountID');
+		$this->db-> join('person', 'project.managerID = person.accountID');
+		$this->db-> join('project_tasks', 'project.projectID = project_tasks.projectID');
+		$this->db->	where('project.projectID',$projectID);
+		$this->db-> limit(1);
+		
+		$query = $this->db->get();
+		
+		if($query-> num_rows() != 1){
+			return;
+		}
+		
+		
+		
+		return $query->result_array();
+		
+		//return $query->result_array();
+			
+	}
+
+
+public function get_all_projects()
+{
+	return $this->db->get('project')->result();
+}
+
 }
 
 
