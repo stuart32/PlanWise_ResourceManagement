@@ -62,9 +62,13 @@ $route['search'] = 'page_functions/search';
 $route['project_allocation'] = 'ProjectCreate/allocation';
 $route['create_project'] = 'ProjectCreate/projectCreate';
 $route['create_tasks'] = 'ProjectCreate/createTasks';
+
 $route['projects'] = 'page_functions/view_projects';
 $route['view_project'] = 'page_functions/view_project';
 $route['find_project/(:any)'] = 'page_functions/find_project/$1';
+
+
+$route['admin'] = 'page_functions/adminreg';
 
 $route['view_profile'] = 'page_functions/view_profile';
 $route['find_profile/(:any)'] = 'page_functions/find_profile/$1';
