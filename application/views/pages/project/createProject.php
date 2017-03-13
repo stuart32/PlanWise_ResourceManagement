@@ -52,85 +52,87 @@
   } );
   
    </script>
-            
-            
-            
-            
-            <label for="projectLocation">* Loaction:</label>
-            
-                        <input type="hidden" id="loca1" name="streetname" value="">
-                        <input type="hidden" id="loca2" name="city" value="">
-                        <input type="hidden" id="loca3" name="country" value="">
-                        <input type="hidden" id="loca4" name="postcode" value="">
-                        
-            <div id="map" style="width:40%x;height:400px;background:White">
-                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7XTpRX5A-G83XNzV_7ORF-OYKfepSD4g&callback=myOptions"></script>
-                <script>
-                    var myOptions = {
-                        zoom: 14,
-                        center: new google.maps.LatLng(55.910213, -3.319792)
-                    }
-
-                    var geocoder = new google.maps.Geocoder;
-                    var infowindow = new google.maps.InfoWindow;
-
-                    var map = new google.maps.Map(document.getElementById("map"), myOptions);
-
-                    var marker;
-
-                    function placeMarker(location) {
-                        geocoder = new google.maps.Geocoder();
-
-                        if (marker) {
-                            marker.setPosition(location);
-                        } else {
-                            marker = new google.maps.Marker({
-                                position: location,
-                                map: map
-                            });
-                        }
-
-                        geocoder.geocode({
-                            'location': location
-                        }, function(results) {
-                            if (results[1]) {
-                                map.setZoom(15);
-                                infowindow.setContent(results[1].formatted_address);
-                                infowindow.open(map, marker);
-                                var addresslocaion = results[1].formatted_address;
-                                //Note  when extracting the location for database input use the variable "addresslocation"
-                                
-                                
-                                
-                                //Splits up location string and applys the vaules to hidden html inputs
-                                var getcode = addresslocaion.match('[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}');
-                                var postcode = getcode[0];
-                                var removePost = addresslocaion.replace(postcode,'');
-                                var values = removePost.split(',');
-                                var streetname = values[0];
-                                var city = values[1];
-                                var country = values[2];
-                                
-                                 $("#loca1").val(streetname);
-                                 $("#loca2").val(city);
-                                 $("#loca3").val(country);
-                                 $("#loca4").val(postcode);
-                                
-                                
-                                
-                                
-                            }
-                        });
-
-
-
-                    }
-
-                    google.maps.event.addListener(map, 'click', function(event) {
-                        placeMarker(event.latLng)
-                    });
-                </script>
-
+              
+              
+              
+            <div class="form-group">
+              <label for="projectLocation">* Loaction:</label>
+              
+                          <input type="text" class="form-control" id="loca1" name="streetname" value="">
+                          <br>
+                          <input type="text" class="form-control" id="loca2" name="city" value="">
+                          <br>
+                          <input type="text" class="form-control" id="loca4" name="postcode" value="">
+                          <br>
+                          <input type="text" class="form-control" id="loca3" name="country" value="">
+              </div>
+              <div id="map" style="width:40%x;height:400px;background:White">
+                  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7XTpRX5A-G83XNzV_7ORF-OYKfepSD4g&callback=myOptions"></script>
+                  <script>
+                      var myOptions = {
+                          zoom: 14,
+                          center: new google.maps.LatLng(55.910213, -3.319792)
+                      }
+  
+                      var geocoder = new google.maps.Geocoder;
+                      var infowindow = new google.maps.InfoWindow;
+  
+                      var map = new google.maps.Map(document.getElementById("map"), myOptions);
+  
+                      var marker;
+  
+                      function placeMarker(location) {
+                          geocoder = new google.maps.Geocoder();
+  
+                          if (marker) {
+                              marker.setPosition(location);
+                          } else {
+                              marker = new google.maps.Marker({
+                                  position: location,
+                                  map: map
+                              });
+                          }
+  
+                          geocoder.geocode({
+                              'location': location
+                          }, function(results) {
+                              if (results[1]) {
+                                  map.setZoom(15);
+                                  infowindow.setContent(results[1].formatted_address);
+                                  infowindow.open(map, marker);
+                                  var addresslocaion = results[1].formatted_address;
+                                  //Note  when extracting the location for database input use the variable "addresslocation"
+                                  
+                                  
+                                  
+                                  //Splits up location string and applys the vaules to hidden html inputs
+                                  var getcode = addresslocaion.match('[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}');
+                                  var postcode = getcode[0];
+                                  var removePost = addresslocaion.replace(postcode,'');
+                                  var values = removePost.split(',');
+                                  var streetname = values[0];
+                                  var city = values[1];
+                                  var country = values[2];
+                                  
+                                   $("#loca1").val(streetname);
+                                   $("#loca2").val(city);
+                                   $("#loca3").val(country);
+                                   $("#loca4").val(postcode);
+                                  
+                                  
+                                  
+                                  
+                              }
+                          });
+  
+  
+  
+                      }
+  
+                      google.maps.event.addListener(map, 'click', function(event) {
+                          placeMarker(event.latLng)
+                      });
+                  </script>
 
 
             </div>
