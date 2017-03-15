@@ -99,50 +99,82 @@
           </div>
           <!--col-md-8 col-sm-8 col-xs-12 close-->
     
-
+</div>
         
         <!--profile-head close-->
-      </div>
-
-      <?php 
-
-      echo $info[0]['title'];
-      ?>
- <!--     
-     
-  <div class="panel panel-default">
-  <div class="panel-heading"> 
-    <h3 class="panel-title">Task 1: <?php echo $info[0]['title']; ?></h3>
-  </div>
-  <div class="panel-body">
-    <h3>Start Date - End Date</h3>
-    <div class="row">
-      <div class="col-sm-6 col-md-4">
-        <div class="panel panel-default">
-          <div class="panel-heading"> 
-             <h3 class="panel-title">Role 1: Name of role</h3>
-           </div>
-          <div class="panel-body">
-            
-            
-              <h1>Role 1 : Name of role</h1>
-              <img src="pictures/Profile-pic.jpg" alt="...">
-                <div class="caption">
-                  <h3>Member 1</h3>
-                  <p>Software Engineer</p>
-                  <p><a href="#" class="btn btn-primary" role="button">Profile</a> </p>
-                </div>
-            
-          </div>
-        
-       </div>
-    </div>
-  </div>
-</div>
-
--->
       
-    </div>
+   <?php
+
+ 
+
+   if($tasks == null)
+   {
+      echo "This project has no tasks";
+   }
+   else
+   {
+   foreach ($tasks as $task) {
+
+       ?>
+
+          <div class="panel panel-default">
+            <div class="panel-heading"> 
+              <h3 class="panel-title"> <?php echo $task['title']; ?></h3>
+            </div>
+            <div class="panel-body">
+              <h3><?php echo $task['startDate']; ?> - <?php echo $task['endDate'];?></h3>
+
+              <br>
+              <br>
+         <div class="row">    
+        <?php 
+          foreach ($roles as $role) {
+            if($roles == null)
+            {
+               echo "This task has no roles";
+            }
+             else
+             {
+            ?>
+            
+                <div class="col-sm-6 col-md-4">
+                  <div class="panel panel-default">
+                    <div class="panel-heading"> 
+                       <h3 class="panel-title"><?php echo $role['roleName'];?></h3>
+                     </div>
+                    <div class="panel-body">
+                      
+                      
+                        <h1>Member name</h1>
+                        <img src="pictures/Profile-pic.jpg" alt="...">
+                          <div class="caption">
+                            
+                            <p>Software Engineer</p>
+                            <p><a href="#" class="btn btn-primary" role="button">Profile</a> </p>
+                          </div>
+                      
+                    </div>
+                  </div>
+                </div>
+             
+          <?php
+        }
+          }
+         ?>     
+
+             </div>
+          </div>
+
+
+       <?php
+     }
+     } 
+    ?>
+
+
+  
+      
+    
 
 
 

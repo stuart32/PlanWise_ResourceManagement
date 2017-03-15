@@ -396,8 +396,38 @@ public function search_algorithm(){
 	*/
 	
 }
+//$this->db-> join('project_roles', 'project_tasks.taskID = project_roles.taskID');
+public function find_roles($projectID)
+{
+	$this->db-> select('taskID');
+	$this->db-> from('project_tasks');
+	$this->db-> where('project_tasks.projectID', $projectID);
+	$tasks = $this->db->get()->result_array();
+	
+	//print_r($tasks);
 
+	foreach($tasks as $t){
+		//print_r($t);
+		$this->db-> select('*');
+		$this->db-> from('project_roles');
+		$this->db-> where('project_roles.taskID', $t['taskID']);
+		//$this->db-> where('projectID',$projectID);
+		$roles = $this->db->get()->result_array();
+	}
+	
+	return $roles; 
+}
 
+public function find_tasks($projectID)
+{
+		$this->db-> select('*');
+		$this->db->	from('project_tasks');
+		$this->db->	where('project_tasks.projectID',$projectID);
+		
+		$query = $this->db->get();
+
+		return $query->result_array();
+}
 
 public function join_find_project($projectID){
 				
@@ -405,7 +435,6 @@ public function join_find_project($projectID){
 		$this->db->	from('project');
 		$this->db-> join('user_account', 'project.managerID = user_account.accountID');
 		$this->db-> join('person', 'project.managerID = person.accountID');
-		$this->db-> join('project_tasks', 'project.projectID = project_tasks.projectID');
 		$this->db->	where('project.projectID',$projectID);
 		$this->db-> limit(1);
 		
@@ -426,7 +455,6 @@ public function join_load_project($projectID){
 		$this->db->	from('project');
 		$this->db-> join('user_account', 'project.managerID = user_account.accountID');
 		$this->db-> join('person', 'project.managerID = person.accountID');
-		$this->db-> join('project_tasks', 'project.projectID = project_tasks.projectID');
 		$this->db->	where('project.projectID',$projectID);
 		$this->db-> limit(1);
 		

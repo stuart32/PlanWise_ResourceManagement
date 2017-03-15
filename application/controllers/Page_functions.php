@@ -212,6 +212,8 @@ public function find_project($projectID ){
 			$this->load->library('form_validation');
 			
 			$data['info'] = $this->project_model->join_find_project($projectID);
+			$data['tasks'] = $this->project_model->find_tasks($projectID);
+			$data['roles'] = $this->project_model->find_roles($projectID);
 			$data['find'] = true;
 			
 			$this->load->view('templates/profile_header', $data);
@@ -227,6 +229,9 @@ public function view_project($projectID){
 			$this->load->library('form_validation');
 			
 			$data['info'] = $this->project_model->join_load_project($projectID);
+			$data['tasks'] = $this->project_model->find_tasks($projectID);
+			$data['roles'] = $this->project_model->find_roles($projectID);
+			
 			
 			$this->load->view('templates/profile_header');
 			$this->load->view('pages/project/show_project');
