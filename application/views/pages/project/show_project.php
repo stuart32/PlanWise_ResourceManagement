@@ -81,7 +81,8 @@
           <div class="col-md8">
             <h5 id="h01"><?php echo $info[0]['title']; ?> </h5>
             <h2 id="h01" style="color: white;">Project Leader:  </h2>
-            <p id="p01"> <?php echo $info[0]['firstname'] ?> <?php echo $info[0]['lastname']?> </p>
+            <p id="p01"> <?php echo $info[0]['firstname'] ?> <?php echo $info[0]['lastname']?></p>
+            <p><?php echo $info[0]['email'];?></p>
             <h2 id="h01" style="color: white;">Description: </h2>
             <p> <?php echo $info[0]['description']; ?></p>
             <br>
@@ -91,6 +92,15 @@
               <li><span class="glyphicon glyphicon-ok-circle"></span> <?php if($info[0]['completed'] == 0){echo "Active";}else{echo "Completed";}?></li>
               <li><span class="glyphicon glyphicon-ok-sign"></span> On Schedual </li>
               <li><span class="glyphicon glyphicon-gbp"></span> Budget: <?php echo $info[0]['budget']; ?></li>
+
+              <?php 
+              if($this->session->accountID == $info[0]['managerID']) 
+              {?>
+               <a href="<?php echo site_url('edit_project/'.$info[0]['projectID'] ) ?>"> <button type="button" class="btn btn-warning" >Edit Project</button></a>
+              <?php 
+              }
+              ?>
+              
 
               
             </ul>
@@ -102,7 +112,7 @@
 </div>
         
         <!--profile-head close-->
-      
+    
    <?php
 
  
@@ -119,12 +129,12 @@
 
           <div class="panel panel-default">
             <div class="panel-heading"> 
+
               <h3 class="panel-title"> <?php echo $task['title']; ?></h3>
             </div>
             <div class="panel-body">
               <h3><?php echo $task['startDate']; ?> - <?php echo $task['endDate'];?></h3>
 
-              <br>
               <br>
          <div class="row">    
         <?php 

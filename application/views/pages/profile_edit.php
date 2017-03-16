@@ -4,12 +4,12 @@
 
 <!-- <?php  echo $title ?> -->
 <?php echo form_open('profile'); ?>
-
+<div class="container">
 	<fieldset>
 	<!-- Form Name -->
 
 
-	<legend>Edit Account Details<legend>
+	<legend >Edit Account Details<legend>
 
 	<label class="col-md-7 control-label">Please fill in the details below(* denotes a required field)</label> <br/><br/>
 
@@ -117,7 +117,8 @@
 		<button id="submit" name="submit" type="submit" class="btn btn-primary btn-lg">Submit</button>
 	  </div>
 	</div>
-
 	
 	</fieldset>
 	</form>
+
+</div>

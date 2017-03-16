@@ -429,6 +429,8 @@ public function find_tasks($projectID)
 		return $query->result_array();
 }
 
+
+
 public function join_find_project($projectID){
 				
 		$this->db-> select('*');
@@ -447,7 +449,7 @@ public function join_find_project($projectID){
 		return $query->result_array();
 			
 	}
-
+/*
 public function join_load_project($projectID){
 		
 		
@@ -471,7 +473,7 @@ public function join_load_project($projectID){
 		//return $query->result_array();
 			
 	}
-
+*/
 
 public function get_all_projects()
 {

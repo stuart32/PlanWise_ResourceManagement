@@ -205,6 +205,8 @@ public function view_projects()
 
 
 
+
+
 public function find_project($projectID ){	
 			
 			$this->check_restricted();
@@ -214,14 +216,14 @@ public function find_project($projectID ){
 			$data['info'] = $this->project_model->join_find_project($projectID);
 			$data['tasks'] = $this->project_model->find_tasks($projectID);
 			$data['roles'] = $this->project_model->find_roles($projectID);
-			$data['find'] = true;
+			//$data['find'] = true;
 			
 			$this->load->view('templates/profile_header', $data);
 			$this->load->view('pages/project/show_project');
 			$this->load->view('templates/footer');
 		
 		}
-
+/*
 public function view_project($projectID){	
 			
 			$this->check_restricted();
@@ -238,6 +240,37 @@ public function view_project($projectID){
 			$this->load->view('templates/footer');
 		
 		}
+*/
+public function edit_project($projectID){
+		if($this->check_restricted() == false) {return;};
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+		
+
+		$data['title'] = 'Edit project';
+		
+		$this->form_validation->set_rules('projectTitle', 'projectTitle', 'required');
+		$this->form_validation->set_rules('projectType', 'projectType', 'required');
+		$this->form_validation->set_rules('startDate', 'startDate', 'required');
+		$this->form_validation->set_rules('endDate', 'endDate', 'required');
+		$this->form_validation->set_rules('projectBudget', 'projectBudject', 'required');
+
+
+		$data['info'] =  ($this->project_model->join_find_project($projectID));
+		if ($this->form_validation->run() === FALSE)
+		{
+			$this->load->view('templates/profile_header', $data);
+			$this->load->view('pages/project/project_edit');
+			$this->load->view('templates/footer');
+
+		}
+		else
+		{
+			$this->project_model->set_project();
+			redirect('view_project', $data);
+
+		} 
+}
 
 
 }
