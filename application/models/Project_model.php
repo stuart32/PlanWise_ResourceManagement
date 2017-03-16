@@ -475,6 +475,25 @@ public function join_load_project($projectID){
 	}
 */
 
+public function project_search($option, $search){
+	
+
+	$option1 = (string)$option;
+	$this->db->select('*');
+	$this->db->	from('project');
+	$this->db->join('person', 'project.managerID = person.accountID');
+	$this->db->join('user_account', 'person.accountID = user_account.accountID');
+	
+	$this->db-> like($option1,$search);
+	
+	$query = $this->db->get()->result();
+	
+	
+	return $query;
+}
+
+
+
 public function get_all_projects()
 {
 	return $this->db->get('project')->result();

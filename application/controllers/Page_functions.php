@@ -272,5 +272,30 @@ public function edit_project($projectID){
 		} 
 }
 
+public function search_project(){
+	
+		$this->check_restricted();
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+	
+		
+		$this->form_validation->set_rules('search', 'Search', 'required');
+		if ($this->form_validation->run() === FALSE){
+			$this->load->view('templates/header');
+			$this->load->view('pages/project/project_search');
+			$this->load->view('templates/footer');
+		}
+		else 
+		{
+			$search = $this->input->post('search');
+			$option = $this->input->post('fields');
+			$data['query'] = $this->project_model->project_search($option, $search);	
+			
+			$this->load->view('templates/header');
+			$this->load->view('pages/project/project_search', $data);
+			$this->load->view('templates/footer');
+		}
+	}
+
 
 }
