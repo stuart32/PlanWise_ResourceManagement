@@ -104,7 +104,6 @@ class Page_functions extends CI_Controller {
 		$this->form_validation->set_rules('postcode', 'postcode', 'required');
 		$this->form_validation->set_rules('streetName', 'streetName', 'required');
 		$this->form_validation->set_rules('buildingNumber', 'buildingNumber', 'required');
-username
 		$data['info'] =  ($this->profile_model->load_profile());
 		if ($this->form_validation->run() === FALSE)
 		{
