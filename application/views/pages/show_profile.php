@@ -138,6 +138,13 @@
           </a>
       </li>
       <?php } ?>
+            <?php if(!isset($find)) { ?>
+
+      <li><a href="#request" role="tab" data-toggle="tab">
+          <i class="fa fa-key"></i> Request days off
+          </a>
+      </li>
+      <?php } ?>
 
     </ul><!--nav-tabs close-->
     
@@ -147,7 +154,6 @@
     <div class="container">
 <div class="col-sm-11" style="float:left;">
 <div class="hve-pro">
-<p>ITS A ME <?php echo $info[0]['firstname'];?></p>
 </div><!--hve-pro close-->
 </div><!--col-sm-12 close-->
 <br clear="all" />
@@ -448,6 +454,49 @@
 
   </div>
 </div>
+</fieldset>
+</form>
+</div><!--row close-->
+</div><!--container close -->          
+</div><!--tab-pane close-->
+<?php } ?>
+</div><!--tab-content close-->
+</div><!--container close-->
+
+<?php if(!isset($find)) { ?>
+<div class="tab-pane fade" id="request">
+<div class="container fom-main">
+<div class="row">
+<div class="col-sm-12">
+<h2 class="register">Request days off</h2>
+</div><!--col-sm-12 close-->
+
+</div><!--row close-->
+<br />
+<div class="row">
+
+<form class="form-horizontal main_form text-left" action=" " method="post"  id="contact_form">
+<fieldset>
+	
+	<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="selectbasic">Select type of request</label>
+  <div class="col-md-4">
+    <select id="selectbasic" name="selectbasic" class="form-control">
+      <option value="1">Holiday</option>
+      <option value="2">Sickness</option>
+    </select>
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for=""></label>
+  <div class="col-md-4">
+    <button id="" name="" class="btn btn-primary">Submit</button>
+  </div>
+</div>
+
 </fieldset>
 </form>
 </div><!--row close-->
