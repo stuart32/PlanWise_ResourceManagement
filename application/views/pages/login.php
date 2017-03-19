@@ -25,11 +25,8 @@
           <div class="checkbox">
             <label><input type="checkbox"> Remember me</label>
           </div>
-<<<<<<< HEAD
           <button type="submit" class="btn btn-default">Submit</button>
-=======
-          <button type="submit" class="btn-outline-primary">Submit</button>
->>>>>>> 04d4f19a9dd6386549b4faf9dad5e9b223b26540
+
         </form>
       </div>
     </div>
