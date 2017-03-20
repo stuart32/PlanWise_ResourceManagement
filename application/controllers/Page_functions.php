@@ -143,10 +143,23 @@ public function view_profile(){
 			$this->load->library('form_validation');
 			
 			$data['info'] = $this->profile_model->join_load_profile();
+			$this->form_validation->set_rules('startDate', 'start date ', 'required');
+			$this->form_validation->set_rules('endDate', 'end date ', 'required');
 			
+					if ($this->form_validation->run() === FALSE)
+		{ 	echo 'testtest1';
 			$this->load->view('templates/profile_header', $data);
 			$this->load->view('pages/show_profile');
 			$this->load->view('templates/footer');
+		} else
+			{
+				$data['leave'] = $this->profile_model->day_off();
+				    echo 'testtest2';
+				
+			$this->load->view('templates/profile_header', $data);
+			$this->load->view('pages/show_profile');
+			$this->load->view('templates/footer');
+			}
 		
 		}
 		

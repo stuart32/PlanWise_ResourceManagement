@@ -48,6 +48,30 @@ public function set_login()
 
 }
 
+public function day_off()
+{
+	$this->load->helper('url');
+	
+	$start = $this->input->post('startDate');
+    $end = $this->input->post('endDate');
+	$formatted_date = date('Y/m/d', strtotime($start));
+	$formatted_date1 = date('Y/m/d', strtotime($end));
+	
+	$datesData = array(
+        'leaveType' => $this->input->post('selecType'),
+        'startDate' => $formatted_date,
+        'endDate' => $formatted_date1
+    );
+    
+		$sd = $this->input->post('startDate');
+		$ed = $this->input->post('endDate');
+    echo 'testtest';
+    $d = $this->db->insert('time_off', $datesData);
+    var_dump ($d);
+    return $d;
+    
+}
+
 public function set_logout(){	
 
 

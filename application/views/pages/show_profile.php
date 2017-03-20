@@ -475,14 +475,14 @@
 <br />
 <div class="row">
 
-<form class="form-horizontal main_form text-left" action=" " method="post"  id="contact_form">
+<?php echo form_open('view_profile'); ?>
 <fieldset>
 	
 	<!-- Select Basic -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="selectbasic">Select type of request</label>
   <div class="col-md-4">
-    <select id="selectbasic" name="selectbasic" class="form-control">
+    <select id="selectbasic" name="selecType" class="form-control">
       <option value="1">Holiday</option>
       <option value="2">Sickness</option>
     </select>
@@ -508,7 +508,6 @@
 	</div>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
  <script>
   $( function() 
   {$( "#datepicker" ).datepicker();
@@ -522,12 +521,13 @@
   } );
   
    </script>
+   </div>
 
 <!-- Button -->
 <div class="form-group">
   <label class="col-md-4 control-label" for=""></label>
   <div class="col-md-4">
-    <button id="" name="" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-default">Submit</button>
   </div>
 </div>
 
