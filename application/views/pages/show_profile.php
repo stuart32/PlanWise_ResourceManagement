@@ -484,7 +484,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="selectbasic">Select type of request</label>
   <div class="col-md-4">
-    <select id="selectbasic" name="selectbasic" class="form-control">
+    <select id="selectbasic" name="selecType" class="form-control">
       <option value="1">Holiday</option>
       <option value="2">Sickness</option>
     </select>
@@ -492,21 +492,20 @@
 </div>
 		<div class="createProject container-fluid col-sm-5">
          <div class='input-group date' >
-                <label for="startDate">* Start Date:</label>
+                <label for="startDate">Start Date:</label>
                 <div class="form-group">
                     <div class='input-group date' >
                         <input type='text' class="form-control" id="datepicker" name="startDate" />
                         </span>
                     </div>
                 </div>
-                <label for="endDate">* End Date:</label>
+                <label for="endDate">End Date:</label>
                 <div class="form-group">
                     <div class='input-group date' >
                         <input type='text' class="form-control" id="datepicker1" name="endDate" />
                         </span>
                     </div>
                 </div>
-            </div>
             </div>
  <script>
   $( function() 
@@ -521,6 +520,7 @@
   } );
   
    </script>
+   </div>
 
 <!-- Button -->
 <div class="form-group">

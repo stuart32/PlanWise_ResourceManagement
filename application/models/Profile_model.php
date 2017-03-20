@@ -48,6 +48,17 @@ public function set_login()
 
 }
 
+public function day_off()
+{
+	$this->load->helper('url');
+	
+	$datesData = array(
+        'selecType' => $this->input->post('leaveType'),
+        'startDate' => $this->input->post('startDate'),
+        'endDate' => $this->input->post('startDate')
+    );
+	}
+
 public function set_logout(){	
 
 
