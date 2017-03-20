@@ -48,6 +48,30 @@ public function set_login()
 
 }
 
+public function day_off()
+{
+	$this->load->helper('url');
+	
+	$start = $this->input->post('startDate');
+    $end = $this->input->post('endDate');
+	$formatted_date = date('Y/m/d', strtotime($start));
+	$formatted_date1 = date('Y/m/d', strtotime($end));
+	
+	$datesData = array(
+        'leaveType' => $this->input->post('selecType'),
+        'startDate' => $formatted_date,
+        'endDate' => $formatted_date1
+    );
+    
+		$sd = $this->input->post('startDate');
+		$ed = $this->input->post('endDate');
+    echo 'testtest';
+    $d = $this->db->insert('time_off', $datesData);
+    var_dump ($d);
+    return $d;
+    
+}
+
 public function set_logout(){	
 
 
@@ -68,12 +92,27 @@ public function set_account()
         'email' => $this->input->post('emailAddress'),
         'typeID' => $this->input->post('type')
     );
-    
+	$us = $this->input->post('username');
+	$pw = $this->input->post('password');
+	$mail = $this->input->post('emailAddress');
 
+    $to = "mario.wasilev@gmail.com"; // this is your Email address
+    $from = $mail; // this is the sender's Email address
+    $subject = "Form submission";
+    $subject2 = "Copy of your form submission";
+    $message = "Details of the registrated user: " . $us . "\n\nblabla" . $pw;
+    $message2 = "Hello " . $us . ",\n\n" . "Thank you for completing your registration in PlanWiseRMS. The details of your registratior will be listed below " . "\n\n"
+    . "Username:" . $us . "\n" . "Password:" . $pw . "\n\n\n" . "We hope you enjoy using PlanWiseRMS!";
+
+    $headers = "From:" . $from;
+    $headers2 = "From:" . $to;
+    mail($to,$subject,$message,$headers);
+    mail($from,$subject2,$message2,$headers2); // sends a copy of the message to the sender
 	
 	$a = $this->db->insert('user_account', $accountData);
 
     return $a;
+   
 }
 
 	public function check_for_profile(){
@@ -285,7 +324,6 @@ public function set_profile()
    
     
 	$addressData = array(
-			'country' => $this->input->post('country'),
 			'city' => $this->input->post('city'),
 			'postcode' => $this->input->post('postcode'),
 			'streetName' => $this->input->post('streetName'),

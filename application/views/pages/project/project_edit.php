@@ -3,7 +3,7 @@
 <!-- FIND THE title VARIABLE BELOW -->
 
 <!-- <?php  echo $title ?> -->
-<?php echo form_open('edit_project'); ?>
+<?php echo form_open('edit_project/'.$project); ?>
 <div class="container">
 	<fieldset>
 	<!-- Form Name -->

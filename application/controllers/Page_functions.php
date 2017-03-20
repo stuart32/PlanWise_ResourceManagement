@@ -14,7 +14,7 @@ class Page_functions extends CI_Controller {
 			}
 
 	public function check_restricted() {
-
+			$this->db->reconnect();
 			$url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
 			if( empty($this->session->userdata('logged_in'))){	
 				if(strpos($url,'/login') == false) {
@@ -143,10 +143,23 @@ public function view_profile(){
 			$this->load->library('form_validation');
 			
 			$data['info'] = $this->profile_model->join_load_profile();
+			$this->form_validation->set_rules('startDate', 'start date ', 'required');
+			$this->form_validation->set_rules('endDate', 'end date ', 'required');
 			
+					if ($this->form_validation->run() === FALSE)
+		{ 	echo 'testtest1';
 			$this->load->view('templates/profile_header', $data);
 			$this->load->view('pages/show_profile');
 			$this->load->view('templates/footer');
+		} else
+			{
+				$data['leave'] = $this->profile_model->day_off();
+				    echo 'testtest2';
+				
+			$this->load->view('templates/profile_header', $data);
+			$this->load->view('pages/show_profile');
+			$this->load->view('templates/footer');
+			}
 		
 		}
 		
@@ -248,6 +261,7 @@ public function edit_project($projectID){
 		
 
 		$data['title'] = 'Edit project';
+		$data['project'] = $projectID;
 		
 		$this->form_validation->set_rules('projectTitle', 'projectTitle', 'required');
 		$this->form_validation->set_rules('projectType', 'projectType', 'required');
@@ -295,6 +309,34 @@ public function search_project(){
 			$this->load->view('pages/project/project_search', $data);
 			$this->load->view('templates/footer');
 		}
+	}
+
+public function interest_project($projectID ){	
+			$this->check_restricted();
+			$this->load->helper('form');
+			$this->load->library('form_validation');
+				
+			$data['info'] = $this->project_model->join_find_project($projectID);
+			$data['interest'] = $this->project_model->find_interest_project($projectID);
+			$data['project'] = $projectID;
+			
+			$this->form_validation->set_rules('sub', 'submit', 'required');
+
+			//$data['find'] = true;
+			if ($this->form_validation->run() === FALSE){
+				
+				$this->load->view('templates/profile_header', $data);
+				$this->load->view('pages/project/interest_project');
+				$this->load->view('templates/footer');
+			} 
+			else
+			{
+				$data['interest'] = $this->project_model->add_interest_project($projectID);
+				$data['interest'] = $this->project_model->find_interest_project($projectID);
+				$this->load->view('templates/profile_header', $data);
+				$this->load->view('pages/project/interest_project');
+				$this->load->view('templates/footer');
+			}
 	}
 
 

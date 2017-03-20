@@ -18,6 +18,11 @@ class Project_model extends CI_Model {
         return $query->row_array();
 }
 
+
+public function convert_date($date){
+	return date('Y/m/d', strtotime($date));
+}
+
 public function set_login()
 
 {
@@ -148,10 +153,10 @@ public function set_account()
 		echo $accountID. ' '. $addressID;
 			
 		$profileData = array(
-				'accountID' => ($accountID),
+			 'accountID' => ($accountID),
 	         'firstname' => $this->input->post('fname'),
 	         'lastname' => $this->input->post('sname'),
-				'addressID' => ($addressID),
+			 'addressID' => ($addressID),
 	         'dob' => $this->input->post('dob'),
 	         'religion' => $this->input->post('religion'),
 	         'locationFlexibility' => $this->input->post('locationFlex') == "able" ? 1 : 0
@@ -171,13 +176,26 @@ public function set_project()
     
    $accountID = $this->session->accountID;
    
-   
+       
+	$addressData = array(
+			'city' => $this->input->post('city'),
+			'postcode' => $this->input->post('postcode'),
+			'streetName' => $this->input->post('streetName'),
+			'country' => $this->input->post('country'),
+			'buldingNumber' => $this->input->post('buildingNumber')
+		);
+		
+		
+	$this->db->insert('address', $addressData);
+	$addressID = $this->db->insert_id();
+
 //    projectID managerID	title	startDate	endDate	budget	projectTypeID	completed
 	$projectData = array(
 			'title' => $this->input->post('projectTitle'),
             'managerID' => ($accountID),
-			'startDate' => $this->input->post('startDate'),
-			'endDate' => $this->input->post('endDate'),
+            'addressID' => ($addressID),
+			'startDate' => $this->project_model->convert_date($this->input->post('startDate')),
+			'endDate' => $this->project_model->convert_date($this->input->post('endDate')),
 			'budget' => $this->input->post('projectBudget'),
 			'projectTypeID' => $this->input->post('projectType')
 		);
@@ -185,20 +203,7 @@ public function set_project()
 		
 	$this->db->insert('project', $projectData);
 	$projectID = $this->db->insert_id();
-	$skillIDs = $this->input->post("skillID");
-	$skillLevels = $this->input->post("skillLevel");
-	$skillNumPeoples = $this->input->post("skillNumPeople");
 
-	//~ //projectReq	skillID	skillLevel	numPeople
-	//~ for ($i=0; $i < count($skillIDs); $i++) {
-         //~ $skillsData[] = array(
-			//~ 'projectReq'=>$projectID,
-			//~ 'skillID'=>$skillIDs[$i],
-			//~ 'skillLevel'=>$skillLevels[$i],
-			//~ 'numPeople'=>$skillNumPeoples[$i],
-         //~ ); // store values in array  
-	//~ }
-	//~ $this->db->insert_batch('project_skills_required', $skillsData);
 	return $projectID;
 
 }
@@ -209,7 +214,7 @@ public function set_tasks()
 {
     $this->load->helper('url');
     
-   $accountID = $this->session->accountID;
+    $accountID = $this->session->accountID;
 	$tasks = $this->input->post('task');
 	$projectID = ( $this->session->projectID);
 	echo $projectID;
@@ -218,8 +223,8 @@ public function set_tasks()
 		$taskData[] = array(
 			'projectID'=>$projectID,
 			'title' => 	$task['title'],			//$this->input->post('task[][title]'),
-			'startDate' => 	$task['startDate'],	// $this->input->post('task[][startDate]'),
-			'endDate' => $task['endDate'] 		//$this->i nput->post('task[][endDate]'),
+			'startDate' => 	$this->project_model->convert_date($task['startDate']),	// $this->input->post('task[][startDate]'),
+			'endDate' => $this->project_model->convert_date($task['endDate']) 		//$this->i nput->post('task[][endDate]'),
 		);
 		$this->db->insert_batch('project_tasks', $taskData);
 		$taskID = $this->db->insert_id();
@@ -437,6 +442,7 @@ public function join_find_project($projectID){
 		$this->db->	from('project');
 		$this->db-> join('user_account', 'project.managerID = user_account.accountID');
 		$this->db-> join('person', 'project.managerID = person.accountID');
+		$this->db-> join('address', 'project.addressID = address.addressID'); 
 		$this->db->	where('project.projectID',$projectID);
 		$this->db-> limit(1);
 		
@@ -498,6 +504,66 @@ public function get_all_projects()
 {
 	return $this->db->get('project')->result();
 }
+
+
+
+public function find_interest_project($projectID){
+	$accountID = $this->session->accountID;
+
+	$this->db->select('personID');
+	$this->db->	from('person');
+	$this->db->	where('person.accountID',$accountID);
+
+	$query = $this->db->get();
+	if($query-> num_rows() != 1){
+		return NULL;
+	}
+		
+	$personID = $query->result()[0]->personID;
+	
+	
+	$this->db->select('*');
+	$this->db->	from('project_interests');
+	$this->db->	where('projectID',$projectID);
+	$this->db->	where('personID',$personID);
+
+	$query = $this->db->get();
+
+	if($query-> num_rows() != 1){
+		return NULL;
+	}
+
+	return $query->result_array()	;
+
+}
+
+public function add_interest_project($projectID){
+	$accountID = $this->session->accountID;
+
+	$this->db->select('personID');
+	$this->db->	from('person');
+	$this->db->	where('person.accountID',$accountID);
+
+	$query = $this->db->get();
+	if($query-> num_rows() != 1){
+		return NULL;
+	}
+		
+	$personID = $query->result()[0]->personID;
+	
+	$interestData = array(
+		'projectID' => $projectID,
+		'personID' => $personID,
+		
+	);
+	
+
+	$inter = $this->db->insert('project_interests', $interestData);
+
+	return $interestData;
+
+}
+
 
 }
 

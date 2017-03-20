@@ -5,7 +5,7 @@
             
           <div class="col-md-4 col-sm-6">
             <div id="map" style="width:40%x;height:400px;background:White">      
-                <script src="https://maps.googleapis.com/maps/api/js?callback=myOptions"></script>
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7XTpRX5A-G83XNzV_7ORF-OYKfepSD4g&callback=myOptions"></script>
                 <script>
                     var myOptions = {
                         zoom: 14,
@@ -98,8 +98,9 @@
               {?>
                <a href="<?php echo base_url() ; echo "index.php/edit_project/"; echo $info[0]['projectID'];?>"> <button type="button" class="btn btn-warning" >Edit Project</button></a>
               <?php 
-              }
-              ?>
+              }else{ ?>
+				<a href="<?php echo site_url('interest_project/'.$info[0]['projectID'] ) ?>"> <button type="button" class="btn btn-warning" >Show Interest</button></a>
+             <?php } ?>
               
 
               

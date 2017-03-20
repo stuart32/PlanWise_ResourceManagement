@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
     <style>#datetimepicker5{z-index:1500 !important;}</style>
-
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/css/mystyle.css">
