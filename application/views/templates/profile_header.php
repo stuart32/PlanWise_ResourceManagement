@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+		<style>#datetimepicker5{z-index:1500 !important;}</style>
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/css/mystyle.css">
@@ -9,10 +10,13 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="<?php echo base_url()?>/css/reset.css"> <!-- CSS reset -->
-		<link rel="stylesheet" href="<?php echo base_url()?>/css/style.css"> <!-- Resource style -->
+	<link rel="stylesheet" href="<?php echo base_url()?>/css/style.css"> <!-- Resource style -->
 	<link rel="stylesheet" href="<?php echo base_url()?>/css/style.scss"> <!-- Resource style -->
 	<script src="<?php echo base_url()?>/js/modernizr.js"></script> <!-- Modernizr -->
 	<script src="<?php echo base_url()?>/js/main.js"></script> <!-- Main JS -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
 
 	<title><?php echo $title; ?></title>
 	<script type="text/javascript">
