@@ -58,13 +58,16 @@
             <div class="form-group">
               <label for="projectLocation">* Loaction:</label>
               
-                          <input type="text" class="form-control" id="loca1" name="streetname" value="">
+                          <input type="text" class="form-control" id="loca1" name="streetName" value="">
                           <br>
                           <input type="text" class="form-control" id="loca2" name="city" value="">
                           <br>
                           <input type="text" class="form-control" id="loca4" name="postcode" value="">
                           <br>
                           <input type="text" class="form-control" id="loca3" name="country" value="">
+                          <br>
+                          <input type="text" class="form-control" placeholder="Building Number" id="loca5" name="buildingNumber" value="">
+
               </div>
               <div id="map" style="width:40%x;height:400px;background:White">
                   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7XTpRX5A-G83XNzV_7ORF-OYKfepSD4g&callback=myOptions"></script>

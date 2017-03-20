@@ -1,7 +1,5 @@
 
 
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <!-- start of profile well-->
 
@@ -490,6 +488,7 @@
     </select>
   </div>
 </div>
+<<<<<<< HEAD
 		<div class="createProject container-fluid col-sm-5">
          <div class='input-group date' >
                 <label for="startDate">Start Date:</label>
@@ -507,6 +506,29 @@
                     </div>
                 </div>
             </div>
+=======
+<div class="createProject container-fluid col-sm-5">
+ <div class='input-group date' >
+		<label for="startDate">* Start Date:</label>
+		<div class="form-group">
+			<div class='input-group date' >
+				<input type='text' class="form-control" id="datepicker" name="startDate" />
+				</span>
+			</div>
+		</div>
+		<label for="endDate">* End Date:</label>
+		<div class="form-group">
+			<div class='input-group date' >
+				<input type='text' class="form-control" id="datepicker1" name="endDate" />
+				</span>
+			</div>
+		</div>
+	</div>
+	</div>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+>>>>>>> 7e6254105a521592f01acd0fae64c8eb86819ec2
  <script>
   $( function() 
   {$( "#datepicker" ).datepicker();

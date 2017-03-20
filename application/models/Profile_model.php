@@ -311,7 +311,6 @@ public function set_profile()
    
     
 	$addressData = array(
-			'country' => $this->input->post('country'),
 			'city' => $this->input->post('city'),
 			'postcode' => $this->input->post('postcode'),
 			'streetName' => $this->input->post('streetName'),
