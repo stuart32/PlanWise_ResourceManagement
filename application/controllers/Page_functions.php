@@ -261,6 +261,7 @@ public function edit_project($projectID){
 		
 
 		$data['title'] = 'Edit project';
+		$data['project'] = $projectID;
 		
 		$this->form_validation->set_rules('projectTitle', 'projectTitle', 'required');
 		$this->form_validation->set_rules('projectType', 'projectType', 'required');

@@ -442,6 +442,7 @@ public function join_find_project($projectID){
 		$this->db->	from('project');
 		$this->db-> join('user_account', 'project.managerID = user_account.accountID');
 		$this->db-> join('person', 'project.managerID = person.accountID');
+		$this->db-> join('address', 'project.addressID = address.addressID'); 
 		$this->db->	where('project.projectID',$projectID);
 		$this->db-> limit(1);
 		
