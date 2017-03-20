@@ -318,6 +318,9 @@ public function interest_project($projectID ){
 			$data['info'] = $this->project_model->join_find_project($projectID);
 			$data['interest'] = $this->project_model->find_interest_project($projectID);
 			$data['project'] = $projectID;
+			
+			$this->form_validation->set_rules('sub', 'submit', 'required');
+
 			//$data['find'] = true;
 			if ($this->form_validation->run() === FALSE){
 				
@@ -327,7 +330,8 @@ public function interest_project($projectID ){
 			} 
 			else
 			{
-				
+				$data['interest'] = $this->project_model->add_interest_project($projectID);
+				$data['interest'] = $this->project_model->find_interest_project($projectID);
 				$this->load->view('templates/profile_header', $data);
 				$this->load->view('pages/project/interest_project');
 				$this->load->view('templates/footer');

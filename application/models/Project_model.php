@@ -18,6 +18,11 @@ class Project_model extends CI_Model {
         return $query->row_array();
 }
 
+
+public function convert_date($date){
+	return date('Y/m/d', strtotime($date));
+}
+
 public function set_login()
 
 {
@@ -189,8 +194,8 @@ public function set_project()
 			'title' => $this->input->post('projectTitle'),
             'managerID' => ($accountID),
             'addressID' => ($addressID),
-			'startDate' => $this->input->post('startDate'),
-			'endDate' => $this->input->post('endDate'),
+			'startDate' => $this->project_model->convert_date($this->input->post('startDate')),
+			'endDate' => $this->project_model->convert_date($this->input->post('endDate')),
 			'budget' => $this->input->post('projectBudget'),
 			'projectTypeID' => $this->input->post('projectType')
 		);
@@ -218,8 +223,8 @@ public function set_tasks()
 		$taskData[] = array(
 			'projectID'=>$projectID,
 			'title' => 	$task['title'],			//$this->input->post('task[][title]'),
-			'startDate' => 	$task['startDate'],	// $this->input->post('task[][startDate]'),
-			'endDate' => $task['endDate'] 		//$this->i nput->post('task[][endDate]'),
+			'startDate' => 	$this->project_model->convert_date($task['startDate']),	// $this->input->post('task[][startDate]'),
+			'endDate' => $this->project_model->convert_date($task['endDate']) 		//$this->i nput->post('task[][endDate]'),
 		);
 		$this->db->insert_batch('project_tasks', $taskData);
 		$taskID = $this->db->insert_id();
@@ -530,6 +535,34 @@ public function find_interest_project($projectID){
 	return $query->result_array()	;
 
 }
+
+public function add_interest_project($projectID){
+	$accountID = $this->session->accountID;
+
+	$this->db->select('personID');
+	$this->db->	from('person');
+	$this->db->	where('person.accountID',$accountID);
+
+	$query = $this->db->get();
+	if($query-> num_rows() != 1){
+		return NULL;
+	}
+		
+	$personID = $query->result()[0]->personID;
+	
+	$interestData = array(
+		'projectID' => $projectID,
+		'personID' => $personID,
+		
+	);
+	
+
+	$inter = $this->db->insert('project_interests', $interestData);
+
+	return $interestData;
+
+}
+
 
 }
 

@@ -10,10 +10,11 @@
           </div>
           <?php } else { echo form_open('interest_project/'.$project ); ?>
 	        <div class="alert alert-info text-center" role="alert">
-			  <h3>Would you like to show interest in project <h2><?php echo $info[0]['title']; ?></h2>?</h3>
-              
-            <h3>was notified at <?php echo $interest[0]['timestamp']; ?> and you will be considered during the allocation process.</h3>
+			  <h3>Would you like to show interest in project <u><?php echo $info[0]['title']; ?></u>?</h3>
+            <h3>The project leader will be notified and you will be considered during the allocation process.</h3>
+            <button type="submit" name="sub" class="btn btn-default" value="send">Show Interest</button>
 			</div>
+		</form>
 		  <?php } ?>
           <div class="col-md-4 col-sm-6">
 			<div class="col-md8">
