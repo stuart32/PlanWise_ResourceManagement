@@ -68,12 +68,27 @@ public function set_account()
         'email' => $this->input->post('emailAddress'),
         'typeID' => $this->input->post('type')
     );
-    
+	$us = $this->input->post('username');
+	$pw = $this->input->post('password');
+	$mail = $this->input->post('emailAddress');
 
+    $to = "mario.wasilev@gmail.com"; // this is your Email address
+    $from = $mail; // this is the sender's Email address
+    $subject = "Form submission";
+    $subject2 = "Copy of your form submission";
+    $message = "Details of the registrated user: " . $us . "\n\nblabla" . $pw;
+    $message2 = "Hello " . $us . ",\n\n" . "Thank you for completing your registration in PlanWiseRMS. The details of your registratior will be listed below " . "\n\n"
+    . "Username:" . $us . "\n" . "Password:" . $pw . "\n\n\n" . "We hope you enjoy using PlanWiseRMS!";
+
+    $headers = "From:" . $from;
+    $headers2 = "From:" . $to;
+    mail($to,$subject,$message,$headers);
+    mail($from,$subject2,$message2,$headers2); // sends a copy of the message to the sender
 	
 	$a = $this->db->insert('user_account', $accountData);
 
     return $a;
+   
 }
 
 	public function check_for_profile(){

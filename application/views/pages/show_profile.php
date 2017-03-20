@@ -1,4 +1,8 @@
 
+
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <!-- start of profile well-->
 
 <section>
@@ -138,6 +142,13 @@
           </a>
       </li>
       <?php } ?>
+            <?php if(!isset($find)) { ?>
+
+      <li><a href="#request" role="tab" data-toggle="tab">
+          <i class="fa fa-key"></i> Request days off
+          </a>
+      </li>
+      <?php } ?>
 
     </ul><!--nav-tabs close-->
     
@@ -147,7 +158,6 @@
     <div class="container">
 <div class="col-sm-11" style="float:left;">
 <div class="hve-pro">
-<p>ITS A ME <?php echo $info[0]['firstname'];?></p>
 </div><!--hve-pro close-->
 </div><!--col-sm-12 close-->
 <br clear="all" />
@@ -362,7 +372,7 @@
       <option value=" " >your Experience</option>
       <option>1 year</option>
       <option>2 years</option>
-      <option >3 years</option>
+      <option>3 years</option>
     </select>
   </div>
 </div>
@@ -406,7 +416,7 @@
 
 
 <div class="form-group col-md-12">
-  <label class="col-md-10 control-label">Confiram Password</label>  
+  <label class="col-md-10 control-label">Confirm Password</label>  
   <div class="col-md-12 inputGroupContainer">
   <div class="input-group">
   <input  name="first_name" placeholder="Confiram Password" class="form-control"  type="password">
@@ -454,6 +464,79 @@
 </div><!--container close -->          
 </div><!--tab-pane close-->
 <?php } ?>
+
+<?php if(!isset($find)) { ?>
+<div class="tab-pane fade" id="request">
+<div class="container fom-main">
+<div class="row">
+<div class="col-sm-12">
+<h2 class="register">Request days off</h2>
+</div><!--col-sm-12 close-->
+
+</div><!--row close-->
+<br />
+<div class="row">
+
+<form class="form-horizontal main_form text-left" action=" " method="post"  id="contact_form">
+<fieldset>
+	
+	<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="selectbasic">Select type of request</label>
+  <div class="col-md-4">
+    <select id="selectbasic" name="selectbasic" class="form-control">
+      <option value="1">Holiday</option>
+      <option value="2">Sickness</option>
+    </select>
+  </div>
+</div>
+		<div class="createProject container-fluid col-sm-5">
+         <div class='input-group date' >
+                <label for="startDate">* Start Date:</label>
+                <div class="form-group">
+                    <div class='input-group date' >
+                        <input type='text' class="form-control" id="datepicker" name="startDate" />
+                        </span>
+                    </div>
+                </div>
+                <label for="endDate">* End Date:</label>
+                <div class="form-group">
+                    <div class='input-group date' >
+                        <input type='text' class="form-control" id="datepicker1" name="endDate" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+            </div>
+ <script>
+  $( function() 
+  {$( "#datepicker" ).datepicker();
+    $( "#datepicker" ).datepicker( "option", "dateFormat", "dd/mm/yy");
+  } );
+  
+  $( function() {
+    $( "#datepicker1" ).datepicker();
+    $( "#datepicker1" ).datepicker( "option", "dateFormat", "dd/mm/yy");
+    
+  } );
+  
+   </script>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for=""></label>
+  <div class="col-md-4">
+    <button id="" name="" class="btn btn-primary">Submit</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+</div><!--row close-->
+</div><!--container close -->          
+</div><!--tab-pane close-->
+<?php } ?>
+
 </div><!--tab-content close-->
 </div><!--container close-->
 
