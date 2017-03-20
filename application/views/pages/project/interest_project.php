@@ -2,16 +2,16 @@
     <div class="well well-sm">
       <div class="container" style="margin-top: 30px;">
         <div class="profile-head">
-		  <?php if(isset($interest)) { ?>
+		  <?php if(isset($interest)) {  ?>
           <div class="alert alert-info text-center" role="alert">
-            <h3>You have shown interest in the project and the project leader of project</h3>
-              <strong><?php echo $info[0]['title']; ?></strong>
-            <h3>was notified at <?php echo $interest[0]['timestamp']; ?> and you will be considered during the allocation process.</h3>
+            <h3>You have shown interest in project</h3>
+              <b><?php  echo $info[0]['title']; ?></b>
+            <h3> and the leader was notified at <?php echo $interest[0]['timestamp']; ?>: you will be considered during the allocation process.</h3>
           </div>
-          <?php } else { echo form_open('interest_project/'+); ?>
+          <?php } else { echo form_open('interest_project/'.$project ); ?>
 	        <div class="alert alert-info text-center" role="alert">
-			  <h3>You have shown interest in the project and the project leader of project</h3>
-              <strong><?php echo $info[0]['title']; ?></strong>
+			  <h3>Would you like to show interest in project <h2><?php echo $info[0]['title']; ?></h2>?</h3>
+              
             <h3>was notified at <?php echo $interest[0]['timestamp']; ?> and you will be considered during the allocation process.</h3>
 			</div>
 		  <?php } ?>

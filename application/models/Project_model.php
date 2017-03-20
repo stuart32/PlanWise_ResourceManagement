@@ -508,27 +508,26 @@ public function find_interest_project($projectID){
 	$this->db->	from('person');
 	$this->db->	where('person.accountID',$accountID);
 
-	$query = $this->db->get()->result();
-
+	$query = $this->db->get();
 	if($query-> num_rows() != 1){
-		return;
+		return NULL;
 	}
-	
+		
 	$personID = $query->result()[0]->personID;
 	
 	
 	$this->db->select('*');
 	$this->db->	from('project_interests');
-	$this->db->	where('project.projectID',$projectID);
-	$this->db->	where('project.personID',$personID);
+	$this->db->	where('projectID',$projectID);
+	$this->db->	where('personID',$personID);
 
-	$query = $this->db->get()->result();
+	$query = $this->db->get();
 
 	if($query-> num_rows() != 1){
-		return;
+		return NULL;
 	}
 
-	return $query->result_array();
+	return $query->result_array()	;
 
 }
 

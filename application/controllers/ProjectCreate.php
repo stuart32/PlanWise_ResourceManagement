@@ -43,7 +43,7 @@ class ProjectCreate extends CI_Controller {
 		$this->form_validation->set_rules('projectBudget', 'Budget', 'required');
 
 		
-		if ($this->form_validation->run() === FALSE)
+		if ($this->form_validation->run() === FAL	SE)
 		{
 			$this->load->view('templates/header', $data);
 			$this->load->view('pages/project/createProject', $data);
