@@ -148,10 +148,10 @@ public function set_account()
 		echo $accountID. ' '. $addressID;
 			
 		$profileData = array(
-				'accountID' => ($accountID),
+			 'accountID' => ($accountID),
 	         'firstname' => $this->input->post('fname'),
 	         'lastname' => $this->input->post('sname'),
-				'addressID' => ($addressID),
+			 'addressID' => ($addressID),
 	         'dob' => $this->input->post('dob'),
 	         'religion' => $this->input->post('religion'),
 	         'locationFlexibility' => $this->input->post('locationFlex') == "able" ? 1 : 0
@@ -171,11 +171,24 @@ public function set_project()
     
    $accountID = $this->session->accountID;
    
-   
+       
+	$addressData = array(
+			'city' => $this->input->post('city'),
+			'postcode' => $this->input->post('postcode'),
+			'streetName' => $this->input->post('streetName'),
+			'country' => $this->input->post('country'),
+			'buldingNumber' => $this->input->post('buildingNumber')
+		);
+		
+		
+	$this->db->insert('address', $addressData);
+	$addressID = $this->db->insert_id();
+
 //    projectID managerID	title	startDate	endDate	budget	projectTypeID	completed
 	$projectData = array(
 			'title' => $this->input->post('projectTitle'),
             'managerID' => ($accountID),
+            'addressID' => ($addressID),
 			'startDate' => $this->input->post('startDate'),
 			'endDate' => $this->input->post('endDate'),
 			'budget' => $this->input->post('projectBudget'),
@@ -185,20 +198,7 @@ public function set_project()
 		
 	$this->db->insert('project', $projectData);
 	$projectID = $this->db->insert_id();
-	$skillIDs = $this->input->post("skillID");
-	$skillLevels = $this->input->post("skillLevel");
-	$skillNumPeoples = $this->input->post("skillNumPeople");
 
-	//~ //projectReq	skillID	skillLevel	numPeople
-	//~ for ($i=0; $i < count($skillIDs); $i++) {
-         //~ $skillsData[] = array(
-			//~ 'projectReq'=>$projectID,
-			//~ 'skillID'=>$skillIDs[$i],
-			//~ 'skillLevel'=>$skillLevels[$i],
-			//~ 'numPeople'=>$skillNumPeoples[$i],
-         //~ ); // store values in array  
-	//~ }
-	//~ $this->db->insert_batch('project_skills_required', $skillsData);
 	return $projectID;
 
 }
@@ -209,7 +209,7 @@ public function set_tasks()
 {
     $this->load->helper('url');
     
-   $accountID = $this->session->accountID;
+    $accountID = $this->session->accountID;
 	$tasks = $this->input->post('task');
 	$projectID = ( $this->session->projectID);
 	echo $projectID;
@@ -497,6 +497,39 @@ public function project_search($option, $search){
 public function get_all_projects()
 {
 	return $this->db->get('project')->result();
+}
+
+
+
+public function find_interest_project($projectID){
+	$accountID = $this->session->accountID;
+
+	$this->db->select('personID');
+	$this->db->	from('person');
+	$this->db->	where('person.accountID',$accountID);
+
+	$query = $this->db->get()->result();
+	
+	if($query-> num_rows() != 1){
+		return;
+	}
+		
+	$personID = $query->result()[0]->personID;
+	
+	
+	$this->db->select('*');
+	$this->db->	from('project_interests');
+	$this->db->	where('project.projectID',$projectID);
+	$this->db->	where('project.personID',$personID);
+
+	$query = $this->db->get()->result();
+
+	if($query-> num_rows() != 1){
+		return;
+	}
+
+	return $query->result_array();
+
 }
 
 }

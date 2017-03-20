@@ -14,7 +14,7 @@ class Page_functions extends CI_Controller {
 			}
 
 	public function check_restricted() {
-
+			$this->db->reconnect();
 			$url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
 			if( empty($this->session->userdata('logged_in'))){	
 				if(strpos($url,'/login') == false) {
@@ -295,6 +295,26 @@ public function search_project(){
 			$this->load->view('pages/project/project_search', $data);
 			$this->load->view('templates/footer');
 		}
+	}
+
+public function interest_project($projectID ){	
+			$this->check_restricted();
+			
+			$data['info'] = $this->project_model->join_find_project($projectID);
+			find_interest_project($projectID);
+			//$data['find'] = true;
+			if ($this->form_validation->run() === FALSE){
+				$this->load->view('templates/profile_header', $data);
+				$this->load->view('pages/project/interest_project');
+				$this->load->view('templates/footer');
+			} 
+			else
+			{
+				
+				$this->load->view('templates/profile_header', $data);
+				$this->load->view('pages/project/interest_project');
+				$this->load->view('templates/footer');
+			}
 	}
 
 
