@@ -509,11 +509,11 @@ public function find_interest_project($projectID){
 	$this->db->	where('person.accountID',$accountID);
 
 	$query = $this->db->get()->result();
-	
+
 	if($query-> num_rows() != 1){
 		return;
 	}
-		
+	
 	$personID = $query->result()[0]->personID;
 	
 	

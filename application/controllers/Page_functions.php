@@ -301,7 +301,7 @@ public function interest_project($projectID ){
 			$this->check_restricted();
 			
 			$data['info'] = $this->project_model->join_find_project($projectID);
-			find_interest_project($projectID);
+			$data['interest'] = $this->project_model->find_interest_project($projectID);
 			//$data['find'] = true;
 			if ($this->form_validation->run() === FALSE){
 				$this->load->view('templates/profile_header', $data);
