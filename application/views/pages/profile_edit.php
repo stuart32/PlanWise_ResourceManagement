@@ -4,7 +4,7 @@
 
 <!-- <?php  echo $title ?> -->
 <?php echo form_open('profile'); ?>
-<div class="container">
+<div class="container" style="width: 100%; height: 100%">
 	<fieldset>
 	<!-- Form Name -->
 
