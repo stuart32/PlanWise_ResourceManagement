@@ -39,11 +39,21 @@
                 </div>
             </div>
             
- <script>
-  $( function() 
-  {$( "#datepicker" ).datepicker();
-    $( "#datepicker" ).datepicker( "option", "dateFormat", "dd/mm/yy");
-  } );
+<script>
+ 
+   $("#datepicker").datepicker({
+            dateFormat: "dd/mm/yy",
+            minDate: 0,
+            onSelect: function (date) {
+                var datepicker1 = $('#datepicker1');
+                var startDate = $(this).datepicker('getDate');
+                var minDate = $(this).datepicker('getDate');
+                datepicker1.datepicker('setDate', minDate);
+                startDate.setDate(startDate.getDate());
+                datepicker1.datepicker('option', 'minDate', minDate);
+                $(this).datepicker('option', 'minDate', minDate);
+            }
+    });
   
   $( function() {
     $( "#datepicker1" ).datepicker();
@@ -51,7 +61,7 @@
     
   } );
   
-   </script>
+     </script>
               
               
               

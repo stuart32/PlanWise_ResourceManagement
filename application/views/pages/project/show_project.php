@@ -96,7 +96,7 @@
               <?php 
               if($this->session->accountID == $info[0]['managerID']) 
               {?>
-               <a href="<?php echo site_url('edit_project/'.$info[0]['projectID'] ) ?>"> <button type="button" class="btn btn-warning" >Edit Project</button></a>
+               <a href="<?php echo base_url() ; echo "index.php/edit_project/"; echo $info[0]['projectID'];?>"> <button type="button" class="btn btn-warning" >Edit Project</button></a>
               <?php 
               }else{ ?>
 				<a href="<?php echo site_url('interest_project/'.$info[0]['projectID'] ) ?>"> <button type="button" class="btn btn-warning" >Show Interest</button></a>

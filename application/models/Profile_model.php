@@ -65,11 +65,9 @@ public function day_off()
     
 		$sd = $this->input->post('startDate');
 		$ed = $this->input->post('endDate');
-    echo 'testtest';
-    $d = $this->db->insert('time_off', $datesData);
-    var_dump ($d);
-    return $d;
-    
+
+		$d = $this->db->insert('time_off', $datesData);
+		return $d;
 }
 
 public function set_logout(){	

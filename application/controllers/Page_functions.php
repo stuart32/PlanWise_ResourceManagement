@@ -220,7 +220,7 @@ public function view_projects()
 
 
 
-public function find_project($projectID ){	
+public function find_project($projectID){	
 			
 			$this->check_restricted();
 			$this->load->helper('form');
@@ -269,19 +269,25 @@ public function edit_project($projectID){
 		$this->form_validation->set_rules('endDate', 'endDate', 'required');
 		$this->form_validation->set_rules('projectBudget', 'projectBudject', 'required');
 
+		$this->form_validation->set_rules('country', 'country', 'required');
+		$this->form_validation->set_rules('city', 'city', 'required');
+		$this->form_validation->set_rules('postcode', 'postcode', 'required');
+		$this->form_validation->set_rules('streetName', 'streetName', 'required');
+		$this->form_validation->set_rules('buildingNumber', 'buildingNumber', 'required');
+
 
 		$data['info'] =  ($this->project_model->join_find_project($projectID));
 		if ($this->form_validation->run() === FALSE)
 		{
 			$this->load->view('templates/profile_header', $data);
 			$this->load->view('pages/project/project_edit');
-			$this->load->view('templates/footer');
+			//$this->load->view('templates/footer');
 
 		}
 		else
 		{
-			$this->project_model->set_project();
-			redirect('view_project', $data);
+			$this->project_model->edit_project($projectID);
+			redirect('find_project/'.$projectID);
 
 		} 
 }

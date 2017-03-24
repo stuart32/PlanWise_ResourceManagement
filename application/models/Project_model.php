@@ -564,6 +564,57 @@ public function add_interest_project($projectID){
 
 }
 
+public function edit_project($projectID)
+	{
+	    $this->load->helper('url');
+	    
+		$accountID = $this->session->accountID;
+
+	    $this->db->select('addressID');
+		$this->db->	from('project');
+		$this->db->	where('projectID',$projectID);
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		if($query-> num_rows() == 1){
+			$addressID = $query->result()[0]->addressID;
+		}
+	    
+
+		$addressData = array(
+			'city' => $this->input->post('city'),
+			'postcode' => $this->input->post('postcode'),
+			'streetName' => $this->input->post('streetName'),
+			'country' => $this->input->post('country'),
+			'buldingNumber' => $this->input->post('buildingNumber')
+		);
+		
+		
+	$this->db->	where('addressID',$addressID);	
+	$this->db->update('address', $addressData);
+
+	echo $projectID. ' '. $addressID;
+
+//    projectID managerID	title	startDate	endDate	budget	projectTypeID	completed
+	$projectData = array(
+			'title' => $this->input->post('projectTitle'),
+            'managerID' => ($accountID),
+            'addressID' => ($addressID),
+			'startDate' => $this->project_model->convert_date($this->input->post('startDate')),
+			'endDate' => $this->project_model->convert_date($this->input->post('endDate')),
+			'budget' => $this->input->post('projectBudget'),
+			'projectTypeID' => $this->input->post('projectType')
+		);
+	    
+	  	$this->db->	where('projectID',$projectID);	
+	  	$this->db->update('project', $projectData);
+
+	}
+
+
+
+
 
 }
 
