@@ -246,7 +246,7 @@
                   /// Notes  id and name for role,  the skill required and the number of people wilth thtat sikill and their proficiency,  along with the employee id and name perhaps
                 
              function delskill(x,y) {
-				 $("#projectSkills"+x+"_"+y+" .selected").remove();
+				 $("#projectSkills"+x+"_"+y+" .selectedSkill").remove();
 			}
   
                 
@@ -255,10 +255,10 @@
                 });
                 
             function selectSkill(x,y,z)    {
-				$("#projectSkills"+x+"_"+y+"  .selected").css('background','#fff');
-				$("#projectSkills"+x+"_"+y+"  .selected").css('color','#fff');
-				$("#projectSkills"+x+"_"+y+"  .selected").removeClass("selected");
-				$("#pSkills"+x+"_"+y+"_"+z).addClass("selected");
+				$("#projectSkills"+x+"_"+y+"  .selectedSkill").css('background','#fff');
+				$("#projectSkills"+x+"_"+y+"  .selectedSkill").css('color','#000');
+				$("#projectSkills"+x+"_"+y+"  .selectedSkill").removeClass("selectedSkill");
+				$("#pSkills"+x+"_"+y+"_"+z).addClass("selectedSkill");
 				$("#pSkills"+x+"_"+y+"_"+z).css('background','#007');
 				$("#pSkills"+x+"_"+y+"_"+z).css('color','#fff');
 			}
