@@ -18,6 +18,11 @@ class Project_model extends CI_Model {
         return $query->row_array();
 }
 
+
+public function convert_date($date){
+	return date('Y/m/d', strtotime($date));
+}
+
 public function set_login()
 
 {
@@ -189,8 +194,8 @@ public function set_project()
 			'title' => $this->input->post('projectTitle'),
             'managerID' => ($accountID),
             'addressID' => ($addressID),
-			'startDate' => $this->input->post('startDate'),
-			'endDate' => $this->input->post('endDate'),
+			'startDate' => $this->project_model->convert_date($this->input->post('startDate')),
+			'endDate' => $this->project_model->convert_date($this->input->post('endDate')),
 			'budget' => $this->input->post('projectBudget'),
 			'projectTypeID' => $this->input->post('projectType')
 		);
@@ -218,8 +223,8 @@ public function set_tasks()
 		$taskData[] = array(
 			'projectID'=>$projectID,
 			'title' => 	$task['title'],			//$this->input->post('task[][title]'),
-			'startDate' => 	$task['startDate'],	// $this->input->post('task[][startDate]'),
-			'endDate' => $task['endDate'] 		//$this->i nput->post('task[][endDate]'),
+			'startDate' => 	$this->project_model->convert_date($task['startDate']),	// $this->input->post('task[][startDate]'),
+			'endDate' => $this->project_model->convert_date($task['endDate']) 		//$this->i nput->post('task[][endDate]'),
 		);
 		$this->db->insert_batch('project_tasks', $taskData);
 		$taskID = $this->db->insert_id();
@@ -437,6 +442,7 @@ public function join_find_project($projectID){
 		$this->db->	from('project');
 		$this->db-> join('user_account', 'project.managerID = user_account.accountID');
 		$this->db-> join('person', 'project.managerID = person.accountID');
+		$this->db-> join('address', 'project.addressID = address.addressID'); 
 		$this->db->	where('project.projectID',$projectID);
 		$this->db-> limit(1);
 		
@@ -508,29 +514,107 @@ public function find_interest_project($projectID){
 	$this->db->	from('person');
 	$this->db->	where('person.accountID',$accountID);
 
-	$query = $this->db->get()->result();
-
+	$query = $this->db->get();
 	if($query-> num_rows() != 1){
-		return;
+		return NULL;
 	}
-	
+		
 	$personID = $query->result()[0]->personID;
 	
 	
 	$this->db->select('*');
 	$this->db->	from('project_interests');
-	$this->db->	where('project.projectID',$projectID);
-	$this->db->	where('project.personID',$personID);
+	$this->db->	where('projectID',$projectID);
+	$this->db->	where('personID',$personID);
 
-	$query = $this->db->get()->result();
+	$query = $this->db->get();
 
 	if($query-> num_rows() != 1){
-		return;
+		return NULL;
 	}
 
-	return $query->result_array();
+	return $query->result_array()	;
 
 }
+
+public function add_interest_project($projectID){
+	$accountID = $this->session->accountID;
+
+	$this->db->select('personID');
+	$this->db->	from('person');
+	$this->db->	where('person.accountID',$accountID);
+
+	$query = $this->db->get();
+	if($query-> num_rows() != 1){
+		return NULL;
+	}
+		
+	$personID = $query->result()[0]->personID;
+	
+	$interestData = array(
+		'projectID' => $projectID,
+		'personID' => $personID,
+		
+	);
+	
+
+	$inter = $this->db->insert('project_interests', $interestData);
+
+	return $interestData;
+
+}
+
+public function edit_project($projectID)
+	{
+	    $this->load->helper('url');
+	    
+		$accountID = $this->session->accountID;
+
+	    $this->db->select('addressID');
+		$this->db->	from('project');
+		$this->db->	where('projectID',$projectID);
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		if($query-> num_rows() == 1){
+			$addressID = $query->result()[0]->addressID;
+		}
+	    
+
+		$addressData = array(
+			'city' => $this->input->post('city'),
+			'postcode' => $this->input->post('postcode'),
+			'streetName' => $this->input->post('streetName'),
+			'country' => $this->input->post('country'),
+			'buldingNumber' => $this->input->post('buildingNumber')
+		);
+		
+		
+	$this->db->	where('addressID',$addressID);	
+	$this->db->update('address', $addressData);
+
+	echo $projectID. ' '. $addressID;
+
+//    projectID managerID	title	startDate	endDate	budget	projectTypeID	completed
+	$projectData = array(
+			'title' => $this->input->post('projectTitle'),
+            'managerID' => ($accountID),
+            'addressID' => ($addressID),
+			'startDate' => $this->project_model->convert_date($this->input->post('startDate')),
+			'endDate' => $this->project_model->convert_date($this->input->post('endDate')),
+			'budget' => $this->input->post('projectBudget'),
+			'projectTypeID' => $this->input->post('projectType')
+		);
+	    
+	  	$this->db->	where('projectID',$projectID);	
+	  	$this->db->update('project', $projectData);
+
+	}
+
+
+
+
 
 }
 

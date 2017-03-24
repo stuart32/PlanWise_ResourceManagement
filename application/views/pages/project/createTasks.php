@@ -255,9 +255,9 @@
                 });
                 
             function selectSkill(x,y,z)    {
-				$("#projectSkills"+x+"_"+y+" .selected").css('background','#fff');
-				$("#projectSkills"+x+"_"+y+" .selected").css('color','#fff');
-				$("#projectSkills"+x+"_"+y+" .selected").removeClass("selected");
+				$("#projectSkills"+x+"_"+y+"  .selected").css('background','#fff');
+				$("#projectSkills"+x+"_"+y+"  .selected").css('color','#fff');
+				$("#projectSkills"+x+"_"+y+"  .selected").removeClass("selected");
 				$("#pSkills"+x+"_"+y+"_"+z).addClass("selected");
 				$("#pSkills"+x+"_"+y+"_"+z).css('background','#007');
 				$("#pSkills"+x+"_"+y+"_"+z).css('color','#fff');

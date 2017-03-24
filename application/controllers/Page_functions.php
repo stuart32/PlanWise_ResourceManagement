@@ -220,7 +220,7 @@ public function view_projects()
 
 
 
-public function find_project($projectID ){	
+public function find_project($projectID){	
 			
 			$this->check_restricted();
 			$this->load->helper('form');
@@ -261,6 +261,7 @@ public function edit_project($projectID){
 		
 
 		$data['title'] = 'Edit project';
+		$data['project'] = $projectID;
 		
 		$this->form_validation->set_rules('projectTitle', 'projectTitle', 'required');
 		$this->form_validation->set_rules('projectType', 'projectType', 'required');
@@ -268,19 +269,25 @@ public function edit_project($projectID){
 		$this->form_validation->set_rules('endDate', 'endDate', 'required');
 		$this->form_validation->set_rules('projectBudget', 'projectBudject', 'required');
 
+		$this->form_validation->set_rules('country', 'country', 'required');
+		$this->form_validation->set_rules('city', 'city', 'required');
+		$this->form_validation->set_rules('postcode', 'postcode', 'required');
+		$this->form_validation->set_rules('streetName', 'streetName', 'required');
+		$this->form_validation->set_rules('buildingNumber', 'buildingNumber', 'required');
+
 
 		$data['info'] =  ($this->project_model->join_find_project($projectID));
 		if ($this->form_validation->run() === FALSE)
 		{
 			$this->load->view('templates/profile_header', $data);
 			$this->load->view('pages/project/project_edit');
-			$this->load->view('templates/footer');
+			//$this->load->view('templates/footer');
 
 		}
 		else
 		{
-			$this->project_model->set_project();
-			redirect('view_project', $data);
+			$this->project_model->edit_project($projectID);
+			redirect('find_project/'.$projectID);
 
 		} 
 }
@@ -312,18 +319,26 @@ public function search_project(){
 
 public function interest_project($projectID ){	
 			$this->check_restricted();
-			
+			$this->load->helper('form');
+			$this->load->library('form_validation');
+				
 			$data['info'] = $this->project_model->join_find_project($projectID);
 			$data['interest'] = $this->project_model->find_interest_project($projectID);
+			$data['project'] = $projectID;
+			
+			$this->form_validation->set_rules('sub', 'submit', 'required');
+
 			//$data['find'] = true;
 			if ($this->form_validation->run() === FALSE){
+				
 				$this->load->view('templates/profile_header', $data);
 				$this->load->view('pages/project/interest_project');
 				$this->load->view('templates/footer');
 			} 
 			else
 			{
-				
+				$data['interest'] = $this->project_model->add_interest_project($projectID);
+				$data['interest'] = $this->project_model->find_interest_project($projectID);
 				$this->load->view('templates/profile_header', $data);
 				$this->load->view('pages/project/interest_project');
 				$this->load->view('templates/footer');

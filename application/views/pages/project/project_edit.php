@@ -1,10 +1,12 @@
 <?php echo validation_errors(); ?>
 
+
 <!-- FIND THE title VARIABLE BELOW -->
 
 <!-- <?php  echo $title ?> -->
-<?php echo form_open('edit_project'); ?>
+<?php echo form_open('edit_project/'.$project); ?>
 <div class="container">
+	<form>
 	<fieldset>
 	<!-- Form Name -->
 
@@ -57,11 +59,7 @@
 	  <span class="help-block">Enter the ending date above</span>  
 	  </div>
 	</div>
-	
-
-	
-
-	
+		
 	<!-- Text input-->
 	<div class="form-group">
 	  <label class="col-md-4 control-label" for="projectBudget">Budget: </label>  
@@ -71,7 +69,50 @@
 	  </div>
 	</div>
 	
+	<!-- Text input-->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="country">Country: </label>  
+	  <div class="col-md-5">
+	  <input id="country" name="country" type="text" placeholder="Scotland..." class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['country']; }   ?> >
+	  <span class="help-block">Enter residing country above</span>  
+	  </div>
+	</div>
 	
+	<!-- Text input-->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="city">City: </label>  
+	  <div class="col-md-5">
+	  <input id="city" name="city" type="text" placeholder="Edinburgh..." class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['city']; }   ?> >
+	  <span class="help-block">Enter residing city above</span>  
+	  </div>
+	</div>
+	
+		<!-- Text input-->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="postcode">Postcode: </label>  
+	  <div class="col-md-5">
+	  <input id="postcode" name="postcode" type="text" pattern ="[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}"  placeholder="EH11 ABC..." class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value='".$info[0]['postcode']."'"; }   ?>  >
+	  <span class="help-block">Enter postcode above</span>  
+	  </div>
+	</div>
+	
+	<!-- Text input-->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="streetName">Street Name: </label>  
+	  <div class="col-md-5">
+	  <input id="streetName" name="streetName" type="text" placeholder="Riccarton Avenue..." class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['streetName']; }   ?>>
+	  <span class="help-block">Enter street name</span>  
+	  </div>
+	</div>
+	
+	<!-- Text input-->
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="buildingNumber">Building Number: </label>  
+	  <div class="col-md-5">
+	  <input id="buildingNumber" name="buildingNumber" type="number" placeholder="Insert number..." class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['buldingNumber']; }   ?> >
+	  <span class="help-block">Enter building number</span>  
+	  </div>
+	</div>
 
 	
 
@@ -84,5 +125,7 @@
 	
 	</fieldset>
 	</form>
-
 </div>
+
+<div>
+

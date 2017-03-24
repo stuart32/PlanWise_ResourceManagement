@@ -2,18 +2,19 @@
     <div class="well well-sm">
       <div class="container" style="margin-top: 30px;">
         <div class="profile-head">
-		  <?php if(isset($interest)) { ?>
+		  <?php if(isset($interest)) {  ?>
           <div class="alert alert-info text-center" role="alert">
-            <h3>You have shown interest in the project and the project leader of project</h3>
-              <strong><?php echo $info[0]['title']; ?></strong>
-            <h3>was notified at <?php echo $interest[0]['timestamp']; ?> and you will be considered during the allocation process.</h3>
+            <h3>You have shown interest in project</h3>
+              <b><?php  echo $info[0]['title']; ?></b>
+            <h3> and the leader was notified at <?php echo $interest[0]['timestamp']; ?>: you will be considered during the allocation process.</h3>
           </div>
-          <?php } else { echo form_open('interest_project/'+); ?>
+          <?php } else { echo form_open('interest_project/'.$project ); ?>
 	        <div class="alert alert-info text-center" role="alert">
-			  <h3>You have shown interest in the project and the project leader of project</h3>
-              <strong><?php echo $info[0]['title']; ?></strong>
-            <h3>was notified at <?php echo $interest[0]['timestamp']; ?> and you will be considered during the allocation process.</h3>
+			  <h3>Would you like to show interest in project <u><?php echo $info[0]['title']; ?></u>?</h3>
+            <h3>The project leader will be notified and you will be considered during the allocation process.</h3>
+            <button type="submit" name="sub" class="btn btn-default" value="send">Show Interest</button>
 			</div>
+		</form>
 		  <?php } ?>
           <div class="col-md-4 col-sm-6">
 			<div class="col-md8">
