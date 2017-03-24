@@ -1,3 +1,18 @@
+.myContainerr {
+margin-left: 15px;
+padding-right: 15px;
+padding-left: 15px;
+margin-right: 15px;
+}
+
+.myTable
+{
+margin-left: 15px;
+padding-right: 15px;
+padding-left: 15px;
+margin-right: 15px;
+}
+
 #subTitle
     {color: rgb(84, 125, 191);
     text-align:center;
@@ -7,7 +22,6 @@
 h5 {
     text-align: center;
 }
-
 
 .mycontent-left {
   margin-left: 15px;
@@ -26,10 +40,6 @@ h5 {
   border-image-width: 3;
 }
 
-#shadow {
--webkit-box-shadow: 5px 5px 5px 4px #8CC9FF;
-box-shadow: 5px 5px 5px 4px #8CC9FF;
-}
 
 .navbar{
     padding-right: 15px;
