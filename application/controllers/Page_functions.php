@@ -344,6 +344,38 @@ public function interest_project($projectID ){
 				$this->load->view('templates/footer');
 			}
 	}
+	
+public function admin_fill_skills($username){
+	if($this->check_restricted() == false) {return;};
+	$this->load->helper('form');
+	$this->load->library('form_validation');
+
+	$data['info'] = $this->profile_model->join_profile_skills($username);
+	$data['skills'] =  $this->project_model->load_skills();
+
+	$skills = $this->input->post('skill');
+	if(isset($skills))
+		foreach($skills as $id2 => $skill)
+		{
+						$this->form_validation->set_rules('skill[' . $id . '][skillID]', 'Skill number '. $id , 'required');
+						$this->form_validation->set_rules('skill[' . $id . '][skillLevel]', 'Skill level  '. $id , 'required');
+						$this->form_validation->set_rules('skill[' . $id . '][experienceYears]', 'Years of experience '. $id , 'required');
+
+
+		}
+	
+	if ($this->form_validation->run() === FALSE){
+		
+		$data['title'] = 'Adding Skills to Profile';
+		
+		$this->load->view('templates/profile_header', $data);
+		$this->load->view('pages/add_skills');
+		$this->load->view('templates/footer');
+	}else{
+		
+	}
+	
+}
 
 
 }

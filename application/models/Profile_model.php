@@ -386,6 +386,27 @@ public function set_profile()
     return $a; */
 }
 
+	public function join_profile_skills($usrname){
+				
+		$this->db-> select('*');
+		$this->db->	from('person');
+		$this->db-> join('user_skills', 'user_skills.accountID = person.accountID');
+		$this->db-> join('skills', 'user_skills.skillID = skills.skillID');
+		$this->db-> join('user_account', 'user_account.accountID = person.accountID');
+		$this->db->	where('user_account.username',$usrname);
+		
+		$query = $this->db->get();
+		
+		if($query-> num_rows() <1){
+			return;
+		}
+		
+		return $query->result();
+		
+			
+	}
+
+
 
 public function profile_search($option, $search){
 	
