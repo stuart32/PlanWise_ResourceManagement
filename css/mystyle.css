@@ -1,17 +1,8 @@
-.myContainerr {
+#myContainerr {
 margin-left: 15px;
-padding-right: 15px;
-padding-left: 15px;
 margin-right: 15px;
 }
 
-.myTable
-{
-margin-left: 15px;
-padding-right: 15px;
-padding-left: 15px;
-margin-right: 15px;
-}
 
 #subTitle
     {color: rgb(84, 125, 191);
@@ -22,6 +13,10 @@ margin-right: 15px;
 h5 {
     text-align: center;
 }
+
+.buttons{
+margin: 15px;
+	}
 
 .mycontent-left {
   margin-left: 15px;
@@ -102,11 +97,6 @@ h5 {
 
 .btn{
 float: right;
-padding-right: 25px;
-margin-right: 25px;
-margin-bottom: 15px;
-margin-top: 25px;
-color:#97DFDB;
 }
 
 .butn{
