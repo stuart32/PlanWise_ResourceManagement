@@ -49,14 +49,12 @@
 	</script>
 </head> 
 <body onload="if(<?php echo $this->session->logged_in ?>){DisplaySessionTimeout();}">
-  <div class="buttons"></div>
+  <div class="buttons">
     <button type="button" onclick="location.href='<?php  echo base_url()."index.php/profile"?>';" class="btn btn-info">
       <span class="glyphicon glyphicon-user"></span> Profile
+     </div>
     </button>
-    <button type="button" onclick="" class="btn btn-info ">
-      <span class="glyphicon glyphicon-calendar"></span> Calendar
-    </button>
-      </div>
+     </div>
   </div>
   <div id="timeDiv" style="display:none; "  >
 		<label id="SessionTimeLb" style="float:left;">SessionTime: </label>
