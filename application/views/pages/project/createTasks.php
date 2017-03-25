@@ -246,7 +246,9 @@
                   /// Notes  id and name for role,  the skill required and the number of people wilth thtat sikill and their proficiency,  along with the employee id and name perhaps
                 
              function delskill(x,y) {
-				 $("#projectSkills"+x+"_"+y+" .selectedSkill").remove();
+				 var r = confirm("Are you sure you would like to delete this task?");
+				 if(r == true)
+					$("#projectSkills"+x+"_"+y+" .selectedSkill").remove();
 			}
   
                 
