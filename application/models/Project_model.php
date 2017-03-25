@@ -88,7 +88,8 @@ public function set_account()
 	
 	public function load_skills(){
 		//query existing skill names
-		$this->db-> select('skillName');
+		$this->db-> select('skillID, skillName');
+        $this->db->order_by('skillID','asc');
 		$this->db->	from('skills');
 		
 		$query = $this->db->get();

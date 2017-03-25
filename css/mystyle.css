@@ -13,6 +13,14 @@ padding-left: 15px;
 margin-right: 15px;
 }
 
+#myContainerr {
+margin-left: 15px;
+padding-right: 15px;
+padding-left: 15px;
+margin-right: 15px;
+}
+
+
 #subTitle
     {color: rgb(84, 125, 191);
     text-align:center;
@@ -21,6 +29,10 @@ margin-right: 15px;
     
 h5 {
     text-align: center;
+}
+
+.selected{
+    color:white;
 }
 
 .mycontent-left {
@@ -93,11 +105,6 @@ h5 {
 .noPadding {
    padding: 0 !important;
    margin: 0 !important;
-}
-
-.skill .selected {
-	background: #007;
-	color:#fff;
 }
 
 .btn{

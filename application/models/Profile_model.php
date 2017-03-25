@@ -403,8 +403,23 @@ public function set_profile()
 		
 		return $query->result();
 		
-			
 	}
+    
+    public function add_profile_skills(){
+        
+        $data = array(
+            'accountID' => $this->input->post('skillaccID'),
+            'skillID' => $this->input->post('skillID'),
+            'skillLevel' => $this->input->post('skillLevel'),
+            'experienceYears' => $this->input->post('skillExperience')
+        );
+        foreach(($this->input->post('skill')) as $skills){
+            $this->db->insert('user_skills', $skills);
+//            var_dump($skills);                          
+        }
+//        var_dump($this->input->post('skill'));
+
+    }
 
 
 

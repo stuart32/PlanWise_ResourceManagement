@@ -352,17 +352,13 @@ public function admin_fill_skills($username){
 
 	$data['info'] = $this->profile_model->join_profile_skills($username);
 	$data['skills'] =  $this->project_model->load_skills();
+    $data['username'] = $username;
 
-	$skills = $this->input->post('skill');
 	if(isset($skills))
-		foreach($skills as $id2 => $skill)
-		{
-						$this->form_validation->set_rules('skill[' . $id . '][skillID]', 'Skill number '. $id , 'required');
-						$this->form_validation->set_rules('skill[' . $id . '][skillLevel]', 'Skill level  '. $id , 'required');
-						$this->form_validation->set_rules('skill[' . $id . '][experienceYears]', 'Years of experience '. $id , 'required');
-
-
-		}
+    $this->form_validation->set_rules('skill[][]', 'Skill acc ID ' , 'required');
+    $this->form_validation->set_rules('skill[][]', 'Skill number ' , 'required');
+    $this->form_validation->set_rules('skill[][]', 'Skill level  ' , 'required');
+    $this->form_validation->set_rules('skill[][]', 'Years of experience ' , 'required');
 	
 	if ($this->form_validation->run() === FALSE){
 		
@@ -372,7 +368,11 @@ public function admin_fill_skills($username){
 		$this->load->view('pages/add_skills');
 		$this->load->view('templates/footer');
 	}else{
-		
+		$this->profile_model->add_profile_skills();	
+        $data['info'] = $this->profile_model->join_profile_skills($username);
+		$this->load->view('templates/profile_header', $data);
+		$this->load->view('pages/add_skills');
+		$this->load->view('templates/footer');	
 	}
 	
 }
