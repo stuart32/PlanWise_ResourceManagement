@@ -64,6 +64,7 @@ $route['create_project'] = 'ProjectCreate/projectCreate';
 $route['create_tasks'] = 'ProjectCreate/createTasks';
 
 $route['projects'] = 'page_functions/view_projects';
+$route['profiles'] = 'page_functions/view_profiles';
 $route['view_project'] = 'page_functions/view_project';
 $route['find_project/(:any)'] = 'page_functions/find_project/$1';
 $route['edit_project/(:any)'] = 'page_functions/edit_project/$1';

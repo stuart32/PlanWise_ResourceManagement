@@ -147,14 +147,13 @@ public function view_profile(){
 			$this->form_validation->set_rules('endDate', 'end date ', 'required');
 			
 					if ($this->form_validation->run() === FALSE)
-		{ 	echo 'testtest1';
+		{ 	
 			$this->load->view('templates/profile_header', $data);
 			$this->load->view('pages/show_profile');
 			$this->load->view('templates/footer');
 		} else
 			{
 				$data['leave'] = $this->profile_model->day_off();
-				    echo 'testtest2';
 				
 			$this->load->view('templates/profile_header', $data);
 			$this->load->view('pages/show_profile');
@@ -216,6 +215,20 @@ public function view_projects()
 
 }
 
+public function view_profiles()
+{
+			$this->check_restricted();
+			$this->load->helper('form');
+			$this->load->library('form_validation');
+			
+			
+			$data['info'] = $this->profile_model->get_all_profiles();
+			
+			$this->load->view('templates/profile_header', $data);
+			$this->load->view('pages/profile_db');
+			$this->load->view('templates/footer');
+
+}
 
 
 

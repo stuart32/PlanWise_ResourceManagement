@@ -38,8 +38,9 @@
 	</script>
 </head> 
 <body onload="if(<?php if (isset($this->session->logged_in) ) { echo $this->session->logged_in; } else  {echo 'false';} ?>){DisplaySessionTimeout();}">
-	<div class="jumbotron text-center">
-		<h1>PlanWise</h1>
+	<div class="jumbotron text-center" style="background-image: url(../img/white-wood.jpg)";>
+		<img src="../img/logo.png" alt="Logo" style="width:150px;height:100px;">
+	</div>
 	</div>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">

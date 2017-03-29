@@ -2,6 +2,7 @@
 <html>
 		<style>#datetimepicker5{z-index:1500 !important;}</style>
 <head>
+	
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/css/mystyle.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,8 +23,8 @@
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	
 
-	<title><?php echo $title; ?></title>
-	<script type="text/javascript">
+	<title>PlanWiseRMS</title>
+	<!-- <script type="text/javascript">
 		var sessionTimeout = <?php echo $this->config->item("sess_expiration"); ?> ; 
 			
 		function DisplaySessionTimeout()
@@ -46,35 +47,43 @@
 					setTimeout(DisplaySessionTimeout,1000);
 			}
 		}	
-	</script>
+	</script> -->
 </head> 
 <body onload="if(<?php echo $this->session->logged_in ?>){DisplaySessionTimeout();}">
-  <div class="buttons">
-    <button type="button" onclick="location.href='<?php  echo base_url()."index.php/profile"?>';" class="btn btn-info">
-      <span class="glyphicon glyphicon-user"></span> Profile
-     </div>
-    </button>
-     </div>
-  </div>
   <div id="timeDiv" style="display:none; "  >
-		<label id="SessionTimeLb" style="float:left;">SessionTime: </label>
-		<p id="time" ></p>
+  <label id="SessionTimeLb" style="float:left;">SessionTime: </label>
+  <p id="time" ></p>
 	</div>
-<div class="page-header">
-  <h4>User Account </h4>
-</div>
+	<div id="navBack">
   <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">PlanWise</a>
+      <a class="navbar-brand" href="#"><img src="../img/logo.png" alt="Logo" style="width:60px;height:30px;"></a>
     </div>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#">Home</a></li>
-      <li class="active"><a href="#">My Account</a></li>
-      <li><a href="create_project">Create Project</a></li>
+      <li><a href="view_profile">Home</a></li>
+     			<li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profile
+				<span class="caret"></span></a>
+       <ul class="dropdown-menu">
+	  <li><a href="view_profile">My profile</a></li>
+      <li><a href="profile">Edit profile</a></li>
+      <li><a href="#">Profile database</a></li>
+       </ul>
+      </li>
+			<li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
+				<span class="caret"></span></a>
+       <ul class="dropdown-menu">
+	  <li><a href="create_project">Create Project</a></li>
+      <li><a href="create_project">My Projects</a></li>
+      <li><a href="projects">Projects Database</a></li>
+       </ul>
+      </li>
       <li><a href="http://askooner1996.wixsite.com/planwise">Company</a></li>
       <li><a href="#" data-toggle="modal" data-target="#myModal">Log Out</a></li>
     </ul>
+    </div>
   </nav>
   </div>
   
@@ -115,11 +124,10 @@
         </div>
         </div>
         </div>
-
 	<div id="timeDiv" style="display:none; "  >
 		<label id="SessionTimeLb" style="float:left;">SessionTime: </label>
 		<p id="time" ></p>
 	</div>
-	
+</body>
                 
              

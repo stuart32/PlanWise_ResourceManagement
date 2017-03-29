@@ -133,13 +133,6 @@
               <i class="fa fa-male"></i> Profile
           </a>
       </li>
-      <?php if(!isset($find)) { ?>
-
-      <li><a href="#change" role="tab" data-toggle="tab">
-          <i class="fa fa-key"></i> Edit Profile
-          </a>
-      </li>
-      <?php } ?>
             <?php if(!isset($find)) { ?>
 
       <li><a href="#request" role="tab" data-toggle="tab">

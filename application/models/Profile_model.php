@@ -195,6 +195,15 @@ public function set_account()
 			
 	}
 	
+	
+public function get_all_profiles()
+{
+	$this->db-> select('*');
+	$this->db->	from('person');
+	$this->db->	join('user_account','user_account.accountID = person.accountID');
+	return $this->db->get()->result();
+}
+	
 	public function load_profile(){
 		$accountID = $this->session->accountID;
 		

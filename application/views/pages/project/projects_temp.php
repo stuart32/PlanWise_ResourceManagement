@@ -1,4 +1,4 @@
-<div id="myContainerr">
+<div class="container">
 	
 <script>
 $(document).ready(function() {

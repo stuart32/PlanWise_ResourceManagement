@@ -14,7 +14,7 @@ class Project_model extends CI_Model {
                 return $query->result_array();
         }
 
-        $query = $this->db->get_where('news', array('slug' => $slug));
+        $query = $this->db->get_where('news', array(' slug' => $slug));
         return $query->row_array();
 }
 
@@ -504,8 +504,6 @@ public function get_all_projects()
 {
 	return $this->db->get('project')->result();
 }
-
-
 
 public function find_interest_project($projectID){
 	$accountID = $this->session->accountID;

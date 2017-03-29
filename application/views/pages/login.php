@@ -9,9 +9,9 @@
 
 	 <div class="container">
     <div id="shadow">
-      <div class="jumbotron">
-        <div id="subTitle" <h3>PlanWise ID </h3>
-        </div>
+      <div class="jumbotron" style="background:transparent !importants">
+      <div class="container">
+        <div id="subTitle" <h3>PlanWise ID </h3></div>
         <h5>Sign into your PlanWise account</h5>
 		<?php echo form_open('login'); ?>
           <div class="form-group">
@@ -29,6 +29,7 @@
           <button type="submit" class="btn btn-default">Submit</button>
 		  </div>
         </form>
+        </div>
       </div>
     </div>
   </div>
