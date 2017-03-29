@@ -409,7 +409,7 @@ public function find_roles($projectID)
 	$this->db-> from('project_tasks');
 	$this->db-> where('project_tasks.projectID', $projectID);
 	$tasks = $this->db->get()->result_array();
-	
+	$roles = array();
 	//print_r($tasks);
 
 	foreach($tasks as $t){

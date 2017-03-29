@@ -69,9 +69,9 @@
       <a class="navbar-brand" href="#">PlanWise</a>
     </div>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#">Home</a></li>
+      <li><a href="<?php echo site_url(); ?>/view_profile">Home</a></li>
       <li class="active"><a href="#">My Account</a></li>
-      <li><a href="create_project">Create Project</a></li>
+      <li><a href="<?php echo site_url(); ?>/create_project ">Create Project</a></li>
       <li><a href="http://askooner1996.wixsite.com/planwise">Company</a></li>
       <li><a href="#" data-toggle="modal" data-target="#myModal">Log Out</a></li>
     </ul>
