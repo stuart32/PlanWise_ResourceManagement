@@ -61,23 +61,23 @@
       <a class="navbar-brand" href="#"><img src="../img/logo.png" alt="Logo" style="width:60px;height:30px;"></a>
     </div>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="view_profile">Home</a></li>
+      <li><a href="<?php echo site_url();?>/view_profile">Home</a></li>
      			<li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profile
 				<span class="caret"></span></a>
        <ul class="dropdown-menu">
-	  <li><a href="view_profile">My profile</a></li>
-      <li><a href="profile">Edit profile</a></li>
-      <li><a href="#">Profile database</a></li>
+	  <li><a href="<?php echo site_url();?>/view_profile">My profile</a></li>
+      <li><a href="<?php echo site_url();?>/profile">Edit profile</a></li>
+      <li><a href="<?php echo site_url();?>/profiles">Profile database</a></li>
        </ul>
       </li>
 			<li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
 				<span class="caret"></span></a>
        <ul class="dropdown-menu">
-	  <li><a href="create_project">Create Project</a></li>
-      <li><a href="create_project">My Projects</a></li>
-      <li><a href="projects">Projects Database</a></li>
+	  <li><a href="<?php echo site_url();?>/create_project">Create Project</a></li>
+      <li><a href="<?php echo site_url();?>/create_project">My Projects</a></li>
+      <li><a href="<?php echo site_url();?>/projects">Projects Database</a></li>
        </ul>
       </li>
       <li><a href="http://askooner1996.wixsite.com/planwise">Company</a></li>

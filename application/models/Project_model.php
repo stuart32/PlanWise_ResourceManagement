@@ -88,7 +88,8 @@ public function set_account()
 	
 	public function load_skills(){
 		//query existing skill names
-		$this->db-> select('skillName');
+		$this->db-> select('skillID, skillName');
+        $this->db->order_by('skillID','asc');
 		$this->db->	from('skills');
 		
 		$query = $this->db->get();
@@ -408,7 +409,7 @@ public function find_roles($projectID)
 	$this->db-> from('project_tasks');
 	$this->db-> where('project_tasks.projectID', $projectID);
 	$tasks = $this->db->get()->result_array();
-	
+	$roles = array();
 	//print_r($tasks);
 
 	foreach($tasks as $t){
@@ -538,8 +539,9 @@ public function find_interest_project($projectID){
 public function add_interest_project($projectID){
 	$accountID = $this->session->accountID;
 
-	$this->db->select('personID');
-	$this->db->	from('person');
+	$this->db->select('personID,username,firstname,lastname,email');
+	$this->db->	from('person'); 
+	$this->db->join('user_account', 'person.accountID = user_account.accountID');
 	$this->db->	where('person.accountID',$accountID);
 
 	$query = $this->db->get();
@@ -548,13 +550,39 @@ public function add_interest_project($projectID){
 	}
 		
 	$personID = $query->result()[0]->personID;
-	
+		$firstname = $query->result()[0]->firstname;	
+		$lastname = $query->result()[0]->lastname;
+		$username = $query->result()[0]->username;
+
 	$interestData = array(
 		'projectID' => $projectID,
 		'personID' => $personID,
 		
 	);
 	
+	
+	
+	$this->db->select('email,title');
+	$this->db->	from('project'); 		
+	$this->db->	join('user_account','user_account.accountID = project.managerID'); 
+	$this->db->	where('project.projectID', $projectID );
+
+	$query = $this->db->get();
+	if($query-> num_rows() != 1){
+		return NULL;
+	}
+	 
+    $title = $query->result()[0]->title;	
+    $email = $query->result()[0]->email;
+	 $to = "sernikpl1@gmail.com"; // this is PlanWiseRMS email
+    $subject = $title." Project Interest";
+    $subject2 = "Copy of registration details";
+    $message = "The user ".$username."(".$firstname." ".$lastname.") has shown interest in your project:".$title.". ";
+    
+    $headers = "From:" . "Planwise@hw.macs.co.uk";
+    mail($email,$subject,$message,$headers);
+    mail($to,$subject2,$message,$headers); // sends a copy of the message to the sender
+    
 
 	$inter = $this->db->insert('project_interests', $interestData);
 

@@ -77,6 +77,8 @@ $route['admin'] = 'page_functions/adminreg';
 
 $route['view_profile'] = 'page_functions/view_profile';
 $route['find_profile/(:any)'] = 'page_functions/find_profile/$1';
+$route['add-skills/(:any)'] = 'page_functions/admin_fill_skills/$1';
+
 $route['logout'] = 'login/logout';
 $route['(:any)'] = 'page_functions/view/$1';
 $route['default_controller'] = 'page_functions/index';

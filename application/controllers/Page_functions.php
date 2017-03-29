@@ -357,6 +357,38 @@ public function interest_project($projectID ){
 				$this->load->view('templates/footer');
 			}
 	}
+	
+public function admin_fill_skills($username){
+	if($this->check_restricted() == false) {return;};
+	$this->load->helper('form');
+	$this->load->library('form_validation');
+
+	$data['info'] = $this->profile_model->join_profile_skills($username);
+	$data['skills'] =  $this->project_model->load_skills();
+    $data['username'] = $username;
+
+	if(isset($skills))
+    $this->form_validation->set_rules('skill[][]', 'Skill acc ID ' , 'required');
+    $this->form_validation->set_rules('skill[][]', 'Skill number ' , 'required');
+    $this->form_validation->set_rules('skill[][]', 'Skill level  ' , 'required');
+    $this->form_validation->set_rules('skill[][]', 'Years of experience ' , 'required');
+	
+	if ($this->form_validation->run() === FALSE){
+		
+		$data['title'] = 'Adding Skills to Profile';
+		
+		$this->load->view('templates/profile_header', $data);
+		$this->load->view('pages/add_skills');
+		$this->load->view('templates/footer');
+	}else{
+		$this->profile_model->add_profile_skills();	
+        $data['info'] = $this->profile_model->join_profile_skills($username);
+		$this->load->view('templates/profile_header', $data);
+		$this->load->view('pages/add_skills');
+		$this->load->view('templates/footer');	
+	}
+	
+}
 
 
 }

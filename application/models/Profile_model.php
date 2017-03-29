@@ -110,8 +110,41 @@ public function set_account()
 	$a = $this->db->insert('user_account', $accountData);
 
     return $a;
-   
+	
 }
+	
+	
+	public function join_find_profile($usrname){
+				
+		$this->db-> select('*');
+		$this->db->	from('person');
+		$this->db-> join('user_account', 'person.accountID = user_account.accountID');
+		$this->db-> join('address', 'person.addressID = address.addressID');
+		$this->db->	where('user_account.username',$usrname);
+		$this->db-> limit(1);
+		
+		$query = $this->db->get();
+		
+		if($query-> num_rows() != 1){
+			return;
+		}
+		
+		return $query->result_array();
+		
+			
+	}
+	
+	
+public function get_all_profiles()
+{
+	$this->db-> select('*');
+	$this->db->	from('person');
+	$this->db->	join('user_account','user_account.accountID = person.accountID');
+	return $this->db->get()->result();
+}
+	
+
+
 
 	public function check_for_profile(){
 		$accountID = $this->session->accountID;
@@ -174,36 +207,7 @@ public function set_account()
 			
 	}
 	
-	
-	public function join_find_profile($usrname){
-				
-		$this->db-> select('*');
-		$this->db->	from('person');
-		$this->db-> join('user_account', 'person.accountID = user_account.accountID');
-		$this->db-> join('address', 'person.addressID = address.addressID');
-		$this->db->	where('user_account.username',$usrname);
-		$this->db-> limit(1);
-		
-		$query = $this->db->get();
-		
-		if($query-> num_rows() != 1){
-			return;
-		}
-		
-		return $query->result_array();
-		
-			
-	}
-	
-	
-public function get_all_profiles()
-{
-	$this->db-> select('*');
-	$this->db->	from('person');
-	$this->db->	join('user_account','user_account.accountID = person.accountID');
-	return $this->db->get()->result();
-}
-	
+
 	public function load_profile(){
 		$accountID = $this->session->accountID;
 		
@@ -394,6 +398,42 @@ public function set_profile()
 
     return $a; */
 }
+
+	public function join_profile_skills($usrname){
+				
+		$this->db-> select('*');
+		$this->db->	from('person');
+		$this->db-> join('user_skills', 'user_skills.accountID = person.accountID');
+		$this->db-> join('skills', 'user_skills.skillID = skills.skillID');
+		$this->db-> join('user_account', 'user_account.accountID = person.accountID');
+		$this->db->	where('user_account.username',$usrname);
+		
+		$query = $this->db->get();
+		
+		if($query-> num_rows() <1){
+			return;
+		}
+		
+		return $query->result();
+		
+	}
+    
+    public function add_profile_skills(){
+        
+        $data = array(
+            'accountID' => $this->input->post('skillaccID'),
+            'skillID' => $this->input->post('skillID'),
+            'skillLevel' => $this->input->post('skillLevel'),
+            'experienceYears' => $this->input->post('skillExperience')
+        );
+        foreach(($this->input->post('skill')) as $skills){
+            $this->db->insert('user_skills', $skills);
+//            var_dump($skills);                          
+        }
+//        var_dump($this->input->post('skill'));
+
+    }
+
 
 
 public function profile_search($option, $search){
