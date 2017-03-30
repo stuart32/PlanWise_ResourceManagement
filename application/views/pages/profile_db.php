@@ -1,9 +1,5 @@
-<div class="container">
-<<<<<<< HEAD
-    
-=======
+<div id="myContainerr">
 	
->>>>>>> eadd1be1605ba56921e5391c04e9524e8dce1196
 <script>
 $(document).ready(function() {
     $('#myTable').DataTable();
@@ -12,11 +8,7 @@ $(document).ready(function() {
 </script>
 
 <script>
-<<<<<<< HEAD
-    $(function(){
-=======
 	$(function(){
->>>>>>> eadd1be1605ba56921e5391c04e9524e8dce1196
     $('.table tr[data-href]').each(function(){
         $(this).css('cursor','pointer').hover(
             function(){ 
@@ -36,20 +28,18 @@ $(document).ready(function() {
 <table id="myTable" class="display table table-striped table-bordered" cellspacing="0" width="100%">
     <thead>
              <tr>
-                <th>Title</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Budget</th>
+                <th>First Name</th>
+                <th>Second Name</th>
+                <th>Day rate</th>
             </tr>
  
      </thead>
      <tbody>
-<?php   foreach($info as $project) {  ?>
+<?php   foreach($info as $person) {  ?>
         <tr>
-            <td><a href=" <?php echo base_url() ; echo "index.php/find_project/"; echo $project->projectID; ?>"</a><?php echo $project->title ?></td>
-            <td><?php echo $project->startDate ?></td>
-            <td><?php echo $project->endDate ?></td>
-            <td><?php echo $project->budget ?></td>
+            <td><a href=" <?php echo base_url() ; echo "index.php/find_profile/"; echo $person->username; ?>"</a><?php echo $person->firstname ?></td>
+            <td><?php echo $person->lastname ?></td>
+            <td><?php echo $person->dayRate ?></td>
         </tr>
  <?php
 }
@@ -58,10 +48,9 @@ $(document).ready(function() {
  
      <tfoot>
             <tr>
-                <th>Title</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Budget</th>
+                <th>First Name</th>
+                <th>Second Name</th>
+                <th>Day rate</th>
             </tr>
         </tfoot>
     </table>

@@ -64,6 +64,7 @@ $route['create_project'] = 'ProjectCreate/projectCreate';
 $route['create_tasks'] = 'ProjectCreate/createTasks';
 
 $route['projects'] = 'page_functions/view_projects';
+$route['profiles'] = 'page_functions/view_profiles';
 $route['view_project'] = 'page_functions/view_project';
 $route['find_project/(:any)'] = 'page_functions/find_project/$1';
 $route['edit_project/(:any)'] = 'page_functions/edit_project/$1';
@@ -78,6 +79,8 @@ $route['admin'] = 'page_functions/adminreg';
 
 $route['view_profile'] = 'page_functions/view_profile';
 $route['find_profile/(:any)'] = 'page_functions/find_profile/$1';
+$route['add-skills/(:any)'] = 'page_functions/admin_fill_skills/$1';
+
 $route['logout'] = 'login/logout';
 $route['(:any)'] = 'page_functions/view/$1';
 $route['default_controller'] = 'page_functions/index';

@@ -7,10 +7,7 @@
 <div class="container" style="width: 100%; height: 100%">
 	<fieldset>
 	<!-- Form Name -->
-
-
-	<legend >Edit Account Details<legend>
-
+	
 	<label class="col-md-7 control-label">Please fill in the details below(* denotes a required field)</label> <br/><br/>
 
 	<!-- Text input-->

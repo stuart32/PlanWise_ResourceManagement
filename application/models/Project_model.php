@@ -14,7 +14,7 @@ class Project_model extends CI_Model {
                 return $query->result_array();
         }
 
-        $query = $this->db->get_where('news', array('slug' => $slug));
+        $query = $this->db->get_where('news', array(' slug' => $slug));
         return $query->row_array();
 }
 
@@ -88,7 +88,8 @@ public function set_account()
 	
 	public function load_skills(){
 		//query existing skill names
-		$this->db-> select('skillName');
+		$this->db-> select('skillID, skillName');
+        $this->db->order_by('skillID','asc');
 		$this->db->	from('skills');
 		
 		$query = $this->db->get();
@@ -219,19 +220,24 @@ public function set_tasks()
 	$projectID = ( $this->session->projectID);
 	echo $projectID;
 		//taskID 	projectID 	title 	startDate 	endDate
-	foreach($tasks as $id4 => $task){
+	foreach($tasks as $id4 => $task){		
+		if(isset($taskData))
+			unset($taskData);
 		$taskData[] = array(
 			'projectID'=>$projectID,
 			'title' => 	$task['title'],			//$this->input->post('task[][title]'),
 			'startDate' => 	$this->project_model->convert_date($task['startDate']),	// $this->input->post('task[][startDate]'),
 			'endDate' => $this->project_model->convert_date($task['endDate']) 		//$this->i nput->post('task[][endDate]'),
 		);
-		$this->db->insert_batch('project_tasks', $taskData);
+		echo "<br> COUNT <br>";
+		print_r($taskData);
+
+		$this->db->insert_batch('project_tasks', $taskData);		
 		$taskID = $this->db->insert_id();
-		if(isset($roleData))
-			unset($roleData);
 		$roles = $this->input->post('task[' . $id4 . '][role]');
 		foreach($roles as $id2 => $role){
+			if(isset($roleData))
+				unset($roleData);
 			$roleData[] = array(
 				'taskID' => $taskID,
 				'roleName' => 	$role['name'],			//$this->input->post('task[][title]'),
@@ -252,7 +258,6 @@ public function set_tasks()
 				);
 			}
 			echo "<br> skills entry <br>";
-			print_r ($skillData);
 			$this->db->insert_batch('role_skills_required', $skillData);
 
 		}
@@ -260,7 +265,7 @@ public function set_tasks()
 
 }
 
-public function search_algorithm(){
+public function search_algorithmOLD(){
 	/*
 		1. take in tasks. For each task, query the database for someone with the skills required to do the task.
 		2. return a person appropriate to the task.
@@ -403,6 +408,7 @@ public function search_algorithm(){
 	
 }
 //$this->db-> join('project_roles', 'project_tasks.taskID = project_roles.taskID');
+
 public function find_roles($projectID)
 {
 	$this->db-> select('*');
@@ -414,6 +420,7 @@ public function find_roles($projectID)
 
 	foreach($tasks as $t){
 		//print_r($t);
+
 		$this->db-> select('pr.*, firstname, lastname, username');
 		$this->db-> from('project_roles as pr');
 		$this->db-> join('employee_assignment','pr.roleID = employee_assignment.roleID');
@@ -426,6 +433,7 @@ public function find_roles($projectID)
 		//print_r($this->db->last_query());
 	}
 	print_r($roles);
+
 	//echo "hello";
 	return $roles; 
 }
@@ -637,8 +645,6 @@ public function get_all_projects()
 	return $this->db->get('project')->result();
 }
 
-
-
 public function find_interest_project($projectID){
 	$accountID = $this->session->accountID;
 
@@ -672,8 +678,9 @@ public function find_interest_project($projectID){
 public function add_interest_project($projectID){
 	$accountID = $this->session->accountID;
 
-	$this->db->select('personID');
-	$this->db->	from('person');
+	$this->db->select('personID,username,firstname,lastname,email');
+	$this->db->	from('person'); 
+	$this->db->join('user_account', 'person.accountID = user_account.accountID');
 	$this->db->	where('person.accountID',$accountID);
 
 	$query = $this->db->get();
@@ -682,13 +689,39 @@ public function add_interest_project($projectID){
 	}
 		
 	$personID = $query->result()[0]->personID;
-	
+		$firstname = $query->result()[0]->firstname;	
+		$lastname = $query->result()[0]->lastname;
+		$username = $query->result()[0]->username;
+
 	$interestData = array(
 		'projectID' => $projectID,
 		'personID' => $personID,
 		
 	);
 	
+	
+	
+	$this->db->select('email,title');
+	$this->db->	from('project'); 		
+	$this->db->	join('user_account','user_account.accountID = project.managerID'); 
+	$this->db->	where('project.projectID', $projectID );
+
+	$query = $this->db->get();
+	if($query-> num_rows() != 1){
+		return NULL;
+	}
+	 
+    $title = $query->result()[0]->title;	
+    $email = $query->result()[0]->email;
+	 $to = "sernikpl1@gmail.com"; // this is PlanWiseRMS email
+    $subject = $title." Project Interest";
+    $subject2 = "Copy of registration details";
+    $message = "The user ".$username."(".$firstname." ".$lastname.") has shown interest in your project:".$title.". ";
+    
+    $headers = "From:" . "Planwise@hw.macs.co.uk";
+    mail($email,$subject,$message,$headers);
+    mail($to,$subject2,$message,$headers); // sends a copy of the message to the sender
+    
 
 	$inter = $this->db->insert('project_interests', $interestData);
 
@@ -739,7 +772,7 @@ public function edit_project($projectID)
 			'projectTypeID' => $this->input->post('projectType')
 		);
 	    
-	  	$this->db->	where('projectID',$projectID);	
+	  	$this->db->where('projectID',$projectID);	
 	  	$this->db->update('project', $projectData);
 
 	}
@@ -828,6 +861,359 @@ public function edit_tasks($projectID)
 }
 
 
+ public function allocation(){
+    	
+    	if($this->check_restricted() == false) {return;};
+    	$this->load->helper('form');
+    	
+		$data['query'] = $this->project_model->search_algorithm();
+    	
+    	$this->load->view('templates/profile_header');
+		$this->load->view('pages/project/project_allocation', $data);
+		$this->load->view('templates/footer');
+    	
+    }
+
+
+
+
+ 
+   public function load_project_history(){
+       
+        $accountID = $this->session->accountID; // will only work for the logged in account ??
+       
+
+        $this->db->select('*');
+        $this->db-> from ( 'project AS proj', 'project_tasks AS task', 'project_roles AS role');
+        $this->db-> join ('project_tasks AS task', 'proj.projectID = task.projectID');
+        $this->db-> join ('project_roles AS role', 'task.taskID = role.taskID ');
+        $this->db-> join ('employee_assignment AS ea', 'role.roleID = ea.roleID');
+        $this->db-> where('ea.accountID', $accountID); 
+       
+        $query = $this->db->get();
+       
+        if($query-> num_rows() < 1){
+            print_r("There are no records to fetch!... \n");
+            return;
+        }
+       
+        return $query;
+           
+    }
+
+    
+    
+    public function day_count($startDate, $endDate){
+        
+        $startDate = new DateTime($startDate);
+        $endDate = new DateTime($endDate);
+        $dayCount = date_diff($startDate, $endDate);
+        return $dayCount;
+    }
+
+
+    public function in_between($taskStartDate, $taskEndDate, $date){
+        
+        $taskStartDate = strtotime($taskStartDate);
+        $taskEndDate = strtotime($taskEndDate);
+        $date = strtotime($date);
+        
+        return (($date>=$taskStartDate) && ($date<=$taskEndDate));
+        
+        
+    }
+
+
+
+
+    public function allocate_assignment($employeeAssignment){
+        
+        $this->db->insert('employee_assignment', $employeeAssignment);
+        
+    
+        
+    }
+    
+    
+    
+    public Function allCandidates(){
+    
+     /* Current expenditure on employees for the project // project ID */
+        $budgetExpenditure = 0;
+        $projectID = ($this->session->projectID);
+        
+        /* Get the budget for the project */
+        $this->db->select('budget');
+        $this->db->from('project');
+        $this->db->where('projectID', $projectID);
+        
+        $budgetLimit = (int)($this->db->get()->result()[0]->budget);
+        
+        /* Return all tasks in project into an array */
+        $this->db->select('taskID,startDate,endDate');
+        $this->db->from('project_tasks');
+        $this->db->where('projectID', $projectID);
+        $taskArray = $this->db->get()->result_array();
+        
+        
+        $employeeAssignment = array();
+       // $rolesArray = array();
+        
+        
+        /* Loop through tasks to get all roles  */
+        foreach($taskArray as $t){
+			$this->db->select('roleID,numPeople');
+            $this->db->from('project_roles');
+            $this->db->where('taskID', $t['taskID']);
+            $query = $this->db->get();
+            $rolesArray = $query->result_array();
+			$taskStartDate = $t['startDate'];
+			$taskEndDate   = $t['endDate'];
+
+           // array_push($rolesArray, $this->db->get()->result_array());
+        
+            /* Loop through roles and get the skills required for them */    
+            foreach($rolesArray as $r){
+
+                $this->db->select('skillID,skillLevel');
+                $this->db->from('role_skills_required');
+                $this->db->where('roleID', $r['roleID']);
+                $skills_required = $this->db->get()->result();
+                $skillslist = array();
+                foreach($skills_required as $sr)
+					$skillslist[]=$sr->skillID;
+
+                  
+                $this->db->select('user_account.accountID,user_skills.skillLevel');
+                $this->db->from('user_account');
+                $this->db->join('user_skills', 'user_skills.accountID = user_account.accountID');
+                $this->db->where_in('user_skills.skillID',$skillslist);
+               
+
+           
+                $candidates = $this->db->get();
+			}
+		}
+    
+}
+ 
+ 
+ 
+public function travel_distance($to, $from){
+ 
+            $from = urlencode($from);
+            $to = urlencode($to);
+ 
+            $data = file_get_contents("http://maps.googleapis.com/maps/api/distancematrix/json?origins=$from&destinations=$to&language=en-EN&sensor=false");
+            $data = json_decode($data);
+ 
+            $time = 0;
+            $distance = 0;
+ 
+            foreach($data->rows[0]->elements as $road) {
+               $time += $road->duration->value;
+               $distance += $road->distance->value;
+            }
+ 
+            //~ echo "To: ".$data->destination_addresses[0];
+            //~ echo "<br/>";
+            //~ echo "From: ".$data->origin_addresses[0];
+            //~ echo "<br/>";
+            $time = $time / 60;
+            //~ echo "Time: ".$time." Minutes";
+            //~ echo "<br/>";
+            $distance = ($distance / 1000) * 0.62137;
+            //~ echo "Distance: ".$distance." Miles";
+            //~ print_r($distance);
+           
+            return $distance;
+       
+}   
+    
+    
+public function search_algorithm(){
+        
+        /* Current expenditure on employees for the project // project ID */
+        $budgetExpenditure = 0;
+        $projectID = ($this->session->projectID);
+        
+        
+		$this->db->select('a.postcode, p.projectID, p.addressID');
+        $this->db->from('address AS a');
+        $this->db->join('project as p', 'p.addressID = a.addressID');
+        $this->db->where('p.projectID', $projectID);
+        
+        $projectAddress = $this->db->get()->result_array();
+        
+        /* Get the budget for the project */
+        $this->db->select('budget');
+        $this->db->from('project');
+        $this->db->where('projectID', $projectID);
+        
+        $budgetLimit = (int)($this->db->get()->result()[0]->budget);
+        
+        /* Return all tasks in project into an array */
+        $this->db->select('taskID,startDate,endDate');
+        $this->db->from('project_tasks');
+        $this->db->where('projectID', $projectID);
+        $taskArray = $this->db->get()->result_array();
+        
+        
+        $employeeAssignment = array();
+       // $rolesArray = array();
+        
+        
+        /* Loop through tasks to get all roles  */
+        foreach($taskArray as $t){
+			$this->db->select('roleID,numPeople');
+            $this->db->from('project_roles');
+            $this->db->where('taskID', $t['taskID']);
+            $query = $this->db->get();
+            $rolesArray = $query->result_array();
+			$taskStartDate = $t['startDate'];
+			$taskEndDate   = $t['endDate'];
+
+           // array_push($rolesArray, $this->db->get()->result_array());
+        
+            /* Loop through roles and get the skills required for them */    
+            foreach($rolesArray as $r){
+
+                $this->db->select('skillID,skillLevel');
+                $this->db->from('role_skills_required');
+                $this->db->where('roleID', $r['roleID']);
+                $skills_required = $this->db->get()->result();
+                $skillslist = array();
+                foreach($skills_required as $sr)
+					$skillslist[]=$sr->skillID;
+
+                  
+                $this->db->select('user_account.accountID,user_skills.skillLevel');
+                $this->db->from('user_account');
+                $this->db->join('user_skills', 'user_skills.accountID = user_account.accountID');
+                $this->db->where_in('user_skills.skillID',$skillslist);
+               
+
+           
+                $candidates = $this->db->get();
+				
+                if($candidates->num_rows() <  $r['numPeople']){
+                        echo 'No candidates match the required number for this role';
+                        return;
+                }
+                $candidates = $candidates->result();
+
+                    foreach($candidates as $c){
+                        $suitable = true;
+                        foreach($skills_required as $skill){
+                            if($c->skillLevel < $skill->skillLevel){
+                                $suitable = false;
+                                print_r('candidate does not have required skill level');
+                                break;  
+                            }
+                        }
+                        
+                        if($suitable = false){
+                            continue;
+                        }
+                                              
+                                              
+                        $accountID = $c->accountID;
+
+
+						$this->db->select('a.postcode, p.travel_distance, p.accountID, p.addressID');
+						$this->db->from('address AS a');
+						$this->db->join('person as p', 'p.addressID = a.addressID');
+						$this->db->where('p.accountID', $accountID);
+						$this->db->limit(1);
+       
+ 
+						$personAddress = $this->db->get()->result_array();
+						print_r( $projectAddress);
+
+                        
+                        $this->db->select('dayRate');
+                        $this->db->from('person');
+                        $this->db->where('accountID', $accountID);
+                        $dayRate = $this->db->get()->result()[0]->dayRate;
+
+                        /* */
+
+
+                        /* check employee availability */
+
+                        $this->db->select('time_off.startDate, time_off.endDate');
+                        $this->db->from('time_off');
+                        $this->db->where('time_off.accountID', $accountID);
+                        $holiday = $this->db->get()->result_array();
+
+                        /* For every holiday the current candidate has, check whether their holiday start date or end date lies anywhere between the tasks start and end dates. */
+                        /* THIS TABLE SHOULD HANDLE ALREADY BEING ASSIGNED TO A PROJECT! --> AVAILABILITY TABLE (availability instead of time_off) */
+
+
+                        foreach($holiday as $h){  
+                            if(in_between($t['startDate'],$t['endDate'], $h['startDate']) || in_between($t['startDate'], $t['endDate'], $h['startDate'])){
+                                echo 'The employee isn\'t available during the task dates!' ;
+                                $suitable = false;
+                                break;
+                            }  
+                        }
+
+                        if($suitable = false){
+                            continue;
+
+                        }
+							
+						print_r("  before location <br>");
+                        if($this->project_model->travel_distance($personAddress[0]['postcode'], $projectAddress[0]['postcode']) > $personAddress[0]['travel_distance'] ){
+                            $suitable = false;
+                            continue;
+                           
+						}
+							
+							
+                        $numberOfDays = $this->project_model->day_count($taskStartDate, $taskEndDate);
+                        $employeeCost =$dayRate * ( $numberOfDays->d);
+                        $budgetExpenditure = $budgetExpenditure + (int) $employeeCost;
+
+                        if($budgetExpenditure > $budgetLimit){
+                            echo 'project budget exceeded! ';
+                            continue; 
+                        }
+
+                        
+                        
+                        break;
+                        
+                    }
+                    
+                array_push(
+					$employeeAssignment, 
+                    array(
+						'roleID' => $r['roleID'],
+						'accountID' => $accountID
+					)
+                );
+                    
+              }
+              
+        }
+        echo "<br> employees:";
+        print_r($employeeAssignment);
+        return $employeeAssignment; 
+        
+ }
+ 
+ public function get_matched_profiles($list){
+	 if(!isset($list) and empty($list))
+		return;
+	
+	 
+ }
+	 
+    
+    
+    
+    
 
 }
 
