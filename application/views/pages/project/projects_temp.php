@@ -1,3 +1,5 @@
+<div class="container">
+    
 <script>
 $(document).ready(function() {
     $('#myTable').DataTable();
@@ -5,10 +7,27 @@ $(document).ready(function() {
  
 </script>
 
-<div id="myContainerr">
-<table id="myTable" class="display table table-striped table-bordered" cellspacing="0" width="100%" margin-left="15px">
+<script>
+    $(function(){
+    $('.table tr[data-href]').each(function(){
+        $(this).css('cursor','pointer').hover(
+            function(){ 
+                $(this).addClass('active'); 
+            },  
+            function(){ 
+                $(this).removeClass('active'); 
+            }).click( function(){ 
+                document.location = $(this).attr('data-href'); 
+            }
+        );
+    });
+});
+</script>
+
+
+<table id="myTable" class="display table table-striped table-bordered" cellspacing="0" width="100%">
     <thead>
-                <tr>
+             <tr>
                 <th>Title</th>
                 <th>Start Date</th>
                 <th>End Date</th>
@@ -19,7 +38,7 @@ $(document).ready(function() {
      <tbody>
 <?php   foreach($info as $project) {  ?>
         <tr>
-            <td><?php echo $project->title ?></td>
+            <td><a href=" <?php echo base_url() ; echo "index.php/find_project/"; echo $project->projectID; ?>"</a><?php echo $project->title ?></td>
             <td><?php echo $project->startDate ?></td>
             <td><?php echo $project->endDate ?></td>
             <td><?php echo $project->budget ?></td>

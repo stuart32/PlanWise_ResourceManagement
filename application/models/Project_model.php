@@ -394,8 +394,9 @@ public function search_algorithm(){
 				return $assigned_data;
 	
 	
-	/*$this->db->select('*');
-	$this->db->from('employee_assignment');
+	/*$this->db->select
+
+		$this->db->from('employee_assignment');
 	$roleID = $this->db->get()->reslt_array();
 		
 	*/
@@ -404,22 +405,28 @@ public function search_algorithm(){
 //$this->db-> join('project_roles', 'project_tasks.taskID = project_roles.taskID');
 public function find_roles($projectID)
 {
-	$this->db-> select('taskID');
+	$this->db-> select('*');
 	$this->db-> from('project_tasks');
 	$this->db-> where('project_tasks.projectID', $projectID);
 	$tasks = $this->db->get()->result_array();
-	
+	$roles=array();
 	//print_r($tasks);
 
 	foreach($tasks as $t){
 		//print_r($t);
-		$this->db-> select('*');
-		$this->db-> from('project_roles');
-		$this->db-> where('project_roles.taskID', $t['taskID']);
+		$this->db-> select('pr.*, firstname, lastname, username');
+		$this->db-> from('project_roles as pr');
+		$this->db-> join('employee_assignment','pr.roleID = employee_assignment.roleID');
+		$this->db-> join('user_account', 'employee_assignment.accountID = user_account.accountID');
+		$this->db-> join('person','employee_assignment.accountID = person.accountID');
+		$this->db-> where('pr.taskID', $t['taskID']);
 		//$this->db-> where('projectID',$projectID);
-		$roles = $this->db->get()->result_array();
+		$roles[] = $this->db->get()->result_array();
+		//echo "<br>";
+		//print_r($this->db->last_query());
 	}
-	
+	print_r($roles);
+	//echo "hello";
 	return $roles; 
 }
 
@@ -455,6 +462,131 @@ public function join_find_project($projectID){
 		return $query->result_array();
 			
 	}
+
+
+public function find_role_skills($projectID)
+{  /*
+	$this->db-> select('*');
+		$this->db->	from('project'); 
+		$this->db->	where('project.projectID',$projectID);
+		$this->db-> limit(1);
+		$roles = array();
+		$skills = array();
+		$tasks = array();
+
+		//$query = $this->db->get();
+		/*
+		if($query-> num_rows() != 1){
+			return;
+		} 
+		
+		$query = $this->db->get()->result_array();
+
+	foreach($query as $project){
+
+		$this->db-> select('pt.*');
+		$this->db-> from('project_tasks as pt');
+		$this->db-> where('pt.projectID', $projectID);
+		$tasks[] = $this->db->get()->result_array();
+			//print_r($tasks);
+		
+		$j = 0;
+		foreach($tasks[$j] as $t){
+			//print_r($t);
+			$this->db-> select('pr.*');
+			$this->db-> from('project_roles as pr');
+	//		$this->db-> join('project_tasks','pr.taskID = project_tasks.taskID');
+	//		$this->db-> join('project','project.projectID = project_tasks.projectID');
+			$this->db-> where('pr.taskID', $t['taskID']);
+			//$this->db-> where('projectID',$projectID);
+			$roles[] = $this->db->get()->result_array();
+		
+		//$i=0;
+			foreach ($roles[$j] as $role) {
+					echo $role['roleID'];
+					$this->db->select('rs.*, skillName');
+					$this->db->from('role_skills_required as rs');
+					$this->db->join('skills', 'rs.skillID = skills.skillID');
+					$this->db->join('skillLevel', 'rs.skillLevel = skillLevel.levelID');
+					$this->db->where('rs.roleID', $role['roleID']);
+					$skills[] = $this->db->get()->result_array();
+					//$i++;
+
+				}
+
+		
+
+		}
+		$j++;
+	}
+	
+
+	//print_r($roles);
+	print_r($skills);
+	return $skills;
+
+	
+
+*/	
+	$tasks = array();
+	$roles = array();
+	$skills = array();
+	
+	$this->db-> select('pt.*');
+	$this->db-> from('project_tasks as pt');
+	$this->db-> where('pt.projectID', $projectID);
+	$tasks[] = $this->db->get()->result_array();
+		//print_r($tasks);
+	
+	$skillList[] =array();
+$i=0;
+	foreach($tasks[$i] as $t){
+		//print_r($t);
+		if(isset($skills))
+		{
+			unset($skills);
+		}
+		if(isset($roles))
+		{
+			unset($roles);
+		}
+		$this->db-> select('pr.*');
+		$this->db-> from('project_roles as pr');
+//		$this->db-> join('project_tasks','pr.taskID = project_tasks.taskID');
+//		$this->db-> join('project','project.projectID = project_tasks.projectID');
+		$this->db-> where('pr.taskID', $t['taskID']);
+		//$this->db-> where('projectID',$projectID);
+		$roles[] = $this->db->get()->result_array();
+
+	$j =0;
+		foreach ($roles[$j] as $role) {
+				echo $role['roleID'];
+				$this->db->select('rs.*, skillName');
+				$this->db->from('role_skills_required as rs');
+				$this->db->join('skills', 'rs.skillID = skills.skillID');
+				$this->db->join('skillLevel', 'rs.skillLevel = skillLevel.levelID');
+				$this->db->where('rs.roleID', $role['roleID']);
+				$skills[] = $this->db->get()->result_array();
+							$skillList[$i] = $skills;
+
+				$j ++;
+
+			}
+
+	$i++;
+   	
+
+	}
+	
+
+	//print_r($roles);
+	print_r($skillList);
+	return $skillList;
+
+
+	
+}
+
 /*
 public function join_load_project($projectID){
 		
@@ -612,7 +744,88 @@ public function edit_project($projectID)
 
 	}
 
+/*
+public function edit_tasks($projectID)
+{
+		$this->db-> select('*');
+		$this->db->	from('project_tasks');
+		$this->db->	where('project_tasks.projectID',$projectID);
+		
+		$tasks = $this->db->get()->result_array();
+		$count = 0;
+		$taskData = array();
 
+		foreach ($tasks as $task)
+		{
+			$count++;
+			$this->db->select('taskID');
+			$this->db->from('project_tasks');
+			$this->db->where('taskID', $task['taskID']);
+			$this->db->limit(1);
+
+			$query = $this->db->get();
+
+			if($query-> num_rows() == 1){
+			$taskID = $query->result()[0]->taskID;}
+
+			$taskData[$count] = array(
+			'title' => $this->input->post('taskTitle'),
+			'taskID' => ($taskID),
+			'startDate' => $this->project_model->convert_date($this->input->post('taskStartDate')),
+			'endDate' => $this->project_model->convert
+			e($this->input->post('taskEndDate')),
+		);
+
+		$this->db->where('taskID', $taskID);	
+
+		}
+
+		
+	  	$this->db->update_batch('project_tasks', $taskData, 'taskID');
+
+
+
+
+}
+*/
+
+
+public function edit_tasks($projectID)
+{
+    $this->load->helper('url');
+    
+    $accountID = $this->session->accountID;
+	$tasks = $this->input->post('task');
+	
+	echo $projectID;
+		//taskID 	projectID 	title 	startDate 	endDate
+	foreach($tasks as $id4 => $task){
+		$taskData[] = array(
+			'projectID'=>$projectID,
+			'title' => 	$task['title'],			//$this->input->post('task[][title]'),
+			'startDate' => 	$this->project_model->convert_date($task['startDate']),	// $this->input->post('task[][startDate]'),
+			'endDate' => $this->project_model->convert_date($task['endDate']) 		//$this->i nput->post('task[][endDate]'),
+		);
+		$this->db->update_batch('project_tasks', $taskData);
+		$taskID = $this->db->insert_id();
+		if(isset($roleData))
+			unset($roleData);
+		$roles = $this->input->post('task[' . $id4 . '][role]');
+		foreach($roles as $id2 => $role){
+			$roleData[] = array(
+				'taskID' => $taskID,
+				'roleName' => 	$role['name'],			//$this->input->post('task[][title]'),
+				'numPeople' => 	$role['numPeople'],	// $this->input->post('task[][startDate]'),
+			);
+			$this->db->update_batch('project_roles', $roleData);
+			$roleID = $this->db->insert_id();
+			
+			
+
+		}
+	}
+
+}
 
 
 
