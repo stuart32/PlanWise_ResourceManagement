@@ -811,8 +811,11 @@ public function travel_distance($to, $from){
             //~ echo "Time: ".$time." Minutes";
             //~ echo "<br/>";
             $distance = ($distance / 1000) * 0.62137;
-            //~ echo "Distance: ".$distance." Miles";
-            //~ print_r($distance);
+            // echo "Distance: ".$distance." Miles";
+            echo ' travel distance function:';
+            print_r($from);
+             print_r($distance); 
+             echo '<br>'; 
            
             return $distance;
        
@@ -871,9 +874,9 @@ public function search_algorithm(){
                 $this->db->where('roleID', $r['roleID']);
                 $skills_required = $this->db->get()->result();
                 $skillslist = array();
-                foreach($skills_required as $sr)
-					$skillslist[]=$sr->skillID;
-
+                foreach($skills_required as $sr){
+								$skillslist[]=$sr->skillID;
+						}
                   
                 $this->db->select('user_account.accountID,user_skills.skillLevel');
                 $this->db->from('user_account');
@@ -883,6 +886,9 @@ public function search_algorithm(){
 
            
                 $candidates = $this->db->get();
+               /* echo ' CANDIDATES: ';
+                echo (string)$candidates;
+						echo '<br>';*/
 				
                 if($candidates->num_rows() <  $r['numPeople']){
                         echo 'No candidates match the required number for this role';
@@ -890,22 +896,36 @@ public function search_algorithm(){
                 }
                 $candidates = $candidates->result();
 
-                    foreach($candidates as $c){
+                foreach($candidates as $c){
+                	
+                	if($this->session->accountID == $c->accountID){
+                		echo '<br>';
+                		echo ' cannot add yourself to role in project';
+                		continue;
+                		}
+                	echo '<br>';
+                	echo 'current candidate: ';
+                	echo $c->accountID;
+                	echo '<br>';
                         $suitable = true;
                         foreach($skills_required as $skill){
                             if($c->skillLevel < $skill->skillLevel){
                                 $suitable = false;
-                                print_r('candidate does not have required skill level');
+                                echo '<br>';
+                                print_r('candidate does not have required skill level: account ID : ');
+                                echo $c->accountID;
+										  echo '<br>';
                                 break;  
                             }
                         }
                         
-                        if($suitable = false){
-                            continue;
-                        }
+                   if($suitable == false){
+                       continue;
+                   }
                                               
                                               
-                        $accountID = $c->accountID;
+                  $accountID = $c->accountID;
+                  print_r($accountID);
 
 
 						$this->db->select('a.postcode, p.travel_distance, p.accountID, p.addressID');
@@ -951,12 +971,28 @@ public function search_algorithm(){
 
                         }
 							
-						print_r("  before location <br>");
-                        if($this->project_model->travel_distance($personAddress[0]['postcode'], $projectAddress[0]['postcode']) > $personAddress[0]['travel_distance'] ){
+					
+						echo ' person max distance :';
+						print_r($personAddress[0]['travel_distance']);
+						echo '<br>';
+						print_r($personAddress[0]['postcode']);
+						echo '<br>'; 
+						
+						
+                        if($this->project_model->travel_distance($personAddress[0]['postcode'], $projectAddress[0]['postcode']) > floatval($personAddress[0]['travel_distance'])){
                             $suitable = false;
+                            echo '  too far away!... ';
                             continue;
                            
-						}
+								}
+								
+								if($suitable = false){
+                            continue;
+
+                        }
+								
+								
+								
 							
 							
                         $numberOfDays = $this->project_model->day_count($taskStartDate, $taskEndDate);
@@ -968,25 +1004,26 @@ public function search_algorithm(){
                             continue; 
                         }
 
-                        
-                        
-                        break;
-                        
-                    }
-                    
-                array_push(
+                         array_push(
 					$employeeAssignment, 
                     array(
 						'roleID' => $r['roleID'],
 						'accountID' => $accountID
 					)
                 );
+                        
+                        break;
+                        
+                    }
+                    
+               
                     
               }
               
         }
         echo "<br> employees:";
         print_r($employeeAssignment);
+       echo '<br>';
         return $employeeAssignment; 
         
  }

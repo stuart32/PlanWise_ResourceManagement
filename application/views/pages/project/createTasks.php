@@ -83,6 +83,10 @@
             <div class="row">
 				<div class="col-lg-12 noPadding ">
 					<div class="input-group " id="skillSelect">
+						<div class="col-sm-1 ">
+							<label>Task Id:</label>
+							<input type="text" name='taskId' id='taskId' value="0"  placeholder='Task Id' class="form-control" readonly >
+						</div>
 						<div class="col-sm-5 ">
 							<label>Task Title:</label>
 							<input type="text" name='taskTitle' id='taskTitle'  placeholder='Task Title' class="form-control">
@@ -93,7 +97,7 @@
 						</div>
 							<div class="col-sm-2 ">
 							<label>End Date:</label>
-							<input type='text' class="form-control" placeholder='End date' name='endDate' id='datepicker2' />
+							<input type='text' class="form-control" placeholder='End date' name='endDate' id='datepicker1' />
 						</div>
 		  				 <div class="col-sm-2 ">
 							<label>Number of Roles in task:</label>
@@ -154,23 +158,23 @@
 				return;
 			}
               $("#projectTasks").append('<li id="pTask'+taskNum+'"  onClick="selectTask('+taskNum+')" > <div id="taskcon" class="panel panel-primary"> '+
-              '<div class="panel-heading task"   name="task['+ taskNum +']"> Task: '+ title +'   Start Date:'+ $("#datepicker").val() +'       End Date :'+ $("#datepicker2").val() +'       Number Of Roles : '+ $("#numOfPeople").val() +' <a data-toggle="collapse"  href="#'+ newtitle +'"  style="color: #C0C0C0;" >  Click to exand/collapse </a>     </div>'+
-              '<div id="'+ newtitle +'" class="panel-collapse collapse">'+
-              '<div id="'+ newtitle +'_roles" class="panel-body">	'+
+              '<div class="panel-heading task"   name="task['+ taskNum +']"> ID: '+ taskNum +'  Task: '+ title +'   Start Date:'+ $("#datepicker").val() +'       End Date :'+ $("#datepicker1").val() +'       Number Of Roles : '+ $("#numOfPeople").val() +' <a data-toggle="collapse"  href="#'+ taskNum +'"  style="color: #C0C0C0;" >  Click to exand/collapse </a>     </div>'+
+              '<div id="'+ taskNum +'" class="panel-collapse collapse">'+
+              '<div id="'+ taskNum +'_roles" class="panel-body">	'+
               '<input name="task['+ taskNum +'][title]" type="text" value="'+ newtitle +'" hidden > </input>'+
 				'<input name="task['+ taskNum +'][startDate]" type="text" value="'+ $("#datepicker").val() +'"  hidden > </input>' +
-              '<input name="task['+ taskNum +'][endDate]" type="text" value="'+ $("#datepicker2").val()+'" hidden > </input>' + 
+              '<input name="task['+ taskNum +'][endDate]" type="text" value="'+ $("#datepicker1").val()+'" hidden > </input>' + 
 
-              '<div class="" id="'+ newtitle +'_table"> '+
+              '<div class="" id="'+ taskNum +'_table"> '+
 							'<label class="text-center">Role Title</label>'+
 							'<label class="text-center">Number of People</label>'+
               '</div id="roletable"></div></li>');
                      
               for (i = 0; i < j; i++)
               {
-              $('#'+ newtitle +'_table').append('<div class ="panel panel-danger" name="'+taskNum+'_'+ i +'" id="'+ newtitle +''+ i +'"><div class="panel-heading role">Role '+ (i+1) +'</div>'+
+              $('#'+ taskNum +'_table').append('<div class ="panel panel-danger" name="'+taskNum+'_'+ i +'" id="'+ taskNum +''+ i +'"><div class="panel-heading role">Role '+ (i+1) +'</div>'+
                   '<div><input name="task['+ taskNum +'][role]['+ i +'][name]" type="text" placeholder="Role Title" class="form-control input-md"/> </div>'+
-                  '<div><input name="task['+ taskNum +'][role]['+ i +'][numPeople]" placeholder="1" type="number" class="form-control input-md"/> </div>'+ 
+                  '<div><input name="task['+ taskNum +'][role]['+ i +'][numPeople]" placeholder="Number of people in this role" type="number" class="form-control input-md"/> </div>'+ 
                   '<div class="row">' +
 					'<div class="col-lg-12 noPadding ">' +
 					'<div class="input-group " id="skillSelect">' +
@@ -215,6 +219,8 @@
             '</div></tr>');
               }
               taskNum= taskNum + 1 ;
+                            
+              document.getElementById('taskId').value = taskNum; 
               });
               
 			function addskill(x,y) {
@@ -231,7 +237,7 @@
               //$("#taskcon").append('<tr id="role'+ i +'"> <td>'+ i +'</td><td><input name="taskTitle" type="text" placeholder="Task Title" class="form-control input-md"/></td><td><input name="employeeName" type="text" placeholder="Employee Name" class="form-control input-md" /> </td></tr>'); }
               
               
-             //<tbody><tr id="addr0"><td>1</td><td><input type="text" name="name0"  placeholder="Name" class="form-control"/></td><td><input type="text" class="form-control" placeholder="Start date" name="startDate0" id="datepicker" /></td><td><input type="text" class="form-control" placeholder="End date" name="endDate0" id="datepicker2" /></td><td><input type="number" id="rolesInTask" value="1" min="1" class="form-control"></td></tr></tbody> 
+             //<tbody><tr id="addr0"><td>1</td><td><input type="text" name="name0"  placeholder="Name" class="form-control"/></td><td><input type="text" class="form-control" placeholder="Start date" name="startDate0" id="datepicker" /></td><td><input type="text" class="form-control" placeholder="End date" name="endDate0" id="datepicker1" /></td><td><input type="number" id="rolesInTask" value="1" min="1" class="form-control"></td></tr></tbody> 
              
               
               
@@ -281,18 +287,29 @@
 				//~ $(this).addClass("selected");
 			//~ });
                 
-  $( function()  {
-      $( "#datepicker" ).datepicker();
-    $( "#datepicker" ).datepicker( "option", "dateFormat", "dd/mm/yy");
-  } );
-  
-  $( function() {
-    $( "#datepicker2" ).datepicker();
-    $( "#datepicker2" ).datepicker( "option", "dateFormat", "dd/mm/yy");
-    
-  } );
-            </script>
+  </script>
+    <script>
+                $("#datepicker").datepicker({
+                    dateFormat: "dd/mm/yy",
+                    minDate: 0,
+                    onSelect: function(date) {
+                        var datepicker1 = $('#datepicker1');
+                        var startDate = $(this).datepicker('getDate');
+                        var minDate = $(this).datepicker('getDate');
+                        datepicker1.datepicker('setDate', minDate);
+                        startDate.setDate(startDate.getDate());
+                        datepicker1.datepicker('option', 'minDate', minDate);
+                        $(this).datepicker('option', 'minDate', minDate);
+                    }
+                });
 
+                $(function() {
+                    $("#datepicker1").datepicker();
+                    $("#datepicker1").datepicker("option", "dateFormat", "dd/mm/yy");
+
+                });
+
+            </script>
         </div>
    		
     </div>
