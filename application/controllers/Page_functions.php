@@ -241,7 +241,9 @@ public function find_project($projectID){
 			
 			$data['info'] = $this->project_model->join_find_project($projectID);
 			$data['tasks'] = $this->project_model->find_tasks($projectID);
-			$data['roles'] = $this->project_model->find_roles($projectID);
+			$data['roles'] = $this->project_model->find_assignment_roles($projectID);
+			$data['rolesback'] = $this->project_model->find_roles($projectID);
+
 			$data['skills'] = $this->project_model->find_role_skills($projectID);
 			
 			$this->load->view('templates/profile_header', $data);
@@ -350,6 +352,7 @@ public function edit_tasks($projectID){
 			$data['tasks'] = $this->project_model->find_tasks($projectID);
 			$data['roles'] = $this->project_model->find_roles($projectID);
 			$data['skills'] = $this->project_model->find_role_skills($projectID);
+			$data['projectID'] = $projectID;
 
 			$this->load->view('templates/profile_header', $data);
 			$this->load->view('pages/project/edit_tasks', $data);

@@ -1,82 +1,10 @@
-<div class="container" style="background-color: #ABB7B7; padding: 1%">
-
- <title>Task Assignment</title>
-
-    <!--
-  <link rel="stylesheet" type="text/css" href="css/mystyle.css">
--->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <script src="./Setting Tasks and Role 2s_files/jquery-ui.js.download"></script>
-    <link rel="stylesheet" href="./Setting Tasks and Role 2s_files/jquery-ui.css">
-
-
-    <!--
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="jquery-3.1.1.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-  <link rel='stylesheet' href='http://fullcalendar.io/js/fullcalendar-2.2.3/fullcalendar.css' />
--->
-
-    <style type="text/css">
-        .row {
-            margin-top: 40px;
-            padding: 0 10px;
-        }
-        
-        .clickable {
-            cursor: pointer;
-        }
-        
-        .panel-heading span {
-            margin-top: -20px;
-            font-size: 15px;
-        }
-
-    </style>
-
-
-    <!--
-  <div class="buttons">
-    <button type="button" onclick="location.href='http://google.com';" class="btn btn-info">
-      <span class="glyphicon glyphicon-user"></span> Profile
-    </button>
-    <button type="button" onclick="location.href='https://preview.c9users.io/mvv1/stage2/calendar/fullcalendar-3.0.1/demos/agenda-views.html?_c9_id=livepreview1&_c9_host=https://ide.c9.io';" class="btn btn-info ">
-      <span class="glyphicon glyphicon-calendar"></span> Calendar
-    </button>
-      </div>
-<div class="page-header">
-  <h4>Creating A project : Task Assignment </h4>
-</div>
-<body>
-  <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">PlanWise</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">My Account</a></li>
-      <li class="active"><a href="#">Create Project</a></li>
-      <li><a href="#">Company</a></li>
-      <li><a href="#">Blog</a></li>
-      <li><a href="#">Log Out</a></li>
-    </ul>
-  </nav>
-  </div>
-  
--->
+<div class="container">
     <div class="alert alert-info text-center" role="alert">
         <h3>Create Project tasks and assign roles to the tasks</h3>
         <strong>(Project must contain at least one task)</strong>
         <h4>  </h4>
     </div>
-    <form action="http://137.195.15.99/~gg3/index.php/create_tasks" method="post" accept-charset="utf-8">
+    <?php echo form_open('edit_tasks/'.$projectID); ?>
 
         <div class="row">
             <div class="col-lg-12 noPadding ">
@@ -124,15 +52,15 @@
                         <?php
                         $taskNo = 0; 
                         foreach($tasks as $task)
-                        { echo $taskNo;
+                        { //echo $taskNo;
                             ?>           
 
 
                         <li id="pTask<?php echo $taskNo; ?>" onclick="selectTask(<?php echo $taskNo;?>)" class="">
 
                             <div id="taskcon" class="panel panel-primary">
-                                <div class="panel-heading task foundit" name="task[0]" style="background: rgb(51, 122, 183);"> Task: first task Start Date:14/03/2017 End Date :30/03/2017 Number Of Roles : 1 <a data-toggle="collapse" href="http://137.195.15.99/~gg3/index.php/edit_tasks#<?php echo $task['taskID'];?>" style="color: #C0C0C0;" class="collapsed" aria-expanded="false">  Click to exand/collapse </a> </div>
-                        
+                                <div class="panel-heading task foundit" name="task[0]" style="background: rgb(51, 122, 183);"> Task: <?php echo $task['title']; ?> Start Date:<?php echo $task['startDate']; ?> End Date :<?php echo $task['endDate']; ?> Number Of Roles : <?php echo sizeof($roles[$taskNo])?> <a data-toggle="collapse" href="http://137.195.15.99/~gg3/index.php/edit_tasks#<?php echo $task['taskID'];?>" style="color: #C0C0C0;" class="collapsed" aria-expanded="false">  Click to exand/collapse </a> </div>
+
                                 <div id="<?php echo $task['taskID'];?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
 
 
@@ -149,9 +77,12 @@
 
 
                                     <div id="first_task_roles" class="panel-body">
-                                        <input name="task[<?php echo $roleNo; ?>][title]" type="text" value="first_task" hidden="">
-                                        <input name="task[<?php echo $roleNo; ?>][startDate]" type="text" value="14/03/2017" hidden="">
-                                        <input name="task[<?php echo $roleNo; ?>][endDate]" type="text" value="30/03/2017" hidden="">
+                                        <input name="task[<?php echo $taskNo; ?>][taskID]" type="text" value="<?php echo $task['taskID'];?>" hidden="">
+                                        <input name="task[<?php echo $taskNo; ?>][role][<?php echo $roleNo; ?>][roleID]" type="text" value="<?php echo $role['roleID'];?>" hidden="">
+                                        <input name="task[<?php echo $taskNo; ?>][title]" type="text" value="<?php echo $task['title']; ?>" hidden="">
+                                        <input name="task[<?php echo $taskNo; ?>][startDate]" type="text" value="<?php echo $task['startDate']; ?>" hidden="">
+                                        <input name="task[<?php echo $taskNo; ?>][endDate]" type="text" value="<?php echo $task['endDate']; ?> " hidden="">
+
                                         <div class="" id="first_task_table">
                                             <label class="text-center">Role Title</label>
                                             <label class="text-center">Number of People</label>
@@ -305,25 +236,14 @@
 
 
 
-                                                                <li id="pSkills0_0_0" value="Analytics " onclick="selectSkill(0,0,0)" class="list-group-item skill" style="background: rgb(255, 255, 255); color: rgb(0, 0, 0);"><?php echo $skill['skillName']; echo $skill['skillID']; ?><span class="label label-primary pull-right"><?php echo $skill['skillLevel']; ?></span>
-                                                                    <input type="number" hidden="" name="task[0][role][0][skill][0][skillID]" value="7">
-                                                                    <input type="number" hidden="" name="task[0][role][0][skill][0][skillLevel]" value="4">
+                                                                <li id="pSkills0_0_0" value="Analytics " onclick="selectSkill(0,0,0)" class="list-group-item skill" style="background: rgb(255, 255, 255); color: rgb(0, 0, 0);"><?php echo $skill['skillName']; ?><span class="label label-primary pull-right"><?php echo $skill['skillLevel']; ?></span>
+                                                                    <input type="number" hidden="" name="task[<?php echo $taskNo?>][role][<?php echo $roleNo?>][skill][<?php echo $skillNo?>][skillID]" value="<?php echo $skill['skillID']; ?>">
+                                                                    <input type="number" hidden="" name="task[<?php echo $taskNo?>][role][<?php echo $roleNo?>][skill][<?php echo $skillNo?>][skillLevel]" value="<?php echo $skill['skillLevel']; ?>">
                                                                 </li>
 
-<!--
-                                                                <li id="pSkills0_0_1" value="Enterprise and business architecture " onclick="selectSkill(0,0,1)" class="list-group-item skill" style="background: rgb(255, 255, 255); color: rgb(0, 0, 0);">Enterprise and business architecture<span class="label label-primary pull-right">6</span>
-                                                                    <input type="number" hidden="" name="task[0][role][0][skill][1][skillID]" value="16">
-                                                                    <input type="number" hidden="" name="task[0][role][0][skill][1][skillLevel]" value="6"> </li>
-                                                                <li id="pSkills0_0_2" value="Information assurance " onclick="selectSkill(0,0,2)" class="list-group-item skill selectedSkill" style="background: rgb(0, 0, 119); color: rgb(255, 255, 255);">Information assurance<span class="label label-primary pull-right">6</span>
-                                                                    <input type="number" hidden="" name="task[0][role][0][skill][2][skillID]" value="6">
-                                                                    <input type="number" hidden="" name="task[0][role][0][skill][2][skillLevel]" value="6"> </li>
-                                                                <li id="pSkills0_0_3" value="Emerging technology monitoring " onclick="selectSkill(0,0,3)" class="list-group-item skill" style="background: rgb(255, 255, 255); color: rgb(0, 0, 0);">Emerging technology monitoring<span class="label label-primary pull-right">4</span>
-                                                                    <input type="number" hidden="" name="task[0][role][0][skill][3][skillID]" value="19">
-                                                                    <input type="number" hidden="" name="task[0][role][0][skill][3][skillLevel]" value="4"> </li>
-                                                        
-          -->                                                         
+                                                     
                                                                     <?php 
-                                                                   
+                                                                    $skillNo ++;
                                                                     }
 
                                                                     //echo $skills[0]['skillName'];
@@ -337,668 +257,19 @@
                                                 </div>
                                             </div>
                                         </div>
-                                     <?php 
+                                  
+
+                                    </div>
+                                       <?php 
                                     $roleNo ++;
                                     }
                                      ?>  
 
-
-                                    </div>
                                 </div>
                             </div>
                         </li>
 
-                   
-
-
-                        <!--
-                        <li id="pTask1" onclick="selectTask(1)" class="selected">
-                            <div id="taskcon" class="panel panel-primary">
-                                <div class="panel-heading task foundit" name="task[1]" style="background: rgb(0, 0, 119);"> Task: second task Start Date:31/03/2017 End Date :13/04/2017 Number Of Roles : 3 <a data-toggle="collapse" href="http://137.195.15.99/~gg3/index.php/create_tasks#second_task" style="color: #C0C0C0;" class="" aria-expanded="true">  Click to exand/collapse </a> </div>
-                                <div id="second_task" class="panel-collapse collapse in" aria-expanded="true">
-                                    <div id="second_task_roles" class="panel-body">
-                                        <input name="task[1][title]" type="text" value="second_task" hidden="">
-                                        <input name="task[1][startDate]" type="text" value="31/03/2017" hidden="">
-                                        <input name="task[1][endDate]" type="text" value="13/04/2017" hidden="">
-                                        <div class="" id="second_task_table">
-                                            <label class="text-center">Role Title</label>
-                                            <label class="text-center">Number of People</label>
-                                            <div class="panel panel-danger" name="1_0" id="second_task0">
-                                                <div class="panel-heading role">Role 1</div>
-                                                <div>
-                                                    <input name="task[1][role][0][name]" type="text" placeholder="Role Title" class="form-control input-md"> </div>
-                                                <div>
-                                                    <input name="task[1][role][0][numPeople]" placeholder="1" type="number" class="form-control input-md"> </div>
-                                                <div class="row">
-                                                    <div class="col-lg-12 noPadding ">
-                                                        <div class="input-group " id="skillSelect">
-                                                            <div class="col-sm-5 ">
-                                                                <label for="skillName">Skill:</label>
-                                                                <select class="form-control" id="skillName1_0">
-                                                                    <option> IT governance </option>
-                                                                    <option> IT strategy and planning </option>
-                                                                    <option> Information management </option>
-                                                                    <option> Information systems coordination </option>
-                                                                    <option> Information security </option>
-                                                                    <option> Information assurance </option>
-                                                                    <option> Analytics </option>
-                                                                    <option> Information content publishing </option>
-                                                                    <option> Consultancy </option>
-                                                                    <option> Technical specialism </option>
-                                                                    <option> Research </option>
-                                                                    <option> IT management </option>
-                                                                    <option> Financial management </option>
-                                                                    <option> Innovation </option>
-                                                                    <option> Business process improvement </option>
-                                                                    <option> Enterprise and business architecture </option>
-                                                                    <option> Business risk management </option>
-                                                                    <option> Sustainability strategy </option>
-                                                                    <option> Emerging technology monitoring </option>
-                                                                    <option> Continuity management </option>
-                                                                    <option> Sustainability management </option>
-                                                                    <option> Network planning </option>
-                                                                    <option> Solution architecture </option>
-                                                                    <option> Data management </option>
-                                                                    <option> Methods and tools </option>
-                                                                    <option> Portfolio management </option>
-                                                                    <option> Programme management </option>
-                                                                    <option> Project management </option>
-                                                                    <option> Portfolio, programme and project support </option>
-                                                                    <option> Business analysis </option>
-                                                                    <option> Requirements definition and management </option>
-                                                                    <option> Business process testing </option>
-                                                                    <option> Change implementation planning and management </option>
-                                                                    <option> Organisation design and implementation </option>
-                                                                    <option> Benefits management </option>
-                                                                    <option> Business modelling </option>
-                                                                    <option> Sustainability assessment </option>
-                                                                    <option> Systems development management </option>
-                                                                    <option> Data analysis </option>
-                                                                    <option> Systems design </option>
-                                                                    <option> Network design </option>
-                                                                    <option> Database design </option>
-                                                                    <option> Programming/software development </option>
-                                                                    <option> Animation development </option>
-                                                                    <option> Safety engineering </option>
-                                                                    <option> Sustainability engineering </option>
-                                                                    <option> Information content authoring </option>
-                                                                    <option> Testing </option>
-                                                                    <option> User experience analysis </option>
-                                                                    <option> User experience design </option>
-                                                                    <option> User experience evaluation </option>
-                                                                    <option> Systems integration </option>
-                                                                    <option> Porting/software configuration </option>
-                                                                    <option> Hardware design </option>
-                                                                    <option> Systems installation/decommissioning </option>
-                                                                    <option> Availability management </option>
-                                                                    <option> Service level management </option>
-                                                                    <option> Service acceptance </option>
-                                                                    <option> Configuration management </option>
-                                                                    <option> Asset management </option>
-                                                                    <option> Change management </option>
-                                                                    <option> Release and deployment </option>
-                                                                    <option> System software </option>
-                                                                    <option> Capacity management </option>
-                                                                    <option> Security administration </option>
-                                                                    <option> Penetration testing </option>
-                                                                    <option> Radio frequency engineering </option>
-                                                                    <option> Application support </option>
-                                                                    <option> IT Infrastructure </option>
-                                                                    <option> Database administration </option>
-                                                                    <option> Storage management </option>
-                                                                    <option> Network support </option>
-                                                                    <option> Problem management </option>
-                                                                    <option> Incident management </option>
-                                                                    <option> Facilities management </option>
-                                                                    <option> Learning and development management </option>
-                                                                    <option> Learning assessment and evaluation </option>
-                                                                    <option> Learning design and development </option>
-                                                                    <option> Learning delivery </option>
-                                                                    <option> Teaching and subject formation </option>
-                                                                    <option> Performance management </option>
-                                                                    <option> Resourcing </option>
-                                                                    <option> Professional development </option>
-                                                                    <option> Quality management </option>
-                                                                    <option> Quality assurance </option>
-                                                                    <option> Quality standards </option>
-                                                                    <option> Conformance review </option>
-                                                                    <option> Safety assessment </option>
-                                                                    <option> Digital forensics </option>
-                                                                    <option> Sourcing </option>
-                                                                    <option> Contract management </option>
-                                                                    <option> Relationship management </option>
-                                                                    <option> Customer service support </option>
-                                                                    <option> Digital marketing </option>
-                                                                    <option> Selling </option>
-                                                                    <option> Sales support </option>
-                                                                    <option> Product management </option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-sm-3 ">
-                                                                <label for="skillLevel">Level:</label>
-                                                                <select class="form-control" id="skillLevel1_0">
-                                                                    <option> Follow </option>
-                                                                    <option> Assist </option>
-                                                                    <option> Apply </option>
-                                                                    <option> Enable </option>
-                                                                    <option> Ensure, advise </option>
-                                                                    <option> Initiate, influence </option>
-                                                                    <option> Set strategy, inspire, mobilise </option>
-                                                                </select>
-                                                            </div>
-                                                            <div class=" input-group-btn noPadding">
-                                                                <button id="addSkill" type="button" onclick="addskill(1,0)" class="btn btn-default  ">Add Skill</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="">
-                                                    <div class="panel panel-info">
-                                                        <div class="panel-heading">
-                                                            <h3 id="titleSkills" class="panel-title">Skills</h3></div>
-                                                        <div class="panel-body">Please choose the skills required for the project, the level of proficiency needed for each skill and the number of people which will need to hold it.
-                                                            <label for="projectSkills">* Skills Required:</label>
-                                                            <ul class="list-group well well-sm pre-scrollable tested" style="max-height: 240px; overflow-y:auto;" id="projectSkills1_0">
-                                                                <li id="pSkills1_0_0" value="Information security " onclick="selectSkill(1,0,0)" class="list-group-item skill" style="background: rgb(255, 255, 255); color: rgb(0, 0, 0);">Information security<span class="label label-primary pull-right">3</span>
-                                                                    <input type="number" hidden="" name="task[1][role][0][skill][0][skillID]" value="5">
-                                                                    <input type="number" hidden="" name="task[1][role][0][skill][0][skillLevel]" value="3"> </li>
-                                                                <li id="pSkills1_0_1" value="Sustainability strategy " onclick="selectSkill(1,0,1)" class="list-group-item skill  selectedSkill" style="background: rgb(0, 0, 119); color: rgb(255, 255, 255);">Sustainability strategy<span class="label label-primary pull-right">7</span>
-                                                                    <input type="number" hidden="" name="task[1][role][0][skill][1][skillID]" value="18">
-                                                                    <input type="number" hidden="" name="task[1][role][0][skill][1][skillLevel]" value="7"> </li>
-                                                            </ul>
-                                                            <button id="delSkill" type="button" onclick="delskill(1,0)" class="btn btn-primary">Delete Skill</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-danger" name="1_1" id="second_task1">
-                                                <div class="panel-heading role">Role 2</div>
-                                                <div>
-                                                    <input name="task[1][role][1][name]" type="text" placeholder="Role Title" class="form-control input-md"> </div>
-                                                <div>
-                                                    <input name="task[1][role][1][numPeople]" placeholder="1" type="number" class="form-control input-md"> </div>
-                                                <div class="row">
-                                                    <div class="col-lg-12 noPadding ">
-                                                        <div class="input-group " id="skillSelect">
-                                                            <div class="col-sm-5 ">
-                                                                <label for="skillName">Skill:</label>
-                                                                <select class="form-control" id="skillName1_1">
-                                                                    <option> IT governance </option>
-                                                                    <option> IT strategy and planning </option>
-                                                                    <option> Information management </option>
-                                                                    <option> Information systems coordination </option>
-                                                                    <option> Information security </option>
-                                                                    <option> Information assurance </option>
-                                                                    <option> Analytics </option>
-                                                                    <option> Information content publishing </option>
-                                                                    <option> Consultancy </option>
-                                                                    <option> Technical specialism </option>
-                                                                    <option> Research </option>
-                                                                    <option> IT management </option>
-                                                                    <option> Financial management </option>
-                                                                    <option> Innovation </option>
-                                                                    <option> Business process improvement </option>
-                                                                    <option> Enterprise and business architecture </option>
-                                                                    <option> Business risk management </option>
-                                                                    <option> Sustainability strategy </option>
-                                                                    <option> Emerging technology monitoring </option>
-                                                                    <option> Continuity management </option>
-                                                                    <option> Sustainability management </option>
-                                                                    <option> Network planning </option>
-                                                                    <option> Solution architecture </option>
-                                                                    <option> Data management </option>
-                                                                    <option> Methods and tools </option>
-                                                                    <option> Portfolio management </option>
-                                                                    <option> Programme management </option>
-                                                                    <option> Project management </option>
-                                                                    <option> Portfolio, programme and project support </option>
-                                                                    <option> Business analysis </option>
-                                                                    <option> Requirements definition and management </option>
-                                                                    <option> Business process testing </option>
-                                                                    <option> Change implementation planning and management </option>
-                                                                    <option> Organisation design and implementation </option>
-                                                                    <option> Benefits management </option>
-                                                                    <option> Business modelling </option>
-                                                                    <option> Sustainability assessment </option>
-                                                                    <option> Systems development management </option>
-                                                                    <option> Data analysis </option>
-                                                                    <option> Systems design </option>
-                                                                    <option> Network design </option>
-                                                                    <option> Database design </option>
-                                                                    <option> Programming/software development </option>
-                                                                    <option> Animation development </option>
-                                                                    <option> Safety engineering </option>
-                                                                    <option> Sustainability engineering </option>
-                                                                    <option> Information content authoring </option>
-                                                                    <option> Testing </option>
-                                                                    <option> User experience analysis </option>
-                                                                    <option> User experience design </option>
-                                                                    <option> User experience evaluation </option>
-                                                                    <option> Systems integration </option>
-                                                                    <option> Porting/software configuration </option>
-                                                                    <option> Hardware design </option>
-                                                                    <option> Systems installation/decommissioning </option>
-                                                                    <option> Availability management </option>
-                                                                    <option> Service level management </option>
-                                                                    <option> Service acceptance </option>
-                                                                    <option> Configuration management </option>
-                                                                    <option> Asset management </option>
-                                                                    <option> Change management </option>
-                                                                    <option> Release and deployment </option>
-                                                                    <option> System software </option>
-                                                                    <option> Capacity management </option>
-                                                                    <option> Security administration </option>
-                                                                    <option> Penetration testing </option>
-                                                                    <option> Radio frequency engineering </option>
-                                                                    <option> Application support </option>
-                                                                    <option> IT Infrastructure </option>
-                                                                    <option> Database administration </option>
-                                                                    <option> Storage management </option>
-                                                                    <option> Network support </option>
-                                                                    <option> Problem management </option>
-                                                                    <option> Incident management </option>
-                                                                    <option> Facilities management </option>
-                                                                    <option> Learning and development management </option>
-                                                                    <option> Learning assessment and evaluation </option>
-                                                                    <option> Learning design and development </option>
-                                                                    <option> Learning delivery </option>
-                                                                    <option> Teaching and subject formation </option>
-                                                                    <option> Performance management </option>
-                                                                    <option> Resourcing </option>
-                                                                    <option> Professional development </option>
-                                                                    <option> Quality management </option>
-                                                                    <option> Quality assurance </option>
-                                                                    <option> Quality standards </option>
-                                                                    <option> Conformance review </option>
-                                                                    <option> Safety assessment </option>
-                                                                    <option> Digital forensics </option>
-                                                                    <option> Sourcing </option>
-                                                                    <option> Contract management </option>
-                                                                    <option> Relationship management </option>
-                                                                    <option> Customer service support </option>
-                                                                    <option> Digital marketing </option>
-                                                                    <option> Selling </option>
-                                                                    <option> Sales support </option>
-                                                                    <option> Product management </option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-sm-3 ">
-                                                                <label for="skillLevel">Level:</label>
-                                                                <select class="form-control" id="skillLevel1_1">
-                                                                    <option> Follow </option>
-                                                                    <option> Assist </option>
-                                                                    <option> Apply </option>
-                                                                    <option> Enable </option>
-                                                                    <option> Ensure, advise </option>
-                                                                    <option> Initiate, influence </option>
-                                                                    <option> Set strategy, inspire, mobilise </option>
-                                                                </select>
-                                                            </div>
-                                                            <div class=" input-group-btn noPadding">
-                                                                <button id="addSkill" type="button" onclick="addskill(1,1)" class="btn btn-default  ">Add Skill</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="">
-                                                    <div class="panel panel-info">
-                                                        <div class="panel-heading">
-                                                            <h3 id="titleSkills" class="panel-title">Skills</h3></div>
-                                                        <div class="panel-body">Please choose the skills required for the project, the level of proficiency needed for each skill and the number of people which will need to hold it.
-                                                            <label for="projectSkills">* Skills Required:</label>
-                                                            <ul class="list-group well well-sm pre-scrollable tested" style="max-height: 240px; overflow-y:auto;" id="projectSkills1_1">
-                                                                <li id="pSkills1_1_0" value="Innovation " onclick="selectSkill(1,1,0)" class="list-group-item skill" style="background: rgb(255, 255, 255); color: rgb(0, 0, 0);">Innovation<span class="label label-primary pull-right">4</span>
-                                                                    <input type="number" hidden="" name="task[1][role][1][skill][0][skillID]" value="14">
-                                                                    <input type="number" hidden="" name="task[1][role][1][skill][0][skillLevel]" value="4"> </li>
-                                                                <li id="pSkills1_1_1" value="Information security " onclick="selectSkill(1,1,1)" class="list-group-item skill" style="background: rgb(255, 255, 255); color: rgb(0, 0, 0);">Information security<span class="label label-primary pull-right">4</span>
-                                                                    <input type="number" hidden="" name="task[1][role][1][skill][1][skillID]" value="5">
-                                                                    <input type="number" hidden="" name="task[1][role][1][skill][1][skillLevel]" value="4"> </li>
-                                                                <li id="pSkills1_1_2" value="Continuity management " onclick="selectSkill(1,1,2)" class="list-group-item skill  selectedSkill" style="background: rgb(0, 0, 119); color: rgb(255, 255, 255);">Continuity management<span class="label label-primary pull-right">6</span>
-                                                                    <input type="number" hidden="" name="task[1][role][1][skill][2][skillID]" value="20">
-                                                                    <input type="number" hidden="" name="task[1][role][1][skill][2][skillLevel]" value="6"> </li>
-                                                            </ul>
-                                                            <button id="delSkill" type="button" onclick="delskill(1,1)" class="btn btn-primary">Delete Skill</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-danger" name="1_2" id="second_task2">
-                                                <div class="panel-heading role">Role 3</div>
-                                                <div>
-                                                    <input name="task[1][role][2][name]" type="text" placeholder="Role Title" class="form-control input-md"> </div>
-                                                <div>
-                                                    <input name="task[1][role][2][numPeople]" placeholder="1" type="number" class="form-control input-md"> </div>
-                                                <div class="row">
-                                                    <div class="col-lg-12 noPadding ">
-                                                        <div class="input-group " id="skillSelect">
-                                                            <div class="col-sm-5 ">
-                                                                <label for="skillName">Skill:</label>
-                                                                <select class="form-control" id="skillName1_2">
-                                                                    <option> IT governance </option>
-                                                                    <option> IT strategy and planning </option>
-                                                                    <option> Information management </option>
-                                                                    <option> Information systems coordination </option>
-                                                                    <option> Information security </option>
-                                                                    <option> Information assurance </option>
-                                                                    <option> Analytics </option>
-                                                                    <option> Information content publishing </option>
-                                                                    <option> Consultancy </option>
-                                                                    <option> Technical specialism </option>
-                                                                    <option> Research </option>
-                                                                    <option> IT management </option>
-                                                                    <option> Financial management </option>
-                                                                    <option> Innovation </option>
-                                                                    <option> Business process improvement </option>
-                                                                    <option> Enterprise and business architecture </option>
-                                                                    <option> Business risk management </option>
-                                                                    <option> Sustainability strategy </option>
-                                                                    <option> Emerging technology monitoring </option>
-                                                                    <option> Continuity management </option>
-                                                                    <option> Sustainability management </option>
-                                                                    <option> Network planning </option>
-                                                                    <option> Solution architecture </option>
-                                                                    <option> Data management </option>
-                                                                    <option> Methods and tools </option>
-                                                                    <option> Portfolio management </option>
-                                                                    <option> Programme management </option>
-                                                                    <option> Project management </option>
-                                                                    <option> Portfolio, programme and project support </option>
-                                                                    <option> Business analysis </option>
-                                                                    <option> Requirements definition and management </option>
-                                                                    <option> Business process testing </option>
-                                                                    <option> Change implementation planning and management </option>
-                                                                    <option> Organisation design and implementation </option>
-                                                                    <option> Benefits management </option>
-                                                                    <option> Business modelling </option>
-                                                                    <option> Sustainability assessment </option>
-                                                                    <option> Systems development management </option>
-                                                                    <option> Data analysis </option>
-                                                                    <option> Systems design </option>
-                                                                    <option> Network design </option>
-                                                                    <option> Database design </option>
-                                                                    <option> Programming/software development </option>
-                                                                    <option> Animation development </option>
-                                                                    <option> Safety engineering </option>
-                                                                    <option> Sustainability engineering </option>
-                                                                    <option> Information content authoring </option>
-                                                                    <option> Testing </option>
-                                                                    <option> User experience analysis </option>
-                                                                    <option> User experience design </option>
-                                                                    <option> User experience evaluation </option>
-                                                                    <option> Systems integration </option>
-                                                                    <option> Porting/software configuration </option>
-                                                                    <option> Hardware design </option>
-                                                                    <option> Systems installation/decommissioning </option>
-                                                                    <option> Availability management </option>
-                                                                    <option> Service level management </option>
-                                                                    <option> Service acceptance </option>
-                                                                    <option> Configuration management </option>
-                                                                    <option> Asset management </option>
-                                                                    <option> Change management </option>
-                                                                    <option> Release and deployment </option>
-                                                                    <option> System software </option>
-                                                                    <option> Capacity management </option>
-                                                                    <option> Security administration </option>
-                                                                    <option> Penetration testing </option>
-                                                                    <option> Radio frequency engineering </option>
-                                                                    <option> Application support </option>
-                                                                    <option> IT Infrastructure </option>
-                                                                    <option> Database administration </option>
-                                                                    <option> Storage management </option>
-                                                                    <option> Network support </option>
-                                                                    <option> Problem management </option>
-                                                                    <option> Incident management </option>
-                                                                    <option> Facilities management </option>
-                                                                    <option> Learning and development management </option>
-                                                                    <option> Learning assessment and evaluation </option>
-                                                                    <option> Learning design and development </option>
-                                                                    <option> Learning delivery </option>
-                                                                    <option> Teaching and subject formation </option>
-                                                                    <option> Performance management </option>
-                                                                    <option> Resourcing </option>
-                                                                    <option> Professional development </option>
-                                                                    <option> Quality management </option>
-                                                                    <option> Quality assurance </option>
-                                                                    <option> Quality standards </option>
-                                                                    <option> Conformance review </option>
-                                                                    <option> Safety assessment </option>
-                                                                    <option> Digital forensics </option>
-                                                                    <option> Sourcing </option>
-                                                                    <option> Contract management </option>
-                                                                    <option> Relationship management </option>
-                                                                    <option> Customer service support </option>
-                                                                    <option> Digital marketing </option>
-                                                                    <option> Selling </option>
-                                                                    <option> Sales support </option>
-                                                                    <option> Product management </option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-sm-3 ">
-                                                                <label for="skillLevel">Level:</label>
-                                                                <select class="form-control" id="skillLevel1_2">
-                                                                    <option> Follow </option>
-                                                                    <option> Assist </option>
-                                                                    <option> Apply </option>
-                                                                    <option> Enable </option>
-                                                                    <option> Ensure, advise </option>
-                                                                    <option> Initiate, influence </option>
-                                                                    <option> Set strategy, inspire, mobilise </option>
-                                                                </select>
-                                                            </div>
-                                                            <div class=" input-group-btn noPadding">
-                                                                <button id="addSkill" type="button" onclick="addskill(1,2)" class="btn btn-default  ">Add Skill</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="">
-                                                    <div class="panel panel-info">
-                                                        <div class="panel-heading">
-                                                            <h3 id="titleSkills" class="panel-title">Skills</h3></div>
-                                                        <div class="panel-body">Please choose the skills required for the project, the level of proficiency needed for each skill and the number of people which will need to hold it.
-                                                            <label for="projectSkills">* Skills Required:</label>
-                                                            <ul class="list-group well well-sm pre-scrollable tested" style="max-height: 240px; overflow-y:auto;" id="projectSkills1_2">
-                                                                <li id="pSkills1_2_0" value="Information systems coordination " onclick="selectSkill(1,2,0)" class="list-group-item skill" style="background: rgb(255, 255, 255); color: rgb(0, 0, 0);">Information systems coordination<span class="label label-primary pull-right">5</span>
-                                                                    <input type="number" hidden="" name="task[1][role][2][skill][0][skillID]" value="4">
-                                                                    <input type="number" hidden="" name="task[1][role][2][skill][0][skillLevel]" value="5"> </li>
-                                                                <li id="pSkills1_2_1" value="Analytics " onclick="selectSkill(1,2,1)" class="list-group-item skill" style="background: rgb(255, 255, 255); color: rgb(0, 0, 0);">Analytics<span class="label label-primary pull-right">7</span>
-                                                                    <input type="number" hidden="" name="task[1][role][2][skill][1][skillID]" value="7">
-                                                                    <input type="number" hidden="" name="task[1][role][2][skill][1][skillLevel]" value="7"> </li>
-                                                                <li id="pSkills1_2_2" value="IT management " onclick="selectSkill(1,2,2)" class="list-group-item skill  selectedSkill" style="background: rgb(0, 0, 119); color: rgb(255, 255, 255);">IT management<span class="label label-primary pull-right">6</span>
-                                                                    <input type="number" hidden="" name="task[1][role][2][skill][2][skillID]" value="12">
-                                                                    <input type="number" hidden="" name="task[1][role][2][skill][2][skillLevel]" value="6"> </li>
-                                                                <li id="pSkills1_2_3" value="Financial management " onclick="selectSkill(1,2,3)" class="list-group-item skill" style="background: rgb(255, 255, 255); color: rgb(0, 0, 0);">Financial management<span class="label label-primary pull-right">6</span>
-                                                                    <input type="number" hidden="" name="task[1][role][2][skill][3][skillID]" value="13">
-                                                                    <input type="number" hidden="" name="task[1][role][2][skill][3][skillLevel]" value="6"> </li>
-                                                            </ul>
-                                                            <button id="delSkill" type="button" onclick="delskill(1,2)" class="btn btn-primary">Delete Skill</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li id="pTask2" onclick="selectTask(2)" class="">
-                            <div id="taskcon" class="panel panel-primary">
-                                <div class="panel-heading task foundit" name="task[0]" style="background: rgb(51, 122, 183);"> Task: first task Start Date:14/03/2017 End Date :30/03/2017 Number Of Roles : 1 <a data-toggle="collapse" href="http://137.195.15.99/~gg3/index.php/create_tasks#first_task" style="color: #C0C0C0;" class="collapsed" aria-expanded="false">  Click to exand/collapse </a> </div>
-                                <div id="first_task" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                    <div id="first_task_roles" class="panel-body">
-                                        <input name="task[0][title]" type="text" value="first_task" hidden="">
-                                        <input name="task[0][startDate]" type="text" value="14/03/2017" hidden="">
-                                        <input name="task[0][endDate]" type="text" value="30/03/2017" hidden="">
-                                        <div class="" id="first_task_table">
-                                            <label class="text-center">Role Title</label>
-                                            <label class="text-center">Number of People</label>
-                                            <div class="panel panel-danger" name="0_0" id="first_task0">
-                                                <div class="panel-heading role">Role 1</div>
-                                                <div>
-                                                    <input name="task[0][role][0][name]" type="text" placeholder="Role Title" class="form-control input-md"> </div>
-                                                <div>
-                                                    <input name="task[0][role][0][numPeople]" placeholder="1" type="number" class="form-control input-md"> </div>
-                                                <div class="row">
-                                                    <div class="col-lg-12 noPadding ">
-                                                        <div class="input-group " id="skillSelect">
-                                                            <div class="col-sm-5 ">
-                                                                <label for="skillName">Skill:</label>
-                                                                <select class="form-control" id="skillName0_0">
-                                                                    <option> IT governance </option>
-                                                                    <option> IT strategy and planning </option>
-                                                                    <option> Information management </option>
-                                                                    <option> Information systems coordination </option>
-                                                                    <option> Information security </option>
-                                                                    <option> Information assurance </option>
-                                                                    <option> Analytics </option>
-                                                                    <option> Information content publishing </option>
-                                                                    <option> Consultancy </option>
-                                                                    <option> Technical specialism </option>
-                                                                    <option> Research </option>
-                                                                    <option> IT management </option>
-                                                                    <option> Financial management </option>
-                                                                    <option> Innovation </option>
-                                                                    <option> Business process improvement </option>
-                                                                    <option> Enterprise and business architecture </option>
-                                                                    <option> Business risk management </option>
-                                                                    <option> Sustainability strategy </option>
-                                                                    <option> Emerging technology monitoring </option>
-                                                                    <option> Continuity management </option>
-                                                                    <option> Sustainability management </option>
-                                                                    <option> Network planning </option>
-                                                                    <option> Solution architecture </option>
-                                                                    <option> Data management </option>
-                                                                    <option> Methods and tools </option>
-                                                                    <option> Portfolio management </option>
-                                                                    <option> Programme management </option>
-                                                                    <option> Project management </option>
-                                                                    <option> Portfolio, programme and project support </option>
-                                                                    <option> Business analysis </option>
-                                                                    <option> Requirements definition and management </option>
-                                                                    <option> Business process testing </option>
-                                                                    <option> Change implementation planning and management </option>
-                                                                    <option> Organisation design and implementation </option>
-                                                                    <option> Benefits management </option>
-                                                                    <option> Business modelling </option>
-                                                                    <option> Sustainability assessment </option>
-                                                                    <option> Systems development management </option>
-                                                                    <option> Data analysis </option>
-                                                                    <option> Systems design </option>
-                                                                    <option> Network design </option>
-                                                                    <option> Database design </option>
-                                                                    <option> Programming/software development </option>
-                                                                    <option> Animation development </option>
-                                                                    <option> Safety engineering </option>
-                                                                    <option> Sustainability engineering </option>
-                                                                    <option> Information content authoring </option>
-                                                                    <option> Testing </option>
-                                                                    <option> User experience analysis </option>
-                                                                    <option> User experience design </option>
-                                                                    <option> User experience evaluation </option>
-                                                                    <option> Systems integration </option>
-                                                                    <option> Porting/software configuration </option>
-                                                                    <option> Hardware design </option>
-                                                                    <option> Systems installation/decommissioning </option>
-                                                                    <option> Availability management </option>
-                                                                    <option> Service level management </option>
-                                                                    <option> Service acceptance </option>
-                                                                    <option> Configuration management </option>
-                                                                    <option> Asset management </option>
-                                                                    <option> Change management </option>
-                                                                    <option> Release and deployment </option>
-                                                                    <option> System software </option>
-                                                                    <option> Capacity management </option>
-                                                                    <option> Security administration </option>
-                                                                    <option> Penetration testing </option>
-                                                                    <option> Radio frequency engineering </option>
-                                                                    <option> Application support </option>
-                                                                    <option> IT Infrastructure </option>
-                                                                    <option> Database administration </option>
-                                                                    <option> Storage management </option>
-                                                                    <option> Network support </option>
-                                                                    <option> Problem management </option>
-                                                                    <option> Incident management </option>
-                                                                    <option> Facilities management </option>
-                                                                    <option> Learning and development management </option>
-                                                                    <option> Learning assessment and evaluation </option>
-                                                                    <option> Learning design and development </option>
-                                                                    <option> Learning delivery </option>
-                                                                    <option> Teaching and subject formation </option>
-                                                                    <option> Performance management </option>
-                                                                    <option> Resourcing </option>
-                                                                    <option> Professional development </option>
-                                                                    <option> Quality management </option>
-                                                                    <option> Quality assurance </option>
-                                                                    <option> Quality standards </option>
-                                                                    <option> Conformance review </option>
-                                                                    <option> Safety assessment </option>
-                                                                    <option> Digital forensics </option>
-                                                                    <option> Sourcing </option>
-                                                                    <option> Contract management </option>
-                                                                    <option> Relationship management </option>
-                                                                    <option> Customer service support </option>
-                                                                    <option> Digital marketing </option>
-                                                                    <option> Selling </option>
-                                                                    <option> Sales support </option>
-                                                                    <option> Product management </option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-sm-3 ">
-                                                                <label for="skillLevel">Level:</label>
-                                                                <select class="form-control" id="skillLevel0_0">
-                                                                    <option> Follow </option>
-                                                                    <option> Assist </option>
-                                                                    <option> Apply </option>
-                                                                    <option> Enable </option>
-                                                                    <option> Ensure, advise </option>
-                                                                    <option> Initiate, influence </option>
-                                                                    <option> Set strategy, inspire, mobilise </option>
-                                                                </select>
-                                                            </div>
-                                                            <div class=" input-group-btn noPadding">
-                                                                <button id="addSkill" type="button" onclick="addskill(0,0)" class="btn btn-default  ">Add Skill</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="">
-                                                    <div class="panel panel-info">
-                                                        <div class="panel-heading">
-                                                            <h3 id="titleSkills" class="panel-title">Skills</h3></div>
-                                                        <div class="panel-body">Please choose the skills required for the project, the level of proficiency needed for each skill and the number of people which will need to hold it.
-                                                            <label for="projectSkills">* Skills Required:</label>
-                                                            <ul class="list-group well well-sm pre-scrollable tested" style="max-height: 240px; overflow-y:auto;" id="projectSkills0_0">
-                                                                <li id="pSkills0_0_0" value="Analytics " onclick="selectSkill(0,0,0)" class="list-group-item skill" style="background: rgb(255, 255, 255); color: rgb(0, 0, 0);">Analytics<span class="label label-primary pull-right">4</span>
-                                                                    <input type="number" hidden="" name="task[0][role][0][skill][0][skillID]" value="7">
-                                                                    <input type="number" hidden="" name="task[0][role][0][skill][0][skillLevel]" value="4"> </li>
-                                                                <li id="pSkills0_0_1" value="Enterprise and business architecture " onclick="selectSkill(0,0,1)" class="list-group-item skill" style="background: rgb(255, 255, 255); color: rgb(0, 0, 0);">Enterprise and business architecture<span class="label label-primary pull-right">6</span>
-                                                                    <input type="number" hidden="" name="task[0][role][0][skill][1][skillID]" value="16">
-                                                                    <input type="number" hidden="" name="task[0][role][0][skill][1][skillLevel]" value="6"> </li>
-                                                                <li id="pSkills0_0_2" value="Information assurance " onclick="selectSkill(0,0,2)" class="list-group-item skill selectedSkill" style="background: rgb(0, 0, 119); color: rgb(255, 255, 255);">Information assurance<span class="label label-primary pull-right">6</span>
-                                                                    <input type="number" hidden="" name="task[0][role][0][skill][2][skillID]" value="6">
-                                                                    <input type="number" hidden="" name="task[0][role][0][skill][2][skillLevel]" value="6"> </li>
-                                                                <li id="pSkills0_0_3" value="Emerging technology monitoring " onclick="selectSkill(0,0,3)" class="list-group-item skill" style="background: rgb(255, 255, 255); color: rgb(0, 0, 0);">Emerging technology monitoring<span class="label label-primary pull-right">4</span>
-                                                                    <input type="number" hidden="" name="task[0][role][0][skill][3][skillID]" value="19">
-                                                                    <input type="number" hidden="" name="task[0][role][0][skill][3][skillLevel]" value="4"> </li>
-                                                            </ul>
-                                                            <button id="delSkill" type="button" onclick="delskill(0,0)" class="btn btn-primary">Delete Skill</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            
-                                </div>
-                            
-
-                        </li>
--->
+                
                         <?php 
                     $taskNo ++;
                     }
@@ -1016,6 +287,7 @@
 
 
         </div>
+    </div>
 
         <br>
         <br>
@@ -1023,7 +295,7 @@
 
         <script>
             var taskNum = 0;
-            $("#create_task").click(function() {
+            $("#edit_task").click(function() {
                 var title = $("#taskTitle").val();
                 var j = $("#numOfPeople").val();
                 var i;
@@ -1049,8 +321,7 @@
                     '<div id="' + newtitle + '" class="panel-collapse collapse">' +
                     '<div id="' + newtitle + '_roles" class="panel-body">   ' +
                     '<input name="task[' + taskNum + '][title]" type="text" value="' + newtitle + '" hidden > </input>' +
-                    '<input name="task[' + taskNum + '][startDate]" type="text" value="' + $("#datepicker").val() + '"  hidden > </input>' +
-                    '<input name="task[' + taskNum + '][endDate]" type="text" value="' + $("#datepicker2").val() + '" hidden > </input>' +
+                    '<input name="task[' + taskNum + '][startDate]" type="text" value="' + $("#datepicker").val() + '"  hidden > </input>' +                    '<input name="task[' + taskNum + '][endDate]" type="text" value="' + $("#datepicker2").val() + '" hidden > </input>' +
 
                     '<div class="" id="' + newtitle + '_table"> ' +
                     '<label class="text-center">Role Title</label>' +
@@ -1290,7 +561,7 @@
 
 
 
-    <em>© 2015 PlanWise</em>
+   
 
     <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="position: absolute; top: 544px; left: 1076.31px; z-index: 4; display: none;">
         <div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a>
@@ -1355,7 +626,7 @@
                     <td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="http://137.195.15.99/~gg3/index.php/create_tasks#">29</a></td>
                 </tr>
                 <tr>
-                    <td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="http://137.195.15.99/~gg3/index.php/create_tasks#">30</a></td>
+                    <td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="http://137.195.15.99/~gg3/index.php/edit_tasks#">30</a></td>
                     <td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td>
                     <td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td>
                     <td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td>
