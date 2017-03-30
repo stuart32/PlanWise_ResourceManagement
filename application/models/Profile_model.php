@@ -49,7 +49,9 @@ public function set_login()
 }
 
 public function day_off()
-{
+{		
+	$accountID = $this->session->accountID;
+
 	$this->load->helper('url');
 	
 	$start = $this->input->post('startDate');
@@ -58,6 +60,7 @@ public function day_off()
 	$formatted_date1 = date('Y/m/d', strtotime($end));
 	
 	$datesData = array(
+		'accountID' => $accountID,
         'leaveType' => $this->input->post('selecType'),
         'startDate' => $formatted_date,
         'endDate' => $formatted_date1

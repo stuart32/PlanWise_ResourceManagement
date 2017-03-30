@@ -1,11 +1,12 @@
 <?php echo validation_errors(); ?>
 
-
 <!-- FIND THE title VARIABLE BELOW -->
 
 <!-- <?php  echo $title ?> -->
 <?php echo form_open('edit_project/'.$project); ?>
-<div class="container">
+
+<div class="container" style="background-color: #ABB7B7; padding: 1%">
+
 	<form>
 	<fieldset>
 	<!-- Form Name -->
@@ -13,11 +14,11 @@
 
 	<legend >Edit Project Details<legend>
 
-	<label class="col-md-7 control-label">Please fill in the details below(* denotes a required field)</label> <br/><br/>
+	<label class="col-md-7">Please fill in the details below(* denotes a required field)</label> <br/><br/>
 
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 control-label" for="projectTitle">Project Title: </label>
+	  <label class="col-md-4 " for="projectTitle">Project Title: </label>
 	  <div class="col-md-5">
 	  <input id="projectTitle" name="projectTitle" type="text" placeholder="" class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['title']; }   ?>  > 
 	  <span class="help-block">Enter the project title above</span>  
@@ -26,7 +27,7 @@
 
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 control-label" for="">Project Email: </label>  
+	  <label class="col-md-4" for="">Project Email: </label>  
 	  <div class="col-md-5">
 	  <input id="" name="" type="text" placeholder="" class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['email']; }   ?> >
 	  <span class="help-block">Enter the project email above</span>  
@@ -35,7 +36,7 @@
 	
 	<!-- Date of birth input-->
 	<div class="form-group">
-	  <label class="col-md-4 control-label" for="projectType">Project type: </label>  
+	  <label class="col-md-4 " for="projectType">Project type: </label>  
 	  <div class="col-md-5">
 	  <input id="projectType" name="projectType" type="text" placeholder="" class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['projectTypeID']; }   ?> >
 	  <span class="help-block">Enter the project type above</span>  
@@ -44,25 +45,25 @@
 	
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 control-label" for="startDate">Start date: </label>  
+	  <label class="col-md-4 " for="startDate">Start date: </label>  
 	  <div class="col-md-5">
-	  <input id="startDate" name="startDate" type="date" placeholder="" class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['startDate']; }   ?> >
+	  <input id="startDate" name="startDate" type="text" placeholder="" class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['startDate']; }   ?> >
 	  <span class="help-block">Enter the starting date above</span>  
 	  </div>
 	</div>
 	
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 control-label" for="endDate">End date: </label>  
+	  <label class="col-md-4 " for="endDate">End date: </label>  
 	  <div class="col-md-5">
-	  <input id="endDate" name="endDate" type="date" placeholder="" class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['endDate']; }   ?> >
+	  <input id="endDate" name="endDate" type="text" placeholder="" class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['endDate']; }   ?> >
 	  <span class="help-block">Enter the ending date above</span>  
 	  </div>
 	</div>
 		
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 control-label" for="projectBudget">Budget: </label>  
+	  <label class="col-md-4 " for="projectBudget">Budget: </label>  
 	  <div class="col-md-5">
 	  <input id="projectBudget" name="projectBudget" type="number" placeholder="" class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['budget']; }   ?> >
 	  <span class="help-block">Enter project budget</span>  
@@ -71,7 +72,7 @@
 	
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 control-label" for="country">Country: </label>  
+	  <label class="col-md-4 " for="country">Country: </label>  
 	  <div class="col-md-5">
 	  <input id="country" name="country" type="text" placeholder="Scotland..." class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['country']; }   ?> >
 	  <span class="help-block">Enter residing country above</span>  
@@ -80,7 +81,7 @@
 	
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 control-label" for="city">City: </label>  
+	  <label class="col-md-4 " for="city">City: </label>  
 	  <div class="col-md-5">
 	  <input id="city" name="city" type="text" placeholder="Edinburgh..." class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['city']; }   ?> >
 	  <span class="help-block">Enter residing city above</span>  
@@ -89,7 +90,7 @@
 	
 		<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 control-label" for="postcode">Postcode: </label>  
+	  <label class="col-md-4 " for="postcode">Postcode: </label>  
 	  <div class="col-md-5">
 	  <input id="postcode" name="postcode" type="text" pattern ="[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}"  placeholder="EH11 ABC..." class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value='".$info[0]['postcode']."'"; }   ?>  >
 	  <span class="help-block">Enter postcode above</span>  
@@ -98,7 +99,7 @@
 	
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 control-label" for="streetName">Street Name: </label>  
+	  <label class="col-md-4 " for="streetName">Street Name: </label>  
 	  <div class="col-md-5">
 	  <input id="streetName" name="streetName" type="text" placeholder="Riccarton Avenue..." class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['streetName']; }   ?>>
 	  <span class="help-block">Enter street name</span>  
@@ -107,14 +108,70 @@
 	
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 control-label" for="buildingNumber">Building Number: </label>  
+	  <label class="col-md-4" for="buildingNumber">Building Number: </label>  
 	  <div class="col-md-5">
 	  <input id="buildingNumber" name="buildingNumber" type="number" placeholder="Insert number..." class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['buldingNumber']; }   ?> >
 	  <span class="help-block">Enter building number</span>  
 	  </div>
 	</div>
 
+<div class="container">
+
+	<!--
 	
+	<?php
+
+	foreach($tasks as $task)
+		{ ?>
+		<br>
+	
+		<div class="row">
+				<div class="col-lg-12 noPadding ">
+					<div class="input-group " >
+						<div class="col-sm-5 ">
+							<label>Task Title:</label>
+							<input type="text" name='taskTitle' id='taskTitle'  placeholder='Task Title' class="form-control" <?php if(isset($tasks)) { 	echo "value=".$task['title']; }   ?>/>
+						</div>
+						<div class="col-sm-2">
+							<label>Start Date:</label>
+							<input type='text' class="form-control" placeholder='Start date' name='taskStartDate' id='datepicker' <?php if(isset($tasks)) { 	echo "value=".$task['startDate']; }   ?> />
+						</div>
+							<div class="col-sm-2 ">
+							<label>End Date:</label>
+							<input type='text' class="form-control" placeholder='End date' name='taskEndDate' id='datepicker2' <?php if(isset($tasks)) { 	echo "value=".$task['endDate']; }   ?> />
+						</div>
+		  				
+					</div>
+				</div>
+            </div>
+
+           
+         
+
+            <br>
+
+            <?php
+            foreach ($roles as $role)
+             { ?>
+			      <div class="form-group">
+				  	<label class="col-md-4 " for="streetName">Role: </label>  
+				  <div class="col-md-5">
+				  <input id="streetName" name="streetName" type="text" placeholder="Riccarton Avenue..." class="form-control input-md" required="" <?php if(isset($roles)) { 	echo "value=".$role['roleName']; }   ?>>
+				  <span class="help-block">Enter role name</span>  
+				  </div>
+				</div>
+				<br>
+			<?php
+            }
+
+         
+      	}
+      	?>
+      -->
+
+
+    
+</div>	
 
 	<!-- Button -->
 	<div class="form-group">

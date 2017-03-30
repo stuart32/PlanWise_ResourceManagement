@@ -111,7 +111,31 @@ public function createTasks(){
 		} 
     }
     
- public function allocation(){
+    public function allocation()
+{        
+		$projectID = ($this->session->projectID);
+
+		$this->check_restricted();
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+		
+		$data['title'] = 'Select Roles';
+		$data['info'] = $this->project_model->join_find_project($projectID);
+		$data['tasks'] = $this->project_model->find_tasks($projectID);
+		$data['roles'] = $this->project_model->find_roles($projectID);
+		$query = $this->project_model->search_algorithm();
+		$data['match'] = $this->project_model->search_algorithm();
+		//$data['find'] = true;
+		
+
+		
+		$this->load->view('templates/profile_header', $data);
+		$this->load->view('pages/project/role_select');
+		$this->load->view('templates/footer');
+
+}
+    
+ public function allocationOld(){
     	
     	if($this->check_restricted() == false) {return;};
     	$this->load->helper('form');
@@ -119,7 +143,7 @@ public function createTasks(){
 		$data['query'] = $this->project_model->search_algorithm();
     	
     	$this->load->view('templates/profile_header');
-		$this->load->view('pages/project/project_allocation', $data);
+		$this->load->view('pages/project/role_select', $data);
 		$this->load->view('templates/footer');
     	
     }

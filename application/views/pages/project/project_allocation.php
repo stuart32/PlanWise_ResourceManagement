@@ -1,7 +1,7 @@
 
 <?php echo form_open('allocation'); ?>
 <?php if(isset($query)) { 
-
+print_r($query);
 ?>
 
 <table>

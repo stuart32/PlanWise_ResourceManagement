@@ -1,5 +1,9 @@
 <div class="container">
+<<<<<<< HEAD
+    
+=======
 	
+>>>>>>> eadd1be1605ba56921e5391c04e9524e8dce1196
 <script>
 $(document).ready(function() {
     $('#myTable').DataTable();
@@ -8,7 +12,11 @@ $(document).ready(function() {
 </script>
 
 <script>
+<<<<<<< HEAD
+    $(function(){
+=======
 	$(function(){
+>>>>>>> eadd1be1605ba56921e5391c04e9524e8dce1196
     $('.table tr[data-href]').each(function(){
         $(this).css('cursor','pointer').hover(
             function(){ 

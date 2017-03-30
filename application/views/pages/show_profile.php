@@ -144,50 +144,50 @@
     </ul><!--nav-tabs close-->
     
     <!-- Tab panes -->
-    <div class="tab-content">
-    <div class="tab-pane fade active in" id="profile">
-    <div class="container">
-<div class="col-sm-11" style="float:left;">
-<div class="hve-pro">
-</div><!--hve-pro close-->
-</div><!--col-sm-12 close-->
-<br clear="all" />
-<div class="row">
-<div class="col-md-12">
-<h4 class="pro-title">Bio Graph</h4>
-</div><!--col-md-12 close-->
+<div class="tab-content">
+	<div class="tab-pane fade active in" id="profile">
+		<div class="container">
+			<div class="col-sm-11" style="float:left;">
+				<div class="hve-pro">
+				</div><!--hve-pro close-->
+			</div><!--col-sm-12 close-->
+			<br clear="all" />
+			<div class="row">
+				<div class="col-md-12">
+					<h4 class="pro-title">Bio Graph</h4>
+				</div><!--col-md-12 close-->
 
+				<div class="col-md-6">
 
-<div class="col-md-6">
+					<div class="table-responsive responsiv-table">
+						<table class="table bio-table">
+							<tbody>
+								<tr>      
+									<td>Firstname</td>
+									<td>: <?php echo $info[0]['firstname'];?></td> 
+								</tr>
+								<tr>    
+									<td>Lastname</td>
+									<td>: <?php echo $info[0]['lastname'];?></td>       
+								</tr>
+								<tr>    
+									<td>Birthday</td>
+									<td>: <?php echo $info[0]['dob'];?></td>       
+								</tr>
+								<tr>    
+									<td>Contury</td>
+									<td>: <?php echo $info[0]['country'];?></td>       
+								</tr>
+								<tr>
+									<td>Occupation</td>
+									<td>: Web Designer</td> 
+								</tr>
 
-<div class="table-responsive responsiv-table">
-  <table class="table bio-table">
-      <tbody>
-     <tr>      
-        <td>Firstname</td>
-        <td>: <?php echo $info[0]['firstname'];?></td> 
-     </tr>
-     <tr>    
-        <td>Lastname</td>
-        <td>: <?php echo $info[0]['lastname'];?></td>       
-     </tr>
-     <tr>    
-        <td>Birthday</td>
-        <td>: <?php echo $info[0]['dob'];?></td>       
-    </tr>
-    <tr>    
-        <td>Contury</td>
-        <td>: <?php echo $info[0]['country'];?></td>       
-    </tr>
-    <tr>
-        <td>Occupation</td>
-        <td>: Web Designer</td> 
-     </tr>
-
-    </tbody>
-  </table>
-  </div><!--table-responsive close-->
-</div><!--col-md-6 close-->
+							</tbody>
+						</table>
+					</div><!--table-responsive close-->
+					
+				</div><!--col-md-6 close-->
 
 <div class="col-md-6">
 
