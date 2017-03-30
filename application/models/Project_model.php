@@ -221,8 +221,8 @@ public function set_tasks()
 	echo $projectID;
 		//taskID 	projectID 	title 	startDate 	endDate
 	foreach($tasks as $id4 => $task){		
-			if(isset($taskData))
-				unset($taskData);
+		if(isset($taskData))
+			unset($taskData);
 		$taskData[] = array(
 			'projectID'=>$projectID,
 			'title' => 	$task['title'],			//$this->input->post('task[][title]'),
@@ -232,19 +232,12 @@ public function set_tasks()
 		echo "<br> COUNT <br>";
 		print_r($taskData);
 
-		$this->db->insert_batch('project_tasks', $taskData);
-		
-		$this->db->select('COUNT(*)');
-		$this->db->from('project_tasks');
-		$this->db->where('projectID',$projectID);
-		$temp = $this->db->get()->result();
-		print_r($temp);
-		
+		$this->db->insert_batch('project_tasks', $taskData);		
 		$taskID = $this->db->insert_id();
-		if(isset($roleData))
-			unset($roleData);
 		$roles = $this->input->post('task[' . $id4 . '][role]');
 		foreach($roles as $id2 => $role){
+			if(isset($roleData))
+				unset($roleData);
 			$roleData[] = array(
 				'taskID' => $taskID,
 				'roleName' => 	$role['name'],			//$this->input->post('task[][title]'),
@@ -265,7 +258,6 @@ public function set_tasks()
 				);
 			}
 			echo "<br> skills entry <br>";
-			print_r ($skillData);
 			$this->db->insert_batch('role_skills_required', $skillData);
 
 		}
@@ -649,7 +641,7 @@ public function edit_project($projectID)
 			'projectTypeID' => $this->input->post('projectType')
 		);
 	    
-	  	$this->db->	where('projectID',$projectID);	
+	  	$this->db->where('projectID',$projectID);	
 	  	$this->db->update('project', $projectData);
 
 	}
@@ -732,16 +724,9 @@ public function edit_project($projectID)
     
     
     
+    public Function allCandidates(){
     
-    
-    
-    
-    
-    
-public function search_algorithm(){
-        
-        
-        /* Current expenditure on employees for the project // project ID */
+     /* Current expenditure on employees for the project // project ID */
         $budgetExpenditure = 0;
         $projectID = ($this->session->projectID);
         
@@ -793,17 +778,110 @@ public function search_algorithm(){
                 $this->db->where_in('user_skills.skillID',$skillslist);
                
 
-               // $numberOfRoles = count($rolesArray);
-                //SELECT accountID FROM `user_skills` 
-				//~ WHERE skillID IN(1,15)
-				//~ GROUP BY accountID
-				//~ having count(distinct(skillID)) = 2
-                
-                //~ $this->db->select('user_account.accountID', 'user_skills.skillLevel');
-                //~ $this->db->from('user_account');
-                //~ $this->db->join('user_skills', 'user_skills.accountID = user_account.accountID');
-                //~ $this->db->where('user_skills.skillID', $skills_required['skillID']);
-                //$this->db->group_by('accountID');
+           
+                $candidates = $this->db->get();
+			}
+		}
+    
+}
+ 
+ 
+ 
+public function travel_distance($to, $from){
+ 
+            $from = urlencode($from);
+            $to = urlencode($to);
+ 
+            $data = file_get_contents("http://maps.googleapis.com/maps/api/distancematrix/json?origins=$from&destinations=$to&language=en-EN&sensor=false");
+            $data = json_decode($data);
+ 
+            $time = 0;
+            $distance = 0;
+ 
+            foreach($data->rows[0]->elements as $road) {
+               $time += $road->duration->value;
+               $distance += $road->distance->value;
+            }
+ 
+            //~ echo "To: ".$data->destination_addresses[0];
+            //~ echo "<br/>";
+            //~ echo "From: ".$data->origin_addresses[0];
+            //~ echo "<br/>";
+            $time = $time / 60;
+            //~ echo "Time: ".$time." Minutes";
+            //~ echo "<br/>";
+            $distance = ($distance / 1000) * 0.62137;
+            //~ echo "Distance: ".$distance." Miles";
+            //~ print_r($distance);
+           
+            return $distance;
+       
+}   
+    
+    
+public function search_algorithm(){
+        
+        /* Current expenditure on employees for the project // project ID */
+        $budgetExpenditure = 0;
+        $projectID = ($this->session->projectID);
+        
+        
+		$this->db->select('a.postcode, p.projectID, p.addressID');
+        $this->db->from('address AS a');
+        $this->db->join('project as p', 'p.addressID = a.addressID');
+        $this->db->where('p.projectID', $projectID);
+        
+        $projectAddress = $this->db->get()->result_array();
+        
+        /* Get the budget for the project */
+        $this->db->select('budget');
+        $this->db->from('project');
+        $this->db->where('projectID', $projectID);
+        
+        $budgetLimit = (int)($this->db->get()->result()[0]->budget);
+        
+        /* Return all tasks in project into an array */
+        $this->db->select('taskID,startDate,endDate');
+        $this->db->from('project_tasks');
+        $this->db->where('projectID', $projectID);
+        $taskArray = $this->db->get()->result_array();
+        
+        
+        $employeeAssignment = array();
+       // $rolesArray = array();
+        
+        
+        /* Loop through tasks to get all roles  */
+        foreach($taskArray as $t){
+			$this->db->select('roleID,numPeople');
+            $this->db->from('project_roles');
+            $this->db->where('taskID', $t['taskID']);
+            $query = $this->db->get();
+            $rolesArray = $query->result_array();
+			$taskStartDate = $t['startDate'];
+			$taskEndDate   = $t['endDate'];
+
+           // array_push($rolesArray, $this->db->get()->result_array());
+        
+            /* Loop through roles and get the skills required for them */    
+            foreach($rolesArray as $r){
+
+                $this->db->select('skillID,skillLevel');
+                $this->db->from('role_skills_required');
+                $this->db->where('roleID', $r['roleID']);
+                $skills_required = $this->db->get()->result();
+                $skillslist = array();
+                foreach($skills_required as $sr)
+					$skillslist[]=$sr->skillID;
+
+                  
+                $this->db->select('user_account.accountID,user_skills.skillLevel');
+                $this->db->from('user_account');
+                $this->db->join('user_skills', 'user_skills.accountID = user_account.accountID');
+                $this->db->where_in('user_skills.skillID',$skillslist);
+               
+
+           
                 $candidates = $this->db->get();
 				
                 if($candidates->num_rows() <  $r['numPeople']){
@@ -828,6 +906,17 @@ public function search_algorithm(){
                                               
                                               
                         $accountID = $c->accountID;
+
+
+						$this->db->select('a.postcode, p.travel_distance, p.accountID, p.addressID');
+						$this->db->from('address AS a');
+						$this->db->join('person as p', 'p.addressID = a.addressID');
+						$this->db->where('p.accountID', $accountID);
+						$this->db->limit(1);
+       
+ 
+						$personAddress = $this->db->get()->result_array();
+						print_r( $projectAddress);
 
                         
                         $this->db->select('dayRate');
@@ -862,6 +951,14 @@ public function search_algorithm(){
 
                         }
 							
+						print_r("  before location <br>");
+                        if($this->project_model->travel_distance($personAddress[0]['postcode'], $projectAddress[0]['postcode']) > $personAddress[0]['travel_distance'] ){
+                            $suitable = false;
+                            continue;
+                           
+						}
+							
+							
                         $numberOfDays = $this->project_model->day_count($taskStartDate, $taskEndDate);
                         $employeeCost =$dayRate * ( $numberOfDays->d);
                         $budgetExpenditure = $budgetExpenditure + (int) $employeeCost;
@@ -888,7 +985,8 @@ public function search_algorithm(){
               }
               
         }
-        
+        echo "<br> employees:";
+        print_r($employeeAssignment);
         return $employeeAssignment; 
         
  }
