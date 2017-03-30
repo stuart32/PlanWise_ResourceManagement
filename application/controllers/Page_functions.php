@@ -123,13 +123,15 @@ class Page_functions extends CI_Controller {
 		} 
 }
 
-public function find_profile($usrname ){	
+public function find_profile($usrname){	
 			
 			$this->check_restricted();
 			$this->load->helper('form');
 			$this->load->library('form_validation');
 			
 			$data['info'] = $this->profile_model->join_find_profile($usrname);
+			$data['history'] = $this->project_model->load_project_history($usrname);
+			$data['time_off'] = $this->profile_model->availability($usrname);
 			$data['find'] = true;
 			
 			$this->load->view('templates/profile_header', $data);
@@ -144,7 +146,9 @@ public function view_profile(){
 			$this->load->helper('form');
 			$this->load->library('form_validation');
 			
-			$data['info'] = $this->profile_model->join_load_profile();
+			$data['info'] = $this->profile_model->join_load_profile(NULL);
+			$data['history'] = $this->project_model->load_project_history(NULL);
+			$data['time_off'] = $this->profile_model->availability(NULL);
 			$this->form_validation->set_rules('startDate', 'start date ', 'required');
 			$this->form_validation->set_rules('endDate', 'end date ', 'required');
 			

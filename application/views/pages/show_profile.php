@@ -1,6 +1,4 @@
 
-
-
 <!-- start of profile well-->
 
 <section>
@@ -9,20 +7,26 @@
 <div class="profile-head">
 <div class="col-md- col-sm-4 col-xs-12">
 <img src="http://www.newlifefamilychiropractic.net/wp-content/uploads/2014/07/300x300.gif" class="img-responsive" />
-<h6><?php echo $info[0]['firstname']; echo " ".  $info[0]['lastname']; ?>  </h6>
+<h6><?php/* echo $info[0]['firstname']; echo " ".  $info[0]['lastname']; */?>  </h6>
 </div><!--col-md-4 col-sm-4 col-xs-12 close-->
 
 
-
+		
 <div class="col-md-5 col-sm-5 col-xs-12">
 <h5 id="h01"> <?php echo $info[0]['firstname']; echo " ".  $info[0]['lastname']; ?>  </h5>
-<p id="p01"> Web Designer / Develpor </p>
+<p id="p01"> <?php if($history != NULL){foreach($history as $h){ echo $h['role_title']; break; } }?> </p>
 <ul>
+	<?php if(isset($history) && isset($time_off)) { /*print_r($history);*/ $true = true;?>
+<?php $currentDate = date('y-m-d'); $latest = date(0000-00-00); foreach($history as $h){ if(($h['task_end']) > $latest ) {  $latest = $h['task_end'];}  else { continue;}	}?>
+	<?php if((($latest) > $currentDate) || $time_off['endDate'] > $currentDate ) {?>
+	<li class = "unavailable"> <p style = "color: red">unavailable</p></li>
+	<?php } else { ?>	
+	<li class = "available"> <p style = "color: #00FF66">available</p> </li>
+	<?php } }?>
 <li><span class="glyphicon glyphicon-briefcase"></span> 5 years</li>
 <li><span class="glyphicon glyphicon-map-marker"></span> Italy</li>
 <li><span class="glyphicon glyphicon-home"></span> 
 <?php echo $info[0]['buldingNumber'];echo " ".  $info[0]['streetName'];echo " ".  $info[0]['postcode'];echo " ".  $info[0]['city'];echo " ".  $info[0]['country']; ?>
-
 </li>
 <li><span class="glyphicon glyphicon-phone"></span> <a href="#" title="call">(+021) 956 789123</a></li>
 <li><span class="glyphicon glyphicon-envelope"></span><a href="#" title="mail"> <?php echo $info[0]['email'];?></a></li>
@@ -42,82 +46,29 @@
 <!--start timeline of projects-->
 
 <section id="cd-timeline" class="cd-container">
+	<?php if(isset($history)) { ?>
+	 <?php foreach($history as $h) { /*print_r($h);*/?>
 		<div class="cd-timeline-block">
 			<div class="cd-timeline-img cd-picture">
 				<img src="<?php echo base_url() ?>/img/cd-icon-picture.svg" alt="Picture">
 			</div> <!-- cd-timeline-img -->
 
+				 
 			<div class="cd-timeline-content">
-				<h2>Title of section 1</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
-				<a href="#0" class="cd-read-more">Read more</a>
-				<span class="cd-date">Jan 14</span>
+				<h2><?php echo $h['project_title'];?> <p><?php ?></p></h2>
+				<p><?php echo $h['project_start']; echo ' - '; echo $h['project_end']; ?></p>
+				<p> <?php echo $h['project_description'];?></p>
+				<h1><?php echo $h['task_title'];?></h1>
+				<p><?php  echo $h['task_start']; echo ' - '; echo$h['task_end']; echo '<br>';?></p>
+				<h1><?php echo $h['role_title'];?></h1>
+				<a href="#0" class="cd-read-more"><?php echo $h['project_title']; ?></a>
+				<?php echo '<br>';?>
+
+				<span class="cd-date"></span>
 			</div> <!-- cd-timeline-content -->
 		</div> <!-- cd-timeline-block -->
-
-		<div class="cd-timeline-block">
-			<div class="cd-timeline-img cd-movie">
-				<img src="<?php echo base_url() ?>/img/cd-icon-movie.svg" alt="Movie">
-			</div> <!-- cd-timeline-img -->
-
-			<div class="cd-timeline-content">
-				<h2>Title of section 2</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde?</p>
-				<a href="#0" class="cd-read-more">Read more</a>
-				<span class="cd-date">Jan 18</span>
-			</div> <!-- cd-timeline-content -->
-		</div> <!-- cd-timeline-block -->
-
-		<div class="cd-timeline-block">
-			<div class="cd-timeline-img cd-picture">
-				<img src="<?php echo base_url() ?>/img/cd-icon-picture.svg" alt="Picture">
-			</div> <!-- cd-timeline-img -->
-
-			<div class="cd-timeline-content">
-				<h2>Title of section 3</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, obcaecati, quisquam id molestias eaque asperiores voluptatibus cupiditate error assumenda delectus odit similique earum voluptatem doloremque dolorem ipsam quae rerum quis. Odit, itaque, deserunt corporis vero ipsum nisi eius odio natus ullam provident pariatur temporibus quia eos repellat consequuntur perferendis enim amet quae quasi repudiandae sed quod veniam dolore possimus rem voluptatum eveniet eligendi quis fugiat aliquam sunt similique aut adipisci.</p>
-				<a href="#0" class="cd-read-more">Read more</a>
-				<span class="cd-date">Jan 24</span>
-			</div> <!-- cd-timeline-content -->
-		</div> <!-- cd-timeline-block -->
-
-		<div class="cd-timeline-block">
-			<div class="cd-timeline-img cd-location">
-				<img src="<?php echo base_url() ?>/img/cd-icon-location.svg" alt="Location">
-			</div> <!-- cd-timeline-img -->
-
-			<div class="cd-timeline-content">
-				<h2>Title of section 4</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
-				<a href="#0" class="cd-read-more">Read more</a>
-				<span class="cd-date">Feb 14</span>
-			</div> <!-- cd-timeline-content -->
-		</div> <!-- cd-timeline-block -->
-
-		<div class="cd-timeline-block">
-			<div class="cd-timeline-img cd-location">
-				<img src="<?php echo base_url() ?>/img/cd-icon-location.svg" alt="Location">
-			</div> <!-- cd-timeline-img -->
-
-			<div class="cd-timeline-content">
-				<h2>Title of section 5</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum.</p>
-				<a href="#0" class="cd-read-more">Read more</a>
-				<span class="cd-date">Feb 18</span>
-			</div> <!-- cd-timeline-content -->
-		</div> <!-- cd-timeline-block -->
-
-		<div class="cd-timeline-block">
-			<div class="cd-timeline-img cd-movie">
-				<img src="<?php echo base_url() ?>/img/cd-icon-movie.svg" alt="Movie">
-			</div> <!-- cd-timeline-img -->
-
-			<div class="cd-timeline-content">
-				<h2>Final Section</h2>
-				<p>This is the content of the last section</p>
-				<span class="cd-date">Feb 26</span>
-			</div> <!-- cd-timeline-content -->
-		</div> <!-- cd-timeline-block -->
+			<?php } }?>
+		
 	</section> <!-- cd-timeline -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="<?php echo base_url()?>/js/main.js"></script> <!-- Main JS -->

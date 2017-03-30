@@ -878,44 +878,39 @@ public function edit_tasks($projectID)
 
 }
 
-
- public function allocation(){
-    	
-    	if($this->check_restricted() == false) {return;};
-    	$this->load->helper('form');
-    	
-		$data['query'] = $this->project_model->search_algorithm();
-    	
-    	$this->load->view('templates/profile_header');
-		$this->load->view('pages/project/project_allocation', $data);
-		$this->load->view('templates/footer');
-    	
-    }
-
-
-
-
  
-   public function load_project_history(){
+   public function load_project_history($usrname){
        
-        $accountID = $this->session->accountID; // will only work for the logged in account ??
+       	if(isset($usrname)){
+       	$this->db->select('accountID');
+			$this->db->from('user_account');
+			$this->db->where('username', $usrname);
+			$accountID = $this->db->get()->result()[0]->accountID;
+
+       }else {
+ 
+       		$accountID = $this->session->accountID;
+       	}
        
 
-        $this->db->select('*');
-        $this->db-> from ( 'project AS proj', 'project_tasks AS task', 'project_roles AS role');
+        $this->db->select('proj.projectID, proj.title AS project_title, proj.description AS project_description, proj.startDate AS project_start, proj.endDate AS project_end,
+         task.title AS task_title, task.startDate AS task_start, task.endDate AS task_end, 
+         role.roleName as role_title ');
+        $this->db-> from ( 'project AS proj');
         $this->db-> join ('project_tasks AS task', 'proj.projectID = task.projectID');
         $this->db-> join ('project_roles AS role', 'task.taskID = role.taskID ');
         $this->db-> join ('employee_assignment AS ea', 'role.roleID = ea.roleID');
         $this->db-> where('ea.accountID', $accountID); 
+        $this->db-> order_by('project_start', 'DESC');
        
-        $query = $this->db->get();
+        $history = $this->db->get()->result_array();
        
-        if($query-> num_rows() < 1){
+        if(sizeof($history) < 1){
             print_r("There are no records to fetch!... \n");
             return;
         }
        
-        return $query;
+        return $history;
            
     }
 
