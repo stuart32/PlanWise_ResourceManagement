@@ -443,6 +443,8 @@ public function admin_fill_skills($username){
 
 	$data['info'] = $this->profile_model->join_profile_skills($username);
 	$data['skills'] =  $this->project_model->load_skills();
+	$data['acc'] = $this->profile_model->getAccountID($username);
+	print_r($this->profile_model->getAccountID($username));
     $data['username'] = $username;
 
 	if(isset($skills))

@@ -613,4 +613,14 @@ public function profile_search($option, $search){
 			return $time_off;
 		}
 
+
+public function getAccountID($username){
+	$this->db->select('accountID');
+	$this->db->from('user_account');
+	$this->db->where('username',$username);
+	return $this->db->get()->result()[0]->accountID;
+	
+	}
+	
+
 }

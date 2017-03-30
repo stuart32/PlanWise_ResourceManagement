@@ -13,7 +13,7 @@
 </script>
 
 <section>
-<div class="container">
+<div class="jumbotron">
 <h1>Role Selection</h1>
 <br>
 <br>
@@ -31,11 +31,22 @@ li .active {
 </style>
 
 
-		<?php //print_r($roles);?>
-<!--
+		<?php 
+		echo "<pre>";
+		print_r($roles);
+				echo "<br>";
+		print_r($candidates);
+						echo "<br>matches  ";
+		print_r($match);
+		echo "</pre>";
+
+		?>
+
 	
 
+<!--
 	<section class="col-md-3">
+-->
 
 		<h1>Tasks</h1>
 		<br>
@@ -43,25 +54,27 @@ li .active {
 		$roleNumber = 0;
 		$taskNumber = 0;
 		$currentTask = $tasks[0]['taskID'];
-		$currentRole = $roles[$roleNumber]['roleID'];
-		echo $currentRole;
-		foreach($tasks as $task)
-		{ ?>
+		$currentRole = $roles[$taskNumber][$roleNumber]['roleID'];
+		//~ echo $currentRole;
+		 ?>
 
 
-		
 
 
+
+
+<!--
 	</section>
+-->
 	 
 
 
-	<section class="col-md-9" style="background-color: #ABB7B7;">
+	<section class="row" style="background-color: #ABB7B7;">
 
-		<div class="col-md-12">
+		<div class="">
 
 
-			<div id="sticky" class="container">
+			<div id="sticky" class="">
 
 				<ul class="nav nav-tabs nav-menu" role="tablist">
    			 	<?php 
@@ -121,11 +134,15 @@ li .active {
 								<p>Please select employees for each role.</p>
 								<br>
 								<div class="row">
-
+										<?php foreach($match as $m){
+												if($m['roleID'] == $r['roleID']){
+													
+											 ?>
 											  <div class="col-sm-6 col-md-4">
 												<div class="thumbnail">
 												  <div class="caption">
 													<h2>Employee Name</h2>
+													<h4><?php echo $m['data']->firstname." ".$m['data']->lastname;  ?></h4>
 													<h3>Employee Position</h3>
 													<ul>
 														<li>Skill 1</li>
@@ -136,36 +153,9 @@ li .active {
 												  </div>
 												</div>
 											  </div>
-
-											  <div class="col-sm-6 col-md-4">
-												<div class="thumbnail">
-												  <div class="caption">
-													<h2>Employee Name</h2>
-													<h3>Employee Position</h3>
-													<ul>
-														<li>Skill 1</li>
-														<li>Skill 2</li>
-														<li>Skill 3</li>
-													</ul>
-													<p><a href="#" class="btn btn-danger btn-xs" role="button">Remove</a> </p>
-												  </div>
-												</div>
-											  </div>
-
-											  <div class="col-sm-6 col-md-4">
-												<div class="thumbnail">
-												  <div class="caption">
-													<h2>Employee Name</h2>
-													<h3>Employee Position</h3>
-													<ul>
-														<li>Skill 1</li>
-														<li>Skill 2</li>
-														<li>Skill 3</li>
-													</ul>
-													<p><a href="#" class="btn btn-danger btn-xs" role="button">Remove</a> </p>
-												  </div>
-												</div>
-											  </div>
+									<?php		}
+											} ?>
+											  
 										</div>
 								<br>
 								<h1>Matching staff for role</h1>
@@ -185,8 +175,10 @@ li .active {
 										</thead>
 										<tbody>
 											<?php 
-											foreach ($match as $m)
-											 { ?>
+											foreach ($candidates as $c)
+											 { //if($c)
+												 
+												 ?>
 												
 								<!--
 											<tr>
@@ -436,7 +428,24 @@ li .active {
 
 	</section>
 		
-
+</div>
 
 </section>
 
+<!--
+<section class="lougout" id="panel">
+  <div class="container">
+      <div class="col-sm-2" style="padding-right:0px; margin-top:5px; padding-top:15px; margin-left:-20px; ">
+        <div class="row">
+			<form action="logout">
+				<button type="submit" class="btn btn-default search-btn ">Yes</button>
+			</form>
+        </div>
+      </div>
+            <div class="row">
+      <div class="col-sm-3" style="padding-right:15px; margin-top:5px; padding-top:15px;">
+          <button type="submit" class="btn btn-default search-btn">No</button>
+        </div>
+  </div>
+  </div>
+</section>-->

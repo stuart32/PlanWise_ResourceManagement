@@ -57,6 +57,10 @@ h5 {
 .selected{
     color:white;
 }
+
+.skill{
+    color:black;
+    }
 .buttons{
 margin: 15px;
 }
