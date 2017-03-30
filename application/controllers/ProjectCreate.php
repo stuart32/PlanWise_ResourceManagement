@@ -114,7 +114,7 @@ public function createTasks(){
     public function allocation()
 {        
 		$projectID = ($this->session->projectID);
-
+		$this->session->projectID = 61;
 		$this->check_restricted();
 		$this->load->helper('form');
 		$this->load->library('form_validation');
@@ -122,9 +122,11 @@ public function createTasks(){
 		$data['title'] = 'Select Roles';
 		$data['info'] = $this->project_model->join_find_project($projectID);
 		$data['tasks'] = $this->project_model->find_tasks($projectID);
-		$data['roles'] = $this->project_model->find_roles($projectID);
+		$data['roles'] = $this->project_model->find_roles_alloc($projectID);
 		$query = $this->project_model->search_algorithm();
 		$data['match'] = $this->project_model->search_algorithm();
+		$data['candidates'] = $this->project_model->allCandidates();
+		
 		//$data['find'] = true;
 		
 

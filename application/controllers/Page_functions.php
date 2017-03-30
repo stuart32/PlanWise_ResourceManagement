@@ -60,13 +60,15 @@ class Page_functions extends CI_Controller {
 	{
 		$this->load->helper('form');
 		$this->load->library('form_validation');
-
+		$this->load->library('encryption');
+		
 		$data['title'] = 'Register Profile';
 
 		$this->form_validation->set_rules('username', 'username', 'required');
 		$this->form_validation->set_rules('password', 'password', 'required');
 		$this->form_validation->set_rules('emailAddress', 'emailAddress', 'required');
-
+		$password = 'mypassword';
+		$hash = crypt($password);
 
 		if ($this->form_validation->run() === FALSE)
 		{
@@ -230,7 +232,20 @@ public function view_profiles()
 
 }
 
+public function view_my_project()
+{
+			$this->check_restricted();
+			$this->load->helper('form');
+			$this->load->library('form_validation');
+			
+			
+			$data['info'] = $this->project_model->get_my_projects(); // you need to get the personID from account ID 
+			
+			$this->load->view('templates/profile_header', $data);
+			$this->load->view('pages/project/my_project');
+			$this->load->view('templates/footer');
 
+}
 
 
 public function find_project($projectID){	
@@ -242,7 +257,7 @@ public function find_project($projectID){
 			$data['info'] = $this->project_model->join_find_project($projectID);
 			$data['tasks'] = $this->project_model->find_tasks($projectID);
 			$data['roles'] = $this->project_model->find_roles($projectID);
-			//$data['find'] = true;
+			$data['skills'] = $this->project_model->find_role_skills($projectID);
 			
 			$this->load->view('templates/profile_header', $data);
 			$this->load->view('pages/project/show_project');
@@ -290,20 +305,79 @@ public function edit_project($projectID){
 
 
 		$data['info'] =  ($this->project_model->join_find_project($projectID));
+		$data['tasks'] = $this->project_model->find_tasks($projectID);
+		$data['roles'] = $this->project_model->find_roles($projectID);
 		if ($this->form_validation->run() === FALSE)
 		{
 			$this->load->view('templates/profile_header', $data);
 			$this->load->view('pages/project/project_edit');
-			//$this->load->view('templates/footer');
+			$this->load->view('templates/footer');
 
 		}
 		else
 		{
+			$this->project_model->edit_tasks($projectID);
 			$this->project_model->edit_project($projectID);
 			redirect('find_project/'.$projectID);
 
 		} 
 }
+
+public function edit_tasks($projectID){
+		if($this->check_restricted() == false) {return;};
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+
+		$task = $this->input->post('task');
+		print_r ($task);
+		 //$roles[] = array();
+		if(!empty($task))
+		{
+			echo "<br>".sizeof($task);
+			// Loop through hotels and add the validation
+			foreach($task as $id => $data)
+			{
+				$this->form_validation->set_rules('task[' . $id . '][title]', 'required');
+				$this->form_validation->set_rules('task[' . $id . '][startDate]','required');
+				$this->form_validation->set_rules('task[' . $id . '][endDate]', 'required');
+				$role = $this->input->post('task[' . $id . '][role]');
+				//unset($roles);
+				//$roles[] = array();
+				foreach($role as $id2 => $role)
+				{
+					$this->form_validation->set_rules('task[' . $id . '][role]['.$id2.'][name]', 'Task '.$id.' Role name '. $id2 , 'required');
+					$this->form_validation->set_rules('task[' . $id . '][role]['.$id2.'][numPeople]', 'Task '.$id.' Number of People '. $id2 , 'required');
+					$this->form_validation->set_rules('task[' . $id . '][role]['.$id2.'][skill][0][skillID]', 'Task '.$id.' A Skill for Role '. $id2 , 'required');
+
+
+				}
+			}
+		}
+	
+			
+		
+
+		if ($this->form_validation->run() === FALSE)
+		{
+			$data['title'] = 'Edit Tasks';
+	
+			$data['info'] =  ($this->project_model->join_find_project($projectID));
+			$data['tasks'] = $this->project_model->find_tasks($projectID);
+			$data['roles'] = $this->project_model->find_roles($projectID);
+			$data['skills'] = $this->project_model->find_role_skills($projectID);
+
+			$this->load->view('templates/profile_header', $data);
+			$this->load->view('pages/project/edit_tasks', $data);
+			$this->load->view('templates/footer');
+
+		}
+		else
+		{
+			$this->project_model->edit_tasks($projectID);
+			redirect('find_project/'.$projectID);
+		} 
+    }
+
 
 public function search_project(){
 	
@@ -365,6 +439,8 @@ public function admin_fill_skills($username){
 
 	$data['info'] = $this->profile_model->join_profile_skills($username);
 	$data['skills'] =  $this->project_model->load_skills();
+	$data['acc'] = $this->profile_model->getAccountID($username);
+	print_r($this->profile_model->getAccountID($username));
     $data['username'] = $username;
 
 	if(isset($skills))
@@ -388,6 +464,25 @@ public function admin_fill_skills($username){
 		$this->load->view('templates/footer');	
 	}
 	
+}
+
+public function role_select($projectID)
+{
+	$this->check_restricted();
+			$this->load->helper('form');
+			$this->load->library('form_validation');
+			
+			$data['title'] = 'Select Roles';
+			$data['info'] = $this->project_model->join_find_project($projectID);
+			$data['tasks'] = $this->project_model->find_tasks($projectID);
+			$data['roles'] = $this->project_model->find_roles($projectID);
+			$data['match'] = $this->project_model->search_algorithm();
+			//$data['find'] = true;
+			
+			$this->load->view('templates/profile_header', $data);
+			$this->load->view('pages/project/role_select');
+			$this->load->view('templates/footer');
+
 }
 
 

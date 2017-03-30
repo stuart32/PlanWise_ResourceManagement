@@ -58,7 +58,7 @@
   <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#"><img src="<?php echo base_url() ?>img/logo.png" alt="Logo" style="width:60px;height:30px;"></a>
+      <a class="navbar-brand" href="<?php echo site_url();?>/view_profile"><img src="<?php echo base_url() ?>img/logo.png" alt="Logo" style="width:60px;height:30px;"></a>
     </div>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="<?php echo site_url();?>/view_profile">Home</a></li>
@@ -76,7 +76,7 @@
 				<span class="caret"></span></a>
        <ul class="dropdown-menu">
 	  <li><a href="<?php echo site_url();?>/create_project">Create Project</a></li>
-      <li><a href="<?php echo site_url();?>/create_project">My Projects</a></li>
+      <li><a href="<?php echo site_url();?>/my_project">My Projects</a></li>
       <li><a href="<?php echo site_url();?>/projects">Projects Database</a></li>
        </ul>
       </li>
@@ -128,6 +128,6 @@
 		<label id="SessionTimeLb" style="float:left;">SessionTime: </label>
 		<p id="time" ></p>
 	</div>
-</body>
+
                 
              
