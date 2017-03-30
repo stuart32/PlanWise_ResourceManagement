@@ -45,38 +45,6 @@ li .active {
 		//~ { ?>
 
 
-		 <!--<div class="col-sm-6 col-md-3 list-group">-->
-<!--
-			  <a href="#" 
--->
-			  <?php 
-			  //~ if($currentTask == $task['taskID'])
-			  		//~ {
-			  			?>
-<!--
-			  			class="list-group-item active"
--->
-			  			<?php
-			  		//~ }
-			  		//~ else if( empty($task)) 
-						//~ continue;
-			  		//~ else
-			  		//~ {
-			  			?>
-<!--
-			  			class="list-group-item"
--->
-			  			<?php
-			  		//~ }
-			  		?>
-<!--
-			   ><?php 
-			   //~ echo $task['title']; ?></a>
--->
-			<?php 
-			//~ } ?>  
-			<!--</div>-->
-
 
 	</section>
 	 

@@ -744,7 +744,7 @@ public function edit_project($projectID)
         $taskArray = $this->db->get()->result_array();
         
         
-        $employeeAssignment = array();
+        $candidateArray = array();
        // $rolesArray = array();
         
         
@@ -782,6 +782,15 @@ public function edit_project($projectID)
                 $candidates = $this->db->get();
 			}
 		}
+		array_push(
+					$candidateArray, 
+                    array(
+						'roleID' => $r['roleID'],
+						'candidates' => $candidates
+					)
+		);
+		
+		return $candidateArray;
     
 }
  
@@ -985,8 +994,8 @@ public function search_algorithm(){
               }
               
         }
-        echo "<br> employees:";
-        print_r($employeeAssignment);
+        //~ echo "<br> employees:";
+        //~ print_r($employeeAssignment);
         return $employeeAssignment; 
         
  }
