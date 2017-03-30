@@ -506,6 +506,24 @@ public function get_all_projects()
 	return $this->db->get('project')->result();
 }
 
+public function get_my_projects()
+{	
+	$accountID = $this->session->accountID;
+	
+	$this->db->select('*');
+	$this->db->from('project');
+	$this->db-> join('project_tasks', 'project.projectID = project_tasks.projectID');
+	$this->db-> join('project_roles', 'project_tasks.taskID = project_roles.taskID');
+	$this->db-> join('employee_assignment', 'project_roles.roleID = employee_assignment.roleID');
+	$this->db-> join('person', 'employee_assignment.accountID = person.accountID'); 
+	$this->db-> where('person.accountID',$accountID);
+	
+	
+	$query = $this->db->get()->result();
+	
+	return $query;
+	}
+
 public function find_interest_project($projectID){
 	$accountID = $this->session->accountID;
 
