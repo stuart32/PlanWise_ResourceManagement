@@ -113,29 +113,47 @@ public function createTasks(){
     
     public function allocation()
 {        
+	    if($this->check_restricted() == false) {return;};
 		$projectID = ($this->session->projectID);
 		$this->session->projectID = 61;
 		$this->check_restricted();
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 		
-		$data['title'] = 'Select Roles';
-		$data['info'] = $this->project_model->join_find_project($projectID);
-		$data['tasks'] = $this->project_model->find_tasks($projectID);
-		$data['roles'] = $this->project_model->find_roles_alloc($projectID);
-		$query = $this->project_model->search_algorithm();
-		$data['match'] = $this->project_model->search_algorithm();
-		$data['candidates'] = $this->project_model->allCandidates();
-		
+
 		//$data['find'] = true;
+		$assigns = $this->input->post('assign');
+		if(!empty($assigns))
+			foreach($assigns as $id => $a)
+			{
+						$this->form_validation->set_rules('assign[' . $id . '][roleID]', 'Role ID' , 'required');
+						$this->form_validation->set_rules('assign[' . $id . '][accountID]', 'Account ID' , 'required');
+			}
+		
+		if ($this->form_validation->run() === FALSE){
+					
+			$data['title'] = 'Select Roles';
+			$data['info'] = $this->project_model->join_find_project($projectID);
+			$data['tasks'] = $this->project_model->find_tasks($projectID);
+			$data['roles'] = $this->project_model->find_roles_alloc($projectID);
+			$data['match'] = $this->project_model->search_algorithm();
+			$data['candidates'] = $this->project_model->allCandidates();
+			$data['projectID'] = $projectID;
+					
+			$this->load->view('templates/profile_header', $data);
+			$this->load->view('pages/project/role_select');
+			$this->load->view('templates/footer');
+			
+		}else{
+			$this->project_model->assignSelectedProject($projectID);
+			redirect('find_project/'.$projectID);	
+		}
 		
 
-		
-		$this->load->view('templates/profile_header', $data);
-		$this->load->view('pages/project/role_select');
-		$this->load->view('templates/footer');
 
 }
+
+
     
  public function allocationOld(){
     	
