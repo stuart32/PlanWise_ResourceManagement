@@ -58,30 +58,30 @@
   <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="<?php echo site_url();?>/view_profile"><img src="<?php echo base_url() ?>img/logo.png" alt="Logo" style="width:60px;height:30px;"></a>
+      <a class="navbar-brand" href="<?php echo site_url();?>/view_profile"><img src="<?php echo base_url() ?>img/Picture1.png" alt="Logo" style="width:60px;height:50px;"></a>
     </div>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="<?php echo site_url();?>/view_profile">Home</a></li>
-     			<li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Profile
+      <li><a href="<?php echo site_url();?>/view_profile" style="color: #1f497a;">Home</a></li>
+     			<li class="dropdown" style="color: #1f497a;">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color: #1f497a;">Profile
 				<span class="caret"></span></a>
        <ul class="dropdown-menu">
-	  <li><a href="<?php echo site_url();?>/view_profile">My profile</a></li>
-      <li><a href="<?php echo site_url();?>/profile">Edit profile</a></li>
-      <li><a href="<?php echo site_url();?>/profiles">Profile database</a></li>
+	  <li><a href="<?php echo site_url();?>/view_profile" style="color: #1f497a;">My profile</a></li>
+      <li><a href="<?php echo site_url();?>/profile" style="color: #1f497a;"> Edit profile</a></li>
+      <li><a href="<?php echo site_url();?>/profiles" style="color: #1f497a;">Profile database</a></li>
        </ul>
       </li>
 			<li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Projects
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color: #1f497a;">Projects
 				<span class="caret"></span></a>
        <ul class="dropdown-menu">
-	  <li><a href="<?php echo site_url();?>/create_project">Create Project</a></li>
-      <li><a href="<?php echo site_url();?>/my_project">My Projects</a></li>
-      <li><a href="<?php echo site_url();?>/projects">Projects Database</a></li>
+	  <li><a href="<?php echo site_url();?>/create_project" style="color: #1f497a;">Create Project</a></li>
+      <li><a href="<?php echo site_url();?>/my_project" style="color: #1f497a;">My Projects</a></li>
+      <li><a href="<?php echo site_url();?>/projects" style="color: #1f497a;">Projects Database</a></li>
        </ul>
       </li>
-      <li><a href="http://askooner1996.wixsite.com/planwise">Company</a></li>
-      <li><a href="#" data-toggle="modal" data-target="#myModal">Log Out</a></li>
+      <li><a href="http://askooner1996.wixsite.com/planwise" style="color: #1f497a;">Company</a></li>
+      <li><a href="#" data-toggle="modal" data-target="#myModal" style="color: #1f497a;">Log Out</a></li>
     </ul>
     </div>
   </nav>

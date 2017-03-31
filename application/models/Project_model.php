@@ -466,7 +466,7 @@ public function find_assignment_roles($projectID)
 	//print_r($roles);
 	//echo "</pre>";
 	//echo "hello";
-	print_r($roles);
+	//print_r($roles);
 	return $roles; 
 }
 
