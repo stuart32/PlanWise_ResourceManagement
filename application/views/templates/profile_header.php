@@ -58,7 +58,8 @@
   <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="<?php echo site_url();?>/view_profile"><img src="<?php echo base_url() ?>img/Picture1.png" alt="Logo" style="width:60px;height:50px;"></a>
+      <a class="navbar-brand" href="<?php echo site_url();?>/view_profile"><img src="<?php echo base_url() ?>img/Picture1.png" alt="Logo" style="width:60px;height:50px; padding-bottom: 10px; "></a>
+
     </div>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="<?php echo site_url();?>/view_profile" style="color: #1f497a;">Home</a></li>

@@ -24,9 +24,9 @@
 	<li class = "available"> <p style = "color: #00FF66">available</p> </li>
 	<?php } }?>
 <li><span class="glyphicon glyphicon-briefcase"></span> 5 years</li>
-<li><span class="glyphicon glyphicon-map-marker"></span> Italy</li>
+<li><span class="glyphicon glyphicon-map-marker"></span> <?php echo $info[0]['country']; ?></li>
 <li><span class="glyphicon glyphicon-home"></span> 
-<?php echo $info[0]['buldingNumber'];echo " ".  $info[0]['streetName'];echo " ".  $info[0]['postcode'];echo " ".  $info[0]['city'];echo " ".  $info[0]['country']; ?>
+<?php echo $info[0]['buldingNumber'];echo " ".  $info[0]['streetName'];echo " ".  $info[0]['postcode'];echo " ".  $info[0]['city']; ?>
 </li>
 <li><span class="glyphicon glyphicon-phone"></span> <a href="#" title="call">(+021) 956 789123</a></li>
 <li><span class="glyphicon glyphicon-envelope"></span><a href="#" title="mail"> <?php echo $info[0]['email'];?></a></li>
