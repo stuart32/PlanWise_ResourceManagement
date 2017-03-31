@@ -60,13 +60,15 @@ class Page_functions extends CI_Controller {
 	{
 		$this->load->helper('form');
 		$this->load->library('form_validation');
-
+		$this->load->library('encryption');
+		
 		$data['title'] = 'Register Profile';
 
 		$this->form_validation->set_rules('username', 'username', 'required');
 		$this->form_validation->set_rules('password', 'password', 'required');
 		$this->form_validation->set_rules('emailAddress', 'emailAddress', 'required');
-
+		$password = 'mypassword';
+		$hash = crypt($password);
 
 		if ($this->form_validation->run() === FALSE)
 		{
@@ -121,13 +123,15 @@ class Page_functions extends CI_Controller {
 		} 
 }
 
-public function find_profile($usrname ){	
+public function find_profile($usrname){	
 			
 			$this->check_restricted();
 			$this->load->helper('form');
 			$this->load->library('form_validation');
 			
 			$data['info'] = $this->profile_model->join_find_profile($usrname);
+			$data['history'] = $this->project_model->load_project_history($usrname);
+			$data['time_off'] = $this->profile_model->availability($usrname);
 			$data['find'] = true;
 			
 			$this->load->view('templates/profile_header', $data);
@@ -142,7 +146,9 @@ public function view_profile(){
 			$this->load->helper('form');
 			$this->load->library('form_validation');
 			
-			$data['info'] = $this->profile_model->join_load_profile();
+			$data['info'] = $this->profile_model->join_load_profile(NULL);
+			$data['history'] = $this->project_model->load_project_history(NULL);
+			$data['time_off'] = $this->profile_model->availability(NULL);
 			$this->form_validation->set_rules('startDate', 'start date ', 'required');
 			$this->form_validation->set_rules('endDate', 'end date ', 'required');
 			
@@ -230,7 +236,20 @@ public function view_profiles()
 
 }
 
+public function view_my_project()
+{
+			$this->check_restricted();
+			$this->load->helper('form');
+			$this->load->library('form_validation');
+			
+			
+			$data['info'] = $this->project_model->get_my_projects(); // you need to get the personID from account ID 
+			
+			$this->load->view('templates/profile_header', $data);
+			$this->load->view('pages/project/my_project');
+			$this->load->view('templates/footer');
 
+}
 
 
 public function find_project($projectID){	
@@ -427,6 +446,8 @@ public function admin_fill_skills($username){
 
 	$data['info'] = $this->profile_model->join_profile_skills($username);
 	$data['skills'] =  $this->project_model->load_skills();
+	$data['acc'] = $this->profile_model->getAccountID($username);
+	print_r($this->profile_model->getAccountID($username));
     $data['username'] = $username;
 
 	if(isset($skills))

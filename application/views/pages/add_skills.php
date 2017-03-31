@@ -130,7 +130,7 @@
                                 $("#newSkills").append(' <li value="' + $("#skillName").val() + ' " class="list-group-item skill ">' + $("#skillName").val() + 
                                     '<span class="label label-primary pull-right">' + ($("#skillLevel option:selected").index() + 1) + 
                                     '</span><span class="label label-success pull-right">' + $("#experience").val() + '</span>' + 
-                                    '<input type="hidden"  name="skill['+ i +'][accountID]" value=" <?php echo $info[0]->accountID; ?> "/> ' +
+                                    '<input type="hidden"  name="skill['+ i +'][accountID]" value=" <?php echo $acc; ?> "/> ' +
                                     '<input type="hidden"  name="skill['+ i +'][skillID]" value="' + ($("#skillName option:selected").index() + 1) + ' "/> ' +
                                     '<input type="hidden"  name="skill['+ i +'][skillLevel]" value="' + ($("#skillLevel option:selected").index() + 1) + ' "/> ' + 
                                     '<input type="hidden"  name="skill['+ i +'][experienceYears]" value="' + $("#experience").val() + ' "/> ' + '</li>');

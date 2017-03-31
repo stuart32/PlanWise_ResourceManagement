@@ -71,6 +71,7 @@ $route['edit_project/(:any)'] = 'page_functions/edit_project/$1';
 $route['edit_tasks/(:any)'] = 'page_functions/edit_tasks/$1';
 $route['interest_project/(:any)'] = 'page_functions/interest_project/$1';
 $route['search_project'] = 'page_functions/search_project';
+$route['my_project'] = 'page_functions/view_my_project';
 $route['role_select/(:any)'] = 'page_functions/role_select/$1';
 
 

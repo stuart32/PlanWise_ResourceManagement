@@ -1,3 +1,13 @@
+a:link {
+color: black;
+}
+th {
+background-color: #7EC0EE
+}
+
+td	{
+background-color: white;
+}
 body{
 background-image: url("../img/wall4.png");
 background-repeat: repeat;
@@ -47,6 +57,10 @@ h5 {
 .selected{
     color:white;
 }
+
+.skill{
+    color:black;
+    }
 .buttons{
 margin: 15px;
 }
