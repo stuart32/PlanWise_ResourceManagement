@@ -90,7 +90,7 @@
               <li><span class="glyphicon glyphicon-calendar"></span> <?php echo $info[0]['startDate']; ?> - <?php echo $info[0]['endDate'];?></li>
               <li><span class="glyphicon glyphicon-map-marker"></span> Edinburgh</li>
               <li><span class="glyphicon glyphicon-ok-circle"></span> <?php if($info[0]['completed'] == 0){echo "Active";}else{echo "Completed";}?></li>
-              <li><span class="glyphicon glyphicon-ok-sign"></span> On Schedual </li>
+              <li><span class="glyphicon glyphicon-ok-sign"></span> On Schedule </li>
               <li><span class="glyphicon glyphicon-gbp"></span> Budget: <?php echo $info[0]['budget']; ?></li>
 
               <?php 
