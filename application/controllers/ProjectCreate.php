@@ -45,7 +45,7 @@ class ProjectCreate extends CI_Controller {
 		
 		if ($this->form_validation->run() === FALSE)
 		{
-			$this->load->view('templates/header', $data);
+			$this->load->view('templates/profile_header', $data);
 			$this->load->view('pages/project/createProject', $data);
 			$this->load->view('templates/footer');
 
@@ -99,7 +99,7 @@ public function createTasks(){
 		
 			$data['skills'] =  $this->project_model->load_skills();
 		
-			$this->load->view('templates/header', $data);
+			$this->load->view('templates/profile_header', $data);
 			$this->load->view('pages/project/createTasks', $data);
 			$this->load->view('templates/footer');
 
