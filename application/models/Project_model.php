@@ -944,7 +944,7 @@ public function edit_tasks($projectID)
         $history = $this->db->get()->result_array();
        
         if(sizeof($history) < 1){
-            print_r("There are no records to fetch!... \n");
+            //~ print_r("There are no records to fetch!... \n");
             return;
         }
        
@@ -1067,11 +1067,13 @@ public function travel_distance($to, $from){
             $to = urlencode($to);
  
             $data = file_get_contents("http://maps.googleapis.com/maps/api/distancematrix/json?origins=$from&destinations=$to&language=en-EN&sensor=false");
+            //~ print_r($data);
+
             $data = json_decode($data);
  
             $time = 0;
             $distance = 0;
- 
+			//~ print_r($data);
             foreach($data->rows[0]->elements as $road) {
                $time += $road->duration->value;
                $distance += $road->distance->value;
