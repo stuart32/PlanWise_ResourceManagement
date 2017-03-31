@@ -618,31 +618,6 @@ $i=0;
 	
 }
 
-/*
-public function join_load_project($projectID){
-		
-		
-		$this->db-> select('*');
-		$this->db->	from('project');
-		$this->db-> join('user_account', 'project.managerID = user_account.accountID');
-		$this->db-> join('person', 'project.managerID = person.accountID');
-		$this->db->	where('project.projectID',$projectID);
-		$this->db-> limit(1);
-		
-		$query = $this->db->get();
-		
-		if($query-> num_rows() != 1){
-			return;
-		}
-		
-		
-		
-		return $query->result_array();
-		
-		//return $query->result_array();
-			
-	}
-*/
 
 public function project_search($option, $search){
 	
@@ -1025,10 +1000,11 @@ public function edit_tasks($projectID)
 					$skillslist[]=$sr->skillID;
 
                   
-                $this->db->select('user_account.accountID,user_skills.skillLevel, firstname,lastname');
+                $this->db->select('user_account.accountID,user_skills.skillLevel, firstname,lastname, address.*');
                 $this->db->from('user_account');
                 $this->db->join('user_skills', 'user_skills.accountID = user_account.accountID');
                 $this->db->join('person','person.accountID = user_account.accountID');
+				$this->db->join('address','person.addressID = address.addressID');
                 $this->db->where_in('user_skills.skillID',$skillslist);
                
 
@@ -1087,8 +1063,6 @@ public function search_algorithm(){
         /* Current expenditure on employees for the project // project ID */
         $budgetExpenditure = 0;
         $projectID = ($this->session->projectID);
-        			print_r($projectID);
-		echo "  hello   ";
         
 		$this->db->select('a.postcode, p.projectID, p.addressID');
         $this->db->from('address AS a');
@@ -1192,7 +1166,8 @@ public function search_algorithm(){
                         /* */
 
 
-                        /* check employee availability */
+              $assigns = $this->input->post('assign');
+	          /* check employee availability */
 
                         $this->db->select('time_off.startDate, time_off.endDate');
                         $this->db->from('time_off');
@@ -1268,6 +1243,28 @@ public function search_algorithm(){
         return $employeeAssignment; 
         
  }
+ 
+ 	//~ $roleData[] = array(
+				//~ 'taskID' => $taskID,
+				//~ 'roleName' => 	$role['name'],			//$this->input->post('task[][title]'),
+				//~ 'numPeople' => 	$role['numPeople'],	// $this->input->post('task[][startDate]'),
+			//~ );
+			//~ $this->db->insert_batch('project_roles', $roleData);
+ 
+ public function assignSelectedProject(){
+	$assigns = $this->input->post('assign');
+	print_r($assigns);
+	$assignData;
+	foreach($assigns as $as)
+	{
+		$assignData[] = array(
+			'roleID' => $as['roleID'],
+			'accountID' => $as['accountID']
+			
+		);
+	}
+	$this->db->insert_batch('employee_assignment', $assignData);
+} 
  
  public function get_matched_profiles($list){
 	 if(!isset($list) and empty($list))

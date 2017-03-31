@@ -1,19 +1,9 @@
-	<script>
- 					$('#nextRole button').on('click', function () {
-  					  var $btn = $(this).button('loading')
-  					  <?php
-  					  $roleNumber ++;
 
-  					  $currentRole = $roles[$roleNumber]['roleID'];
-
-  					  echo $currentRole;
-  					  ?>
-    				$btn.button('reset')
-  })
-</script>
 
 <section>
 <div class="jumbotron">
+
+
 <h1>Role Selection</h1>
 <br>
 <br>
@@ -34,10 +24,10 @@ li .active {
 		<?php 
 		echo "<pre>";
 		print_r($roles);
-				echo "<br>";
-		print_r($candidates);
-						echo "<br>matches  ";
-		print_r($match);
+				//~ echo "<br>";
+		//~ print_r($candidates);
+						//~ echo "<br>matches  ";
+		//~ print_r($match);
 		echo "</pre>";
 
 		?>
@@ -70,7 +60,13 @@ li .active {
 
 
 	<section class="row" style="background-color: #ABB7B7;">
-
+		<?php 
+		echo form_open('project_allocation/');
+		?>
+		<div class="alert alert-info text-center" role="alert">
+			<h3>Confirm Allocated Roles</h3>
+			<h4> <?php echo validation_errors(); ?> </h4>
+		</div>
 		<div class="">
 
 
@@ -117,6 +113,7 @@ li .active {
 	foreach($roles as $role){
 			if(empty($role)) 
 				continue;
+				$j =0;
 			foreach($role as $r){
 				if($currentRole == $r['roleID']){
 				?>
@@ -136,7 +133,6 @@ li .active {
 								<div class="row">
 										<?php foreach($match as $m){
 												if($m['roleID'] == $r['roleID']){
-													
 											 ?>
 											  <div class="col-sm-6 col-md-4">
 												<div class="thumbnail">
@@ -149,14 +145,19 @@ li .active {
 														<li>Skill 2</li>
 														<li>Skill 3</li>
 													</ul>
+													<input hidden name='assign[<?php echo $j; ?>][roleID]' value='<?php echo $m['roleID'];  ?>' >
+													<input hidden name='assign[<?php echo $j; ?>][accountID]' value='<?php echo $m['accountID']  ?>' >
 													<p><a href="#" class="btn btn-danger btn-xs" role="button">Remove</a> </p>
 												  </div>
 												</div>
 											  </div>
-									<?php		}
+									<?php		$j++;	
+
+												}
 											} ?>
 											  
 										</div>
+								
 								<br>
 								<h1>Matching staff for role</h1>
 								<br>
@@ -166,9 +167,8 @@ li .active {
 											<tr >
 												<th>First Name</th>
 												<th>Last Name</th>
-												<th>Email</th>
-												<td>Position</td>
-												<td>Skill Level</td>
+												<th>City</th>
+												<th>Postcode</th>
 												<td>  </td>
 
 											</tr>
@@ -176,73 +176,32 @@ li .active {
 										<tbody>
 											<?php 
 											foreach ($candidates as $c)
-											 { //if($c)
-												 
+											 { 
+												 if($c['roleID']== $r['roleID'])
+												 {
+													foreach($c['candidates'] as $oneC){
 												 ?>
 												
-								<!--
+								
 											<tr>
 												
-												<td><?php echo $m['firstname'];?></td>
-												<td><?php echo $m['lastname'];?></td>
-												<td><?php echo $m['email'];?></td>
-												<td>Software Engineer</td>
-												<td><?php echo $m['level'];?> </td>
-												<td><button id="submit" name="submit" type="submit" class="btn btn-success btn-xs">Add to role</button></td>
-											</tr>
-								-->
+												<td><?php echo $oneC->firstname;?></td>
+												<td><?php echo $oneC->lastname;?></td>
+												<td><?php echo $oneC->city;?></td>
+												<td><?php echo $oneC->postcode;?></td>
 
-										   <?php } ?>
 
-										  
-											<tr>
-												
-												<td>Peter</td>
-												<td>Parker</td>
-												<td>peterparker@mail.com</td>
-												 <td>Software Engineer</td>
-												<td> 5 Years </td>
 												<td><button id="submit" name="submit" type="submit" class="btn btn-success btn-xs">Add to role</button></td>
 											</tr>
-											<tr>
-												
-												<td>John</td>
-												<td>Rambo</td>
-												<td>johnrambo@mail.com</td>
-												 <td>Software Engineer</td>
-												<td> 5 Years </td>
-												<td><button id="submit" name="submit" type="submit" class="btn btn-success btn-xs">Add to role</button></td>
-											</tr>
-											<tr>
-												
-												<td>John</td>
-												<td>Carter</td>
-												<td>johncarter@mail.com</td>
-												<td>Software Engineer</td>
-												<td> 5 Years </td>
-												<td><button id="submit" name="submit" type="submit" class="btn btn-success btn-xs">Add to role</button></td>
-											</tr>
-											<tr>
-												
-												<td>Peter</td>
-												<td>Parker</td>
-												<td>peterparker@mail.com</td>
-												 <td>Software Engineer</td>
-												<td> 5 Years </td>
-												<td><button id="submit" name="submit" type="submit" class="btn btn-success btn-xs">Add to role</button></td>
-											</tr>
-											<tr>
-												
-												<td>John</td>
-												<td>Rambo</td>
-												<td>johnrambo@mail.com</td>
-												 <td>Software Engineer</td>
-												<td> 5 Years </td>
-												<td><button id="submit" name="submit" type="submit" class="btn btn-success btn-xs">Add to role</button></td>
-											</tr>
+								
+
+										   <?php }
+										     }
+										   } ?>
 										</tbody>
 									</table>
 								</div>
+							
 							</div>
 						</div>
 					</div>
@@ -263,53 +222,34 @@ li .active {
 								<p>Please select employees for each role.</p>
 								<br>
 								<div class="row">
-
+										<?php foreach($match as $m){
+												if($m['roleID'] == $r['roleID']){
+													
+											 ?>
 											  <div class="col-sm-6 col-md-4">
 												<div class="thumbnail">
 												  <div class="caption">
 													<h2>Employee Name</h2>
-													<h3>Employee Position</h3>
+													<h4><?php echo $m['data']->firstname." ".$m['data']->lastname;  ?></h4>
+													<h3>Employee Position<?php		echo	$j;?></h3>
 													<ul>
 														<li>Skill 1</li>
 														<li>Skill 2</li>
 														<li>Skill 3</li>
 													</ul>
+													<input hidden name='assign[<?php echo $j; ?>][roleID]' value='<?php echo $m['roleID'];  ?>' >
+													<input hidden name='assign[<?php echo $j; ?>][accountID]' value='<?php echo $m['accountID']  ?>' >
 													<p><a href="#" class="btn btn-danger btn-xs" role="button">Remove</a> </p>
-												  </div>
+												  </div> 
 												</div>
 											  </div>
-
-											  <div class="col-sm-6 col-md-4">
-												<div class="thumbnail">
-												  <div class="caption">
-													<h2>Employee Name</h2>
-													<h3>Employee Position</h3>
-													<ul>
-														<li>Skill 1</li>
-														<li>Skill 2</li>
-														<li>Skill 3</li>
-													</ul>
-													<p><a href="#" class="btn btn-danger btn-xs" role="button">Remove</a> </p>
-												  </div>
-												</div>
-											  </div>
-
-											  <div class="col-sm-6 col-md-4">
-												<div class="thumbnail">
-												  <div class="caption">
-													<h2>Employee Name</h2>
-													<h3>Employee Position</h3>
-													<ul>
-														<li>Skill 1</li>
-														<li>Skill 2</li>
-														<li>Skill 3</li>
-													</ul>
-													<p><a href="#" class="btn btn-danger btn-xs" role="button">Remove</a> </p>
-												  </div>
-												</div>
-											  </div>
+									<?php			$j++;
+												}
+											} ?>
+											  
 										</div>
-								<br>
+								
+							<br>
 								<h1>Matching staff for role</h1>
 								<br>
 								<div class="bs-example">
@@ -318,81 +258,41 @@ li .active {
 											<tr >
 												<th>First Name</th>
 												<th>Last Name</th>
-												<th>Email</th>
-												<td>Position</td>
-												<td>Skill Level</td>
+												<th>City</th>
+												<th>Postcode</th>
 												<td>  </td>
 
 											</tr>
 										</thead>
 										<tbody>
 											<?php 
-											foreach ($match as $m)
-											 { ?>
+											foreach ($candidates as $c)
+											 { 
+												 if($c['roleID']== $r['roleID'])
+												 {
+													foreach($c['candidates'] as $oneC){
+												 ?>
 												
-								<!--
+								
 											<tr>
 												
-												<td><?php echo $m['firstname'];?></td>
-												<td><?php echo $m['lastname'];?></td>
-												<td><?php echo $m['email'];?></td>
-												<td>Software Engineer</td>
-												<td><?php echo $m['level'];?> </td>
-												<td><button id="submit" name="submit" type="submit" class="btn btn-success btn-xs">Add to role</button></td>
-											</tr>
-								-->
+												<td><?php echo $oneC->firstname;?></td>
+												<td><?php echo $oneC->lastname;?></td>
+												<td><?php echo $oneC->city;?></td>
+												<td><?php echo $oneC->postcode;?></td>
 
-										   <?php } ?>
 
-										  
-											<tr>
-												
-												<td>Peter</td>
-												<td>Parker</td>
-												<td>peterparker@mail.com</td>
-												 <td>Software Engineer</td>
-												<td> 5 Years </td>
 												<td><button id="submit" name="submit" type="submit" class="btn btn-success btn-xs">Add to role</button></td>
 											</tr>
-											<tr>
-												
-												<td>John</td>
-												<td>Rambo</td>
-												<td>johnrambo@mail.com</td>
-												 <td>Software Engineer</td>
-												<td> 5 Years </td>
-												<td><button id="submit" name="submit" type="submit" class="btn btn-success btn-xs">Add to role</button></td>
-											</tr>
-											<tr>
-												
-												<td>John</td>
-												<td>Carter</td>
-												<td>johncarter@mail.com</td>
-												<td>Software Engineer</td>
-												<td> 5 Years </td>
-												<td><button id="submit" name="submit" type="submit" class="btn btn-success btn-xs">Add to role</button></td>
-											</tr>
-											<tr>
-												
-												<td>Peter</td>
-												<td>Parker</td>
-												<td>peterparker@mail.com</td>
-												 <td>Software Engineer</td>
-												<td> 5 Years </td>
-												<td><button id="submit" name="submit" type="submit" class="btn btn-success btn-xs">Add to role</button></td>
-											</tr>
-											<tr>
-												
-												<td>John</td>
-												<td>Rambo</td>
-												<td>johnrambo@mail.com</td>
-												 <td>Software Engineer</td>
-												<td> 5 Years </td>
-												<td><button id="submit" name="submit" type="submit" class="btn btn-success btn-xs">Add to role</button></td>
-											</tr>
+								
+
+										   <?php }
+										     }
+										   } ?>
 										</tbody>
 									</table>
 								</div>
+							
 							</div>
 						</div>
 					</div>
@@ -410,11 +310,6 @@ li .active {
 
 
 					<!-- Button -->
-					<div class="form-group">
-					  <div class="col-md-9 control-label">
-						<button id="nextRole" name="submit" type="submit" class="btn btn-primary btn-lg">Next Role</button>
-					  </div>
-					</div>
 
 				
 
@@ -425,9 +320,14 @@ li .active {
 
 
 
-
+		<div class="form-group">
+		  <div class="col-md-9 control-label">
+			<button id="nextRole" name="submit" type="submit" class="btn btn-primary btn-lg">Complete Allocation</button>
+		  </div>
+		</div>
 	</section>
-		
+
+
 </div>
 
 </section>
