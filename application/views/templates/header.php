@@ -36,6 +36,21 @@
 			}
 		}	
 	</script>
+	
+<style>
+
+ul.li.unavailable {
+	
+	color = red;
+}
+
+ul.li.available{
+	
+	color = green;
+	
+}
+
+</style>
 </head> 
 <body onload="if(<?php if (isset($this->session->logged_in) ) { echo $this->session->logged_in; } else  {echo 'false';} ?>){DisplaySessionTimeout();}">
 	<div class="jumbotron text-center" style="background-image: url(../img/white-wood.jpg)";>

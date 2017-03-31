@@ -165,10 +165,17 @@ public function get_all_profiles()
 		return 1;
 	}
 
-	public function join_load_profile(){
+	public function join_load_profile($username){
 		
-		$accountID = $this->session->accountID;
-		
+		 	if(isset($usrname)){
+       	$this->db->select('accountID');
+			$this->db->from('user_account');
+			$this->db->where('username', $usrname);
+			$accountID = $this->db->get()->result()[0]->accountID;
+       }else {
+       		$accountID = $this->session->accountID;
+       	}
+       	
 		$this->db-> select('*');
 		$this->db->	from('person');
 		$this->db-> join('user_account', 'person.accountID = user_account.accountID');
@@ -583,6 +590,28 @@ public function profile_search($option, $search){
 	*/
 	
 	}
+	
+	
+	public function availability($usrname){
+			 	if(isset($usrname)){
+       	$this->db->select('accountID');
+			$this->db->from('user_account');
+			$this->db->where('username', $usrname);
+			$accountID = $this->db->get()->result()[0]->accountID;
+
+       }else {
+
+       		$accountID = $this->session->accountID;
+       	}
+			$this->db->select('startDate, endDate');
+			$this->db->from('time_off');
+			$this->db->where('accountID', $accountID);
+			$this->db->order_by('endDate', 'DESC');
+			$this->db->limit(1);
+			$time_off = $this->db->get()->result_array();
+
+			return $time_off;
+		}
 
 
 public function getAccountID($username){

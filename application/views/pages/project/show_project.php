@@ -152,22 +152,30 @@
          <div class="row">    
         <?php 
         $j = -1;
-          foreach ($roles[$i] as $role) {
-            $j++;
-            if($roles == null)
-            {
-               echo "This task has no roles";
-            }
-             else
-             {
+          $rolesNew;
+          $noPeople;
 
-            ?>
+          if(empty($roles[$i])    )
+            {
+               $rolesNew[$i] = $rolesback[$i];
+               $noPeople=true;
+            }else{
+              $rolesNew[$i] = $roles[$i];
+              $noPeople=false;
+            }
+          foreach ($rolesNew[$i] as $role) {
+            $j++;
+             ?>
+
+
+
             
                 <div class="col-sm-6 col-md-4">
                   <div class="panel panel-default">
                     <div class="panel-heading"> 
                        <h3 class="panel-title"><?php echo $role['roleName'];?></h3>
                      </div>
+                     <?php if(!$noPeople) { ?>
                     <div class="panel-body">
                       
                       
@@ -186,11 +194,12 @@
                           </div>
                       
                     </div>
+                    <?php  } ?>
                   </div>
                 </div>
              
           <?php
-        }
+        
           }
          ?>     
 

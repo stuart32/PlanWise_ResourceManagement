@@ -123,13 +123,15 @@ class Page_functions extends CI_Controller {
 		} 
 }
 
-public function find_profile($usrname ){	
+public function find_profile($usrname){	
 			
 			$this->check_restricted();
 			$this->load->helper('form');
 			$this->load->library('form_validation');
 			
 			$data['info'] = $this->profile_model->join_find_profile($usrname);
+			$data['history'] = $this->project_model->load_project_history($usrname);
+			$data['time_off'] = $this->profile_model->availability($usrname);
 			$data['find'] = true;
 			
 			$this->load->view('templates/profile_header', $data);
@@ -144,7 +146,9 @@ public function view_profile(){
 			$this->load->helper('form');
 			$this->load->library('form_validation');
 			
-			$data['info'] = $this->profile_model->join_load_profile();
+			$data['info'] = $this->profile_model->join_load_profile(NULL);
+			$data['history'] = $this->project_model->load_project_history(NULL);
+			$data['time_off'] = $this->profile_model->availability(NULL);
 			$this->form_validation->set_rules('startDate', 'start date ', 'required');
 			$this->form_validation->set_rules('endDate', 'end date ', 'required');
 			
@@ -256,7 +260,9 @@ public function find_project($projectID){
 			
 			$data['info'] = $this->project_model->join_find_project($projectID);
 			$data['tasks'] = $this->project_model->find_tasks($projectID);
-			$data['roles'] = $this->project_model->find_roles($projectID);
+			$data['roles'] = $this->project_model->find_assignment_roles($projectID);
+			$data['rolesback'] = $this->project_model->find_roles($projectID);
+
 			$data['skills'] = $this->project_model->find_role_skills($projectID);
 			
 			$this->load->view('templates/profile_header', $data);
@@ -365,6 +371,7 @@ public function edit_tasks($projectID){
 			$data['tasks'] = $this->project_model->find_tasks($projectID);
 			$data['roles'] = $this->project_model->find_roles($projectID);
 			$data['skills'] = $this->project_model->find_role_skills($projectID);
+			$data['projectID'] = $projectID;
 
 			$this->load->view('templates/profile_header', $data);
 			$this->load->view('pages/project/edit_tasks', $data);
