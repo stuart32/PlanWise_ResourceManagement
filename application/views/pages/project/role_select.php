@@ -131,8 +131,12 @@ li .active {
 								<p>Please select employees for each role.</p>
 								<br>
 								<div class="row">
-										<?php foreach($match as $m){
+									
+										<?php 
+										 if(isset($match)){
+										 foreach($match as $m){
 											$j++;
+											
 												if($m['roleID'] == $r['roleID']){
 											 ?>
 											  <div class="col-sm-6 col-md-4">
@@ -155,7 +159,16 @@ li .active {
 									<?php			
 
 												}
-											} ?>
+											} 
+										}else{ ?>
+												<div class="alert alert-info text-center" role="alert">
+													<h3>Confirm Allocated Roles</h3>
+													<h4> <?php echo validation_errors(); ?> </h4>
+												</div>
+											
+		<?php								}
+											
+											?>
 											  
 										</div>
 								

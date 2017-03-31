@@ -252,13 +252,15 @@
                   /// Notes  id and name for role,  the skill required and the number of people wilth thtat sikill and their proficiency,  along with the employee id and name perhaps
                 
              function delskill(x,y) {
-				 var r = confirm("Are you sure you would like to delete this task?");
+				 var r = confirm("Are you sure you would like to delete this skill?");
 				 if(r == true)
 					$("#projectSkills"+x+"_"+y+" .selectedSkill").remove();
 			}
   
                 
              $("#delTask").click(function() {
+					var r = confirm("Are you sure you would like to delete this task?");
+					if(r == true)
 					$("#projectTasks .selected").remove();
                 });
                 
@@ -302,12 +304,33 @@
                         $(this).datepicker('option', 'minDate', minDate);
                     }
                 });
+				
 
                 $(function() {
+                    $("#datepicker").datepicker();
+                    $("#datepicker").datepicker("option", "dateFormat", "dd/mm/yy");
+
+                });
+                
+				$("#datepicker1").datepicker({
+                    dateFormat: "dd/mm/yy",
+                    minDate: 0,
+                    onSelect: function(date) {
+                        var datepicker1 = $('#datepicker1');
+                        var startDate = $(this).datepicker('getDate');
+                        var minDate = $(this).datepicker('getDate');
+                        datepicker1.datepicker('setDate', minDate);
+                        startDate.setDate(startDate.getDate());
+                        datepicker1.datepicker('option', 'minDate', minDate);
+                        $(this).datepicker('option', 'minDate', minDate);
+                    }
+                });
+				$(function() {
                     $("#datepicker1").datepicker();
                     $("#datepicker1").datepicker("option", "dateFormat", "dd/mm/yy");
 
                 });
+
 
             </script>
         </div>

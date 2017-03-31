@@ -45,7 +45,7 @@ class ProjectCreate extends CI_Controller {
 		
 		if ($this->form_validation->run() === FALSE)
 		{
-			$this->load->view('templates/header', $data);
+			$this->load->view('templates/profile_header', $data);
 			$this->load->view('pages/project/createProject', $data);
 			$this->load->view('templates/footer');
 
@@ -99,7 +99,7 @@ public function createTasks(){
 		
 			$data['skills'] =  $this->project_model->load_skills();
 		
-			$this->load->view('templates/header', $data);
+			$this->load->view('templates/profile_header', $data);
 			$this->load->view('pages/project/createTasks', $data);
 			$this->load->view('templates/footer');
 
@@ -115,7 +115,6 @@ public function createTasks(){
 {        
 	    if($this->check_restricted() == false) {return;};
 		$projectID = ($this->session->projectID);
-		$this->session->projectID = 61;
 		$this->check_restricted();
 		$this->load->helper('form');
 		$this->load->library('form_validation');

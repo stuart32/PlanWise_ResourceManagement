@@ -16,9 +16,6 @@
             <label for="projectTitle">* Project Name:</label>
             <input type="text" class="form-control" name="projectTitle">
             <br>
-            <label for="projectEmail">* Project Email:</label>
-            <input type="text" class="form-control" name="projectEmail">
-            <br>
             <label for="projectType">Project Type:</label>
             <input type="text" class="form-control" name="projectType">
             <br>
