@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 		<style>#datetimepicker5{z-index:1500 !important;}</style>
+		
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/css/mystyle.css">
@@ -48,6 +49,13 @@
 			}
 		}	
 	</script>
+<style type="text/css">
+	
+	 nav li a {
+	color: #59ABE3;
+}
+</style>
+
 </head> 
 <body onload="if(<?php echo $this->session->logged_in ?>){DisplaySessionTimeout();}">
   <div class="buttons">
@@ -64,7 +72,11 @@
 <div class="page-header">
   <h4>User Account </h4>
 </div>
-  <nav class="navbar navbar-default">
+
+
+
+</style>
+  <nav class="navbar navbar-default" >
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">PlanWise</a>

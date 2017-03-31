@@ -1,7 +1,7 @@
 <section>
     <div class="well well-sm">
       <div class="container" style="margin-top: 30px;">
-        <div class="profile-head">
+        <div class="profile-head" style="background-color: #6C7A89">
             
           <div class="col-md-4 col-sm-6">
             <div id="map" style="width:40%x;height:400px;background:White">      

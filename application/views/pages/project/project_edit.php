@@ -5,7 +5,7 @@
 <!-- <?php  echo $title ?> -->
 <?php echo form_open('edit_project/'.$project); ?>
 
-<div class="container" style="background-color: #ABB7B7; padding: 1%">
+<div class="container" style=" padding: 1%;">
 
 	<form>
 	<fieldset>
@@ -18,7 +18,7 @@
 
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 " for="projectTitle">Project Title: </label>
+	  <label class="col-md-4 " for="projectTitle" style="color: #1f497a;">Project Title: </label>
 	  <div class="col-md-5">
 	  <input id="projectTitle" name="projectTitle" type="text" placeholder="" class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['title']; }   ?>  > 
 	  <span class="help-block">Enter the project title above</span>  
@@ -27,7 +27,7 @@
 
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4" for="">Project Email: </label>  
+	  <label class="col-md-4" for="" style="color: #1f497a;">Project Email: </label>  
 	  <div class="col-md-5">
 	  <input id="" name="" type="text" placeholder="" class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['email']; }   ?> >
 	  <span class="help-block">Enter the project email above</span>  
@@ -36,7 +36,7 @@
 	
 	<!-- Date of birth input-->
 	<div class="form-group">
-	  <label class="col-md-4 " for="projectType">Project type: </label>  
+	  <label class="col-md-4 " for="projectType" style="color: #1f497a;">Project type: </label>  
 	  <div class="col-md-5">
 	  <input id="projectType" name="projectType" type="text" placeholder="" class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['projectTypeID']; }   ?> >
 	  <span class="help-block">Enter the project type above</span>  
@@ -45,7 +45,7 @@
 	
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 " for="startDate">Start date: </label>  
+	  <label class="col-md-4 " for="startDate" style="color: #1f497a;">Start date: </label>  
 	  <div class="col-md-5">
 	  <input id="startDate" name="startDate" type="text" placeholder="" class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['startDate']; }   ?> >
 	  <span class="help-block">Enter the starting date above</span>  
@@ -54,7 +54,7 @@
 	
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 " for="endDate">End date: </label>  
+	  <label class="col-md-4 " for="endDate" style="color: #1f497a;">End date: </label>  
 	  <div class="col-md-5">
 	  <input id="endDate" name="endDate" type="text" placeholder="" class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['endDate']; }   ?> >
 	  <span class="help-block">Enter the ending date above</span>  
@@ -63,7 +63,7 @@
 		
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 " for="projectBudget">Budget: </label>  
+	  <label class="col-md-4 " for="projectBudget" style="color: #1f497a;">Budget: </label>  
 	  <div class="col-md-5">
 	  <input id="projectBudget" name="projectBudget" type="number" placeholder="" class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['budget']; }   ?> >
 	  <span class="help-block">Enter project budget</span>  
@@ -72,7 +72,7 @@
 	
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 " for="country">Country: </label>  
+	  <label class="col-md-4 " for="country" style="color: #1f497a;">Country: </label>  
 	  <div class="col-md-5">
 	  <input id="country" name="country" type="text" placeholder="Scotland..." class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['country']; }   ?> >
 	  <span class="help-block">Enter residing country above</span>  
@@ -81,7 +81,7 @@
 	
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 " for="city">City: </label>  
+	  <label class="col-md-4 " for="city" style="color: #1f497a;">City: </label>  
 	  <div class="col-md-5">
 	  <input id="city" name="city" type="text" placeholder="Edinburgh..." class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['city']; }   ?> >
 	  <span class="help-block">Enter residing city above</span>  
@@ -90,7 +90,7 @@
 	
 		<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 " for="postcode">Postcode: </label>  
+	  <label class="col-md-4 " for="postcode" style="color: #1f497a;">Postcode: </label>  
 	  <div class="col-md-5">
 	  <input id="postcode" name="postcode" type="text" pattern ="[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}"  placeholder="EH11 ABC..." class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value='".$info[0]['postcode']."'"; }   ?>  >
 	  <span class="help-block">Enter postcode above</span>  
@@ -99,7 +99,7 @@
 	
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 " for="streetName">Street Name: </label>  
+	  <label class="col-md-4 " for="streetName" style="color: #1f497a;">Street Name: </label>  
 	  <div class="col-md-5">
 	  <input id="streetName" name="streetName" type="text" placeholder="Riccarton Avenue..." class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['streetName']; }   ?>>
 	  <span class="help-block">Enter street name</span>  
@@ -108,7 +108,7 @@
 	
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4" for="buildingNumber">Building Number: </label>  
+	  <label class="col-md-4" for="buildingNumber" style="color: #1f497a;">Building Number: </label>  
 	  <div class="col-md-5">
 	  <input id="buildingNumber" name="buildingNumber" type="number" placeholder="Insert number..." class="form-control input-md" required="" <?php if(isset($info)) { 	echo "value=".$info[0]['buldingNumber']; }   ?> >
 	  <span class="help-block">Enter building number</span>  
