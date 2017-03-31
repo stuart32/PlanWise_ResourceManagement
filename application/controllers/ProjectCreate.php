@@ -115,7 +115,6 @@ public function createTasks(){
 {        
 	    if($this->check_restricted() == false) {return;};
 		$projectID = ($this->session->projectID);
-		$this->session->projectID = 61;
 		$this->check_restricted();
 		$this->load->helper('form');
 		$this->load->library('form_validation');
