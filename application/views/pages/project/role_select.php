@@ -22,13 +22,13 @@ li .active {
 
 
 		<?php 
-		echo "<pre>";
-		print_r($roles);
+		//~ echo "<pre>";
+		//~ print_r($roles);
 				//~ echo "<br>";
 		//~ print_r($candidates);
 						//~ echo "<br>matches  ";
 		//~ print_r($match);
-		echo "</pre>";
+		//~ echo "</pre>";
 
 		?>
 
@@ -113,7 +113,7 @@ li .active {
 	foreach($roles as $role){
 			if(empty($role)) 
 				continue;
-				$j =0;
+				$j =-1;
 			foreach($role as $r){
 				if($currentRole == $r['roleID']){
 				?>
@@ -132,6 +132,7 @@ li .active {
 								<br>
 								<div class="row">
 										<?php foreach($match as $m){
+											$j++;
 												if($m['roleID'] == $r['roleID']){
 											 ?>
 											  <div class="col-sm-6 col-md-4">
@@ -151,7 +152,7 @@ li .active {
 												  </div>
 												</div>
 											  </div>
-									<?php		$j++;	
+									<?php			
 
 												}
 											} ?>
@@ -231,7 +232,7 @@ li .active {
 												  <div class="caption">
 													<h2>Employee Name</h2>
 													<h4><?php echo $m['data']->firstname." ".$m['data']->lastname;  ?></h4>
-													<h3>Employee Position<?php		echo	$j;?></h3>
+													<h3>Employee Position</h3>
 													<ul>
 														<li>Skill 1</li>
 														<li>Skill 2</li>
@@ -243,7 +244,7 @@ li .active {
 												  </div> 
 												</div>
 											  </div>
-									<?php			$j++;
+									<?php			
 												}
 											} ?>
 											  

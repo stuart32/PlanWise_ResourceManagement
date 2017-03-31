@@ -1086,10 +1086,10 @@ public function travel_distance($to, $from){
             //~ echo "<br/>";
             $distance = ($distance / 1000) * 0.62137;
             // echo "Distance: ".$distance." Miles";
-            echo ' travel distance function:';
-            print_r($from);
-             print_r($distance); 
-             echo '<br>'; 
+            //~ echo ' travel distance function:';
+            //~ print_r($from);
+             //~ print_r($distance); 
+             //~ echo '<br>'; 
            
             return $distance;
        
@@ -1136,12 +1136,12 @@ public function search_algorithm(){
             $rolesArray = $query->result_array();
 			$taskStartDate = $t['startDate'];
 			$taskEndDate   = $t['endDate'];
-			print_r($rolesArray);
+			//~ print_r($rolesArray);
            // array_push($rolesArray, $this->db->get()->result_array());
         
             /* Loop through roles and get the skills required for them */    
             foreach($rolesArray as $r){
-				print_r($r['roleID']);
+				//~ print_r($r['roleID']);
                 $this->db->select('skillID,skillLevel');
                 $this->db->from('role_skills_required');
                 $this->db->where('roleID', $r['roleID']);
@@ -1165,7 +1165,7 @@ public function search_algorithm(){
 						echo '<br>';*/
 				
                 if($candidates->num_rows() <  $r['numPeople']){
-                        echo 'No candidates match the required number for this role';
+                        //~ echo 'No candidates match the required number for this role';
                         return;
                 }
                 $candidates = $candidates->result();
@@ -1173,22 +1173,22 @@ public function search_algorithm(){
                 foreach($candidates as $c){
                 	
                 	if($this->session->accountID == $c->accountID){
-                		echo '<br>';
-                		echo ' cannot add yourself to role in project';
+                		//~ echo '<br>';
+                		//~ echo ' cannot add yourself to role in project';
                 		continue;
                 		}
-                	echo '<br>';
-                	echo 'current candidate: ';
-                	echo $c->accountID;
-                	echo '<br>';
+                	//~ echo '<br>';
+                	//~ echo 'current candidate: ';
+                	//~ echo $c->accountID;
+                	//~ echo '<br>';
                         $suitable = true;
                         foreach($skills_required as $skill){
                             if($c->skillLevel < $skill->skillLevel){
                                 $suitable = false;
-                                echo '<br>';
-                                print_r('candidate does not have required skill level: account ID : ');
-                                echo $c->accountID;
-										  echo '<br>';
+                                //~ echo '<br>';
+                                //~ print_r('candidate does not have required skill level: account ID : ');
+                                //~ echo $c->accountID;
+										  //~ echo '<br>';
                                 break;  
                             }
                         }
@@ -1199,7 +1199,7 @@ public function search_algorithm(){
                                               
                                               
                   $accountID = $c->accountID;
-                  print_r($accountID);
+                  //~ print_r($accountID);
 
 
 						$this->db->select('a.postcode, p.travel_distance, p.accountID, p.addressID');
@@ -1235,7 +1235,7 @@ public function search_algorithm(){
 
                         foreach($holiday as $h){  
                             if(in_between($t['startDate'],$t['endDate'], $h['startDate']) || in_between($t['startDate'], $t['endDate'], $h['startDate'])){
-                                echo 'The employee isn\'t available during the task dates!' ;
+                                //~ echo 'The employee isn\'t available during the task dates!' ;
                                 $suitable = false;
                                 break;
                             }  
@@ -1248,17 +1248,17 @@ public function search_algorithm(){
 							
 
 					
-						echo ' person max distance :';
-						print_r($personAddress[0]['travel_distance']);
-						echo '<br>';
-						print_r($personAddress[0]['postcode']);
-						echo '<br>'; 
+						//~ echo ' person max distance :';
+						//~ print_r($personAddress[0]['travel_distance']);
+						//~ echo '<br>';
+						//~ print_r($personAddress[0]['postcode']);
+						//~ echo '<br>'; 
 						
 						
                         if($this->project_model->travel_distance($personAddress[0]['postcode'], $projectAddress[0]['postcode']) > floatval($personAddress[0]['travel_distance'])){
 
                             $suitable = false;
-                            echo '  too far away!... ';
+                            //~ echo '  too far away!... ';
                             continue;
                            
 								}
@@ -1277,7 +1277,7 @@ public function search_algorithm(){
                         $budgetExpenditure = $budgetExpenditure + (int) $employeeCost;
 
                         if($budgetExpenditure > $budgetLimit){
-                            echo 'project budget exceeded! ';
+                            //~ echo 'project budget exceeded! ';
                             continue; 
                         }
 
@@ -1317,9 +1317,9 @@ public function search_algorithm(){
               
         }
 
-        echo "<br> employees:";
-        print_r($employeeAssignment);
-       echo '<br>';
+        //~ echo "<br> employees:";
+        //~ print_r($employeeAssignment);
+       //~ echo '<br>';
 
         return $employeeAssignment; 
         
