@@ -1,7 +1,7 @@
 <section>
     <div class="well well-sm">
       <div class="container" style="margin-top: 30px;">
-        <div class="profile-head">
+        <div class="profile-head" style="background-color: #6C7A89">
 		  <?php if(isset($interest)) {  ?>
           <div class="alert alert-info text-center" role="alert">
             <h3>You have shown interest in project</h3>

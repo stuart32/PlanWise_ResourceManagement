@@ -61,7 +61,7 @@
 				<h1><?php echo $h['task_title'];?></h1>
 				<p><?php  echo $h['task_start']; echo ' - '; echo$h['task_end']; echo '<br>';?></p>
 				<h1><?php echo $h['role_title'];?></h1>
-				<a href="#0" class="cd-read-more"><?php echo $h['project_title']; ?></a>
+				<a href="<?php echo site_url() ?>/find_project/<?php echo $h['projectID']?>" class="cd-read-more"><?php echo $h['project_title']; ?></a>
 				<?php echo '<br>';?>
 
 				<span class="cd-date"></span>
